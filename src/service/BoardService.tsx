@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BoardService = {
 
-  //글 목록 불러오기
+  // 글 목록 불러오기
   async getBoards() {
     try {
       const res = await axios.get('/board');
@@ -13,7 +13,7 @@ const BoardService = {
   },
 
   //글 작성하기
-  async createBoard(board) {
+  async createBoard(board : any) {
     try {
       const res = await axios.post('/create_board', board);
       return res.data;
@@ -25,7 +25,7 @@ const BoardService = {
   },
 
   //글 상세보기
-  async getOneBoard(no) {
+  async getOneBoard(no : any) {
     try {
       const res = await axios.get('/read_board/' + no, no);
       return res.data;
@@ -37,7 +37,7 @@ const BoardService = {
   },
 
   //글 수정하기
-  async updateBoard(no, board) {
+  async updateBoard(no : any, board : any) {
     try {
       const res = await axios.put('/update_board/' + no, board);
       return res.data;
@@ -49,7 +49,7 @@ const BoardService = {
   },
 
   //글 삭제하기
-  async deleteBoard(no) {
+  async deleteBoard(no : any) {
     try {
       const res = await axios.delete('/delete_board/' + no ,no);
       return res.data;

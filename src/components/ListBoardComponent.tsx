@@ -3,7 +3,7 @@ import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 
 export default function ListBoardComponent() {
-    const [boards, setBoards] = useState([]);
+    const [boards, setBoards] = useState<any>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function ListBoardComponent() {
         navigate('/create_board');
     }
 
-    function readBoard(no) {
+    function readBoard(no: any) {
         navigate(`/read_board/${no}`);
     }
 
@@ -41,6 +41,14 @@ export default function ListBoardComponent() {
                         </tr>
                     </thead>
                     <tbody>
+                        {/* {boards.map((board) => 
+                        <tr key={board.no}>
+                            <td>{board.no}</td>
+                            <td onClick={() => readBoard(board.no)}>{board.title}</td>
+                            <td>{board.member_id}</td>
+                            <td>{board.created_time}</td>
+                        </tr>
+                        )} */}
                         <tr key={boards.no}>
                             <td>{boards.no}</td>
                             <td onClick={() => readBoard(boards.no)}>{boards.title}</td>

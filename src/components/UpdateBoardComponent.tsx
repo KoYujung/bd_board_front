@@ -12,19 +12,19 @@ export default function UpdateBoardComponent() {
     const { no } = useParams();
     const navigate = useNavigate();
 
-    const changeTitle = (event) => {
+    const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, title: event.target.value });
     };
 
-    const changeContents = (event) => {
+    const changeContents = (event : React.ChangeEvent<HTMLTextAreaElement>) => {
         setData({ ...data, contents: event.target.value });
     };
 
-    const changeMemberId = (event) => {
+    const changeMemberId = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, member_id: event.target.value });
     };
 
-    const updateBoard = (event) => {
+    const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         let new_board = {
             title: data.title,
