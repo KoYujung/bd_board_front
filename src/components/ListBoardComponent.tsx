@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import { Table } from 'antd';
+import { ColumnType } from 'antd/es/table';
+
+interface DataType {
+  no: string;
+  title: string;
+  member_id: number;
+  created_time: string;
+}
 
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
@@ -18,7 +26,8 @@ export default function ListBoardComponent() {
                 console.error(error);
             });
     }, []);
-console.log(boards);
+    // console.log(boards);
+
     function createBoard() {
         navigate('/create_board');
     }
@@ -27,15 +36,20 @@ console.log(boards);
         navigate(`/read_board/${no}`);
     }
 
+    // const columns: ColumnType<DataType> = [
+
+    // ]
+
     return (
         <>
-        <Table />
-        <h2 className='text-center'>게시판 목록</h2>
-        <div className='row'>
-            <button className='btn btn-primary' onClick={createBoard}>글 작성</button>
+        <h2>게시판 목록</h2>
+        <div>
+            <button onClick={createBoard}>글 작성</button>
         </div>
-        <div className='row'>
-            <table className='table table-striped table-bordered' cellSpacing={10}>
+
+        {/* <Table columns={columns} data={boards}/> */}
+
+            {/* <table cellSpacing={10}>
                 <thead>
                     <tr>
                         <th>글 번호</th>
@@ -54,8 +68,7 @@ console.log(boards);
                     </tr>
                     )}
                 </tbody>
-            </table>
-        </div>
+            </table> */}
         </>
     );
 }
