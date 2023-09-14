@@ -6,6 +6,7 @@ const BoardService = {
   async getBoards() {
     try {
       const res = await axios.get('/board');
+      console.log("글 목록 조회 성공");
       return res.data;
     } catch(error) {
       console.error(error);
