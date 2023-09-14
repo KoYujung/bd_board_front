@@ -40,7 +40,6 @@ export default function TableTest() {
         title: "글 번호",
         dataIndex: "no",
         key: "no",
-        
     },
     {
         title: "제목",
@@ -63,7 +62,12 @@ export default function TableTest() {
         <>
         <h2>게시판</h2>
         <Button type="primary" onClick={createBoard}>글 작성</Button>
-        <Table columns={columns} dataSource={boards}/>
+        <Table columns={columns} dataSource={boards} 
+        onRow={(record, rowIndex) => {
+            return {
+                onClick : () => readBoard(record.no)
+            }
+        }}/>
         </>
     )
 }
