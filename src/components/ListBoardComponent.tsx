@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Button, Table } from "antd";
+import { Button, Form, Input, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
 interface DataType {
@@ -34,6 +34,10 @@ export default function TableTest() {
     const readBoard = (no: any) => {
         navigate(`/read_board/${no}`);
     }
+
+    const selectChange = () => {
+        console.log()
+    }
     
     const columns: ColumnsType<DataType> = [
     {
@@ -60,7 +64,21 @@ export default function TableTest() {
     
     return (
         <>
-        <Button type="primary" onClick={createBoard} >글 작성</Button>
+        <div id='createButton'>
+            <Button type="primary" onClick={createBoard} >글 작성</Button>
+        </div>
+        <div id='selectButton'>
+            <form>
+                <Select 
+                defaultValue="제목" style={{width: 80}}
+                onChange={selectChange} 
+                options={[
+                    { value : 'title', label : '제목' },
+                    { value : 'member_id', label : '작성자'}
+                ]} />
+                <Input placeholder='검색어를 입력해주세요'></Input><Button>검색</Button>
+            </form>
+        </div>
         <Table columns={columns} dataSource={boards} 
         onRow={(record, rowIndex) => {
             return {
