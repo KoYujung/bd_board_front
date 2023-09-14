@@ -42,7 +42,7 @@ export default function ReadBoardComponent() {
         <label>제목 </label> : {board.title}
       </div>
       <div>
-        <label>내용 </label> : <TextArea defaultValue={board.contents} readOnly></TextArea>
+        <label>내용 </label> : <TextArea value={board.contents} readOnly>{board.contents}</TextArea>
       </div>
       <div>
         <label>작성자 </label> : {board.member_id}
@@ -53,7 +53,7 @@ export default function ReadBoardComponent() {
       <div>
         <Button onClick={() => navigate('/board')}>글 목록</Button>
         <Button onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
-        <Button onClick={deleteView}>글 삭제</Button>
+        <Button danger onClick={deleteView}>글 삭제</Button>
       </div>
     </div>
   )

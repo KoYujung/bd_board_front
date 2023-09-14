@@ -3,7 +3,6 @@ import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import { Button, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import '../index.css'
 
 interface DataType {
     no: string;

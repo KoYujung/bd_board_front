@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BoardService from '../service/BoardService';
+import TextArea from 'antd/es/input/TextArea';
+import { Button, Input } from 'antd';
 
 export default function UpdateBoardComponent() {
     const [data, setData] = useState({
@@ -34,7 +36,7 @@ export default function UpdateBoardComponent() {
         console.log("new_board", JSON.stringify(new_board));
         BoardService.updateBoard(no, new_board)
             .then(() => {
-                navigate('/board');
+                navigate('/read_board/' + no);
             });
     };
 
@@ -59,20 +61,20 @@ export default function UpdateBoardComponent() {
             <form>
                 <div>
                     <label>제목</label>
-                    <input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle}></input>
+                    <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle}></Input>
                 </div>
                 <div>
                     <label>내용</label>
-                    <textarea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents}></textarea>
+                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents}></TextArea>
                 </div>
                 <div>
                     <label>작성자 번호</label>
-                    <input value={data.member_id} onChange={changeMemberId}></input>
+                    <Input value={data.member_id} onChange={changeMemberId}></Input>
                 </div>
             </form>
             <div className='row'>
-                <button onClick={updateBoard}>저장</button>
-                <button onClick={() => navigate(-1)}>취소</button>
+                <Button onClick={updateBoard}>저장</Button>
+                <Button danger onClick={() => navigate(-1)}>취소</Button>
             </div>
         </div>
     )
