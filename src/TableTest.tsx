@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BoardService from './service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import "./index.css";
-import { Space, Table } from "antd";
+import { Button, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
 interface DataType {
@@ -20,7 +20,7 @@ export default function TableTest() {
         BoardService.getBoards()
             .then((data) => {
                 setBoards(data);
-                console.log(data);
+                // console.log(data);
             })
             .catch((error) => {
                 console.log("글 목록 api 호출 실패");
@@ -35,9 +35,6 @@ export default function TableTest() {
     const readBoard = (no: any) => {
         navigate(`/read_board/${no}`);
     }
-
-    console.log(boards);
-    console.log(boards.no);
     
     const columns: ColumnsType<DataType> = [
     {
@@ -49,7 +46,6 @@ export default function TableTest() {
         title: "제목",
         dataIndex: "title",
         key: "title",
-        render: (text) => <a onClick={() => readBoard(boards.no)}>{text}</a>
     },
     {
         title: "작성자",
@@ -61,12 +57,12 @@ export default function TableTest() {
         dataIndex: "created_time",
         key: "created_time"
     },
-    ];  
+    ];
     
     return (
         <>
         <h2>게시판</h2>
-        <button onClick={createBoard}>글 작성</button>
+        <Button type="primary" onClick={createBoard}>글 작성</Button>
         <Table columns={columns} dataSource={boards}/>
         </>
     )

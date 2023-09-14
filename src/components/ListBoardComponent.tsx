@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Table } from 'antd';
-import { ColumnType } from 'antd/es/table';
+import { Button, Space, Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
 
-export default function ListBoardComponent() {
+interface DataType {
+    no: string;
+    title: string;
+    member_id: number;
+    created_time: string;
+}
+
+export default function TableTest() {
     const [boards, setBoards] = useState<any>([]);
     const navigate = useNavigate();
 
@@ -19,42 +26,44 @@ export default function ListBoardComponent() {
                 console.error(error);
             });
     }, []);
-    // console.log(boards);
 
-    function createBoard() {
+    const createBoard = () => {
         navigate('/create_board');
     }
 
-    function readBoard(no: any) {
+    const readBoard = (no: any) => {
         navigate(`/read_board/${no}`);
     }
-
+    
+    const columns: ColumnsType<DataType> = [
+    {
+        title: "글 번호",
+        dataIndex: "no",
+        key: "no",
+        
+    },
+    {
+        title: "제목",
+        dataIndex: "title",
+        key: "title",
+    },
+    {
+        title: "작성자",
+        dataIndex: "member_id",
+        key: "member_id"
+    },
+    {
+        title: "작성일",
+        dataIndex: "created_time",
+        key: "created_time"
+    },
+    ];
+    
     return (
         <>
-        <h2>게시판 목록</h2>
-        <div>
-            <button onClick={createBoard}>글 작성</button>
-        </div>
-            <table cellSpacing={10}>
-                <thead>
-                    <tr>
-                        <th>글 번호</th>
-                        <th>타이틀</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {boards.map((board : any) => 
-                    <tr key={board.no}>
-                        <td>{board.no}</td>
-                        <td onClick={() => readBoard(board.no)}>{board.title}</td>
-                        <td>{board.member_id}</td>
-                        <td>{board.created_time}</td>
-                    </tr>
-                    )}
-                </tbody>
-            </table>
+        <h2>게시판</h2>
+        <Button type="primary" onClick={createBoard}>글 작성</Button>
+        <Table columns={columns} dataSource={boards}/>
         </>
-    );
+    )
 }
