@@ -53,3 +53,7 @@ Footer {
   text-align: center;
   margin-top: 20px;
 }
+
+.board_content {
+  margin: 2%;
+}

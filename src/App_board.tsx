@@ -10,8 +10,9 @@ import BoardHeaderComponent from './components/BoardHeaderComponent';
 
 export default function App_board() {
   return (
-    <>
+    <div>
     <BoardHeaderComponent />
+    <div className='board_content'>
     <Routes>
       <Route path='/' element={<ListBoardComponent />} />
       <Route path='/board' element={<ListBoardComponent />} />
@@ -19,7 +20,8 @@ export default function App_board() {
       <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
       <Route path='/read_board/:no' element={<ReadBoardComponent />} />
     </Routes>
+    </div>
     <Footer>©2023 Created by yuu</Footer>
-    </>    
+    </div>    
   )
 }

@@ -39,16 +39,16 @@ export default function ReadBoardComponent() {
         <h3>글 상세 조회</h3>
       </div>
       <div>
-        <label>제목 </label> : {board.title}
+        <label>제목 </label>{board.title}
       </div>
       <div>
-        <label>내용 </label> : <TextArea value={board.contents} readOnly>{board.contents}</TextArea>
+        <label>내용 </label><TextArea value={board.contents} readOnly>{board.contents}</TextArea>
       </div>
       <div>
-        <label>작성자 </label> : {board.member_id}
+        <label>작성자 </label>{board.member_id}
       </div>
       <div>
-        <label>작성일 </label> : {board.created_time}
+        <label>작성일 </label>{board.created_time}
       </div>
       <div>
         <Button onClick={() => navigate('/board')}>글 목록</Button>
