@@ -4,13 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Table } from 'antd';
 import { ColumnType } from 'antd/es/table';
 
-interface DataType {
-  no: string;
-  title: string;
-  member_id: number;
-  created_time: string;
-}
-
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const navigate = useNavigate();
@@ -36,20 +29,13 @@ export default function ListBoardComponent() {
         navigate(`/read_board/${no}`);
     }
 
-    // const columns: ColumnType<DataType> = [
-
-    // ]
-
     return (
         <>
         <h2>게시판 목록</h2>
         <div>
             <button onClick={createBoard}>글 작성</button>
         </div>
-
-        {/* <Table columns={columns} data={boards}/> */}
-
-            {/* <table cellSpacing={10}>
+            <table cellSpacing={10}>
                 <thead>
                     <tr>
                         <th>글 번호</th>
@@ -68,7 +54,7 @@ export default function ListBoardComponent() {
                     </tr>
                     )}
                 </tbody>
-            </table> */}
+            </table>
         </>
     );
 }
