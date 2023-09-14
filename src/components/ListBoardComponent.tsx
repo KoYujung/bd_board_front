@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Button, Space, Table } from "antd";
+import { Button, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import '../index.css'
 
 interface DataType {
     no: string;
@@ -60,8 +61,7 @@ export default function TableTest() {
     
     return (
         <>
-        <h2>게시판</h2>
-        <Button type="primary" onClick={createBoard}>글 작성</Button>
+        <Button type="primary" onClick={createBoard} >글 작성</Button>
         <Table columns={columns} dataSource={boards} 
         onRow={(record, rowIndex) => {
             return {

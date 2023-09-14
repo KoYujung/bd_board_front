@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
 
 export default function ReadBoardComponent() {
   const [ board, setBoard] = useState({
@@ -40,7 +42,7 @@ export default function ReadBoardComponent() {
         <label>제목 </label> : {board.title}
       </div>
       <div>
-        <label>내용 </label> : <textarea defaultValue={board.contents} readOnly></textarea>
+        <label>내용 </label> : <TextArea defaultValue={board.contents} readOnly></TextArea>
       </div>
       <div>
         <label>작성자 </label> : {board.member_id}
@@ -48,10 +50,10 @@ export default function ReadBoardComponent() {
       <div>
         <label>작성일 </label> : {board.created_time}
       </div>
-      <div><br></br>
-        <button onClick={() => {navigate('/board')}}>글 목록</button>
-        <button onClick={() => {navigate('/update_board/' + no)}}>글 수정</button>     
-        <button onClick={() => {deleteView()}}>글 삭제</button>      
+      <div>
+        <Button onClick={() => navigate('/board')}>글 목록</Button>
+        <Button onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
+        <Button onClick={deleteView}>글 삭제</Button>
       </div>
     </div>
   )

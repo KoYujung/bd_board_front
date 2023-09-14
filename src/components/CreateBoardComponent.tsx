@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
+import TextArea from 'antd/es/input/TextArea';
+import { Button, Input } from 'antd';
 
 export default function CreateBoardComponent() {
     const [data, setData] = useState({
@@ -37,19 +39,19 @@ export default function CreateBoardComponent() {
             <form>
                 <div className='create_title'>
                     <label>제목</label>
-                    <input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle}></input>
+                    <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle}></Input>
                 </div>
                 <div className='create_contents'>
                     <label>내용</label>
-                    <textarea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents}></textarea>
+                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents}></TextArea>
                 </div>
                 <div className='create_memberId'>
                     <label>작성자 번호</label>
-                    <input value={data.member_id} onChange={changeMemberId}></input>
+                    <Input value={data.member_id} onChange={changeMemberId}></Input>
                 </div>
             </form>
-            <button onClick={createBoard}>완료</button>
-            <button onClick={() => {navigate(-1)}}>이전</button>
+            <Button type='primary' onClick={createBoard}>완료</Button>
+            <Button onClick={() => {navigate(-1)}}>이전</Button>
         </div>
     );
 }
