@@ -13,6 +13,9 @@ interface DataType {
 
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
+    const [selected, SetSelected] = useState<string>('제목');
+    const [inputted , setInput] = useState<string>('');
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,10 +38,19 @@ export default function ListBoardComponent() {
         navigate(`/read_board/${no}`);
     }
 
-    const selectChange = () => {
-        console.log()
+    const selectChange = (e : string) => {
+        SetSelected(e);
     }
-    
+
+    const InputSearch = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value);
+    }
+
+    const searchBoard  = () => {
+        console.log(selected, inputted);
+        navigate('/search_board/')
+    }
+
     const columns: ColumnsType<DataType> = [
     {
         title: "글 번호",
@@ -67,17 +79,20 @@ export default function ListBoardComponent() {
         <div id='createButton'>
             <Button type="primary" onClick={createBoard} >글 작성</Button>
         </div>
+
         <div id='selectButton'>
-            <Select id='ListSelect'
-            defaultValue="제목" style={{width: 80}}
-            onChange={selectChange} 
+            <Select id='ListSelect' style={{width: 80, cursor: 'pointer'}} key={selected}
+            onChange={(selectChange)} value={selected}
             options={[
                 { value : 'title', label : '제목' },
                 { value : 'member_id', label : '작성자'}
-            ]} />
-            <Input placeholder='검색어를 입력해주세요' id='ListInput'/>
-            <Button style={{margin : '0'}} id='ListSearch'>검색</Button>
+            ]}/>
+
+            <Input placeholder='검색어를 입력해주세요' id='ListInput' onChange={InputSearch} value={inputted}/>
+
+            <Button style={{margin : '0'}} id='ListSearch' onClick={searchBoard}>검색</Button>
         </div>
+        
         <Table columns={columns} dataSource={boards} 
         onRow={(record, rowIndex) => {
             return {

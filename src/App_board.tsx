@@ -16,6 +16,7 @@ export default function App_board() {
     <Routes>
       <Route path='/' element={<ListBoardComponent />} />
       <Route path='/board' element={<ListBoardComponent />} />
+      <Route path='/search_board' element={<ListBoardComponent />} />
       <Route path='/create_board' element={<CreateBoardComponent />} />
       <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
       <Route path='/read_board/:no' element={<ReadBoardComponent />} />

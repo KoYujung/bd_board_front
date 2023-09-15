@@ -6,7 +6,6 @@ const BoardService = {
   async getBoards() {
     try {
       const res = await axios.get('/board');
-      console.log("글 목록 조회 성공");
       return res.data;
     } catch(error) {
       console.error(error);
@@ -19,7 +18,6 @@ const BoardService = {
       const res = await axios.post('/create_board', board);
       return res.data;
     } catch (error) {
-      console.log("create_board 호출 실패");
       console.error(error);
       throw error;
     }
@@ -31,7 +29,6 @@ const BoardService = {
       const res = await axios.get('/read_board/' + no, no);
       return res.data;
     } catch(error) {
-      console.log("read_board 호출 실패");
       console.error(error);
       throw error;
     }
@@ -43,7 +40,6 @@ const BoardService = {
       const res = await axios.put('/update_board/' + no, board);
       return res.data;
     } catch(error) {
-      console.log("update_board 호출 실패");
       console.error(error);
       throw error;
     }
@@ -54,9 +50,18 @@ const BoardService = {
     try {
       const res = await axios.delete('/delete_board/' + no ,no);
       return res.data;
-
     } catch(error) {
-      console.log("delete_board 호출 실패");
+      console.error(error);
+      throw error;
+    }
+  },
+
+  //글 검색하기
+  async searchBoard(no : any) {
+    try {
+      const res = await axios.get('/search_board');
+      return res.data;
+    } catch(error) {
       console.error(error);
       throw error;
     }
