@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Descriptions, DescriptionsProps } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
 export default function ReadBoardComponent() {
@@ -21,6 +21,27 @@ export default function ReadBoardComponent() {
       })
   }, [no]);
 
+  const items: DescriptionsProps['items'] = [
+    {
+      label: '제목',
+      children: board.title,
+    },
+    {
+      label: '작성일',
+      children: board.created_time,
+      span: 2,
+    },
+    {
+      label: '내용',
+      children: board.contents,
+      span: 3,
+    },
+    {
+      label: '작성자',
+      children: board.member_id,
+    },
+  ]
+
   function deleteView() {
     if(window.confirm("게시글을 삭제하시겠습니까? ")) {
       BoardService.deleteBoard(no)
@@ -34,29 +55,11 @@ export default function ReadBoardComponent() {
   }
 
   return (
-    <div>
-      <div>
-        <h3>글 상세 조회</h3>
-      </div>
-      <div>
-        <label>제목 </label>{board.title}
-      </div>
-      <div>
-        <label>내용 </label><TextArea value={board.contents} readOnly>{board.contents}</TextArea>
-      </div>
-      <div>
-        <label>작성자 </label>{board.member_id}
-      </div>
-      <div>
-        <label>작성일 </label>{board.created_time}
-      </div>
-      <div>
-        <Button onClick={() => navigate('/board')}>글 목록</Button>
-        <Button onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
-        <Button danger onClick={deleteView}>글 삭제</Button>
-      </div>
-    </div>
+    <>
+    <Descriptions title='글 상세' bordered items={items}/>
+    <Button onClick={() => navigate('/board')}>글 목록</Button>
+    <Button onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
+    <Button danger onClick={deleteView}>글 삭제</Button>
+    </>
   )
 }
-
-
