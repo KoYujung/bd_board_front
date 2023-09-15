@@ -73,8 +73,8 @@ export default function UpdateBoardComponent() {
                 </div>
             </form>
             <div className='row'>
-                <Button onClick={updateBoard}>저장</Button>
-                <Button danger onClick={() => navigate(-1)}>취소</Button>
+                <Button className='MarginButton' onClick={updateBoard}>저장</Button>
+                <Button className='MarginButton' danger onClick={() => navigate(-1)}>취소</Button>
             </div>
         </div>
     )

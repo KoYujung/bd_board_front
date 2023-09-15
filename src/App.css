@@ -57,3 +57,20 @@ Footer {
 .board_content {
   margin: 2%;
 }
+
+.MarginButton {
+  margin-top: 25px;
+  margin-right: 10px;
+}
+
+#createButton, #ListSelect,#ListInput {
+  float: left;
+}
+
+#selectButton, #ListSearch {
+  float: right;
+}
+
+label {
+  margin-bottom: 20px;
+}

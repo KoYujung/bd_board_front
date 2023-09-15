@@ -47,11 +47,11 @@ export default function CreateBoardComponent() {
                 </div>
                 <div className='create_memberId'>
                     <label>작성자 번호</label>
-                    <Input value={data.member_id} onChange={changeMemberId}></Input>
+                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId}></Input>
                 </div>
             </form>
-            <Button type='primary' onClick={createBoard}>완료</Button>
-            <Button onClick={() => {navigate(-1)}}>이전</Button>
+            <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>
+            <Button className='MarginButton' onClick={() => {navigate(-1)}}>이전</Button>
         </div>
     );
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Descriptions, DescriptionsProps } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
 
 export default function ReadBoardComponent() {
   const [ board, setBoard] = useState({
@@ -57,9 +56,9 @@ export default function ReadBoardComponent() {
   return (
     <>
     <Descriptions title='글 상세' bordered items={items}/>
-    <Button onClick={() => navigate('/board')}>글 목록</Button>
-    <Button onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
-    <Button danger onClick={deleteView}>글 삭제</Button>
+    <Button className='MarginButton' onClick={() => navigate('/board')}>글 목록</Button>
+    <Button className='MarginButton' onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
+    <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     </>
   )
 }

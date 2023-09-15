@@ -68,21 +68,22 @@ export default function ListBoardComponent() {
             <Button type="primary" onClick={createBoard} >글 작성</Button>
         </div>
         <div id='selectButton'>
-            <Select 
+            <Select id='ListSelect'
             defaultValue="제목" style={{width: 80}}
             onChange={selectChange} 
             options={[
                 { value : 'title', label : '제목' },
                 { value : 'member_id', label : '작성자'}
             ]} />
-            <Input placeholder='검색어를 입력해주세요'></Input><Button>검색</Button>
+            <Input placeholder='검색어를 입력해주세요' id='ListInput'/>
+            <Button style={{margin : '0'}} id='ListSearch'>검색</Button>
         </div>
         <Table columns={columns} dataSource={boards} 
         onRow={(record, rowIndex) => {
             return {
                 onClick : () => readBoard(record.no)
             }
-        }}/>
+        }} style={{cursor: 'pointer'}}/>
         </>
     )
 }
