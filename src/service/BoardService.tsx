@@ -57,9 +57,9 @@ const BoardService = {
   },
 
   //글 검색하기
-  async searchBoard(no : any) {
+  async searchBoard(type: any, keyword: any) {
     try {
-      const res = await axios.get('/search_board');
+      const res = await axios.get('/search_board/' + type + '/' + keyword);
       return res.data;
     } catch(error) {
       console.error(error);

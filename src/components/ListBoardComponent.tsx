@@ -22,7 +22,6 @@ export default function ListBoardComponent() {
         BoardService.getBoards()
             .then((data) => {
                 setBoards(data);
-                // console.log(data);
             })
             .catch((error) => {
                 console.log("글 목록 api 호출 실패");
@@ -34,7 +33,7 @@ export default function ListBoardComponent() {
         navigate('/create_board');
     }
 
-    const readBoard = (no: any) => {
+    const readBoard = (no: string) => {
         navigate(`/read_board/${no}`);
     }
 
@@ -47,31 +46,32 @@ export default function ListBoardComponent() {
     }
 
     const searchBoard  = () => {
-        console.log(selected, inputted);
-        navigate('/search_board/')
+        if(inputted === '') {
+            alert("검색어를 입력해주세요");
+        } else navigate('/search_board/' + selected + '/' + inputted);
     }
 
     const columns: ColumnsType<DataType> = [
-    {
-        title: "글 번호",
-        dataIndex: "no",
-        key: "no",
-    },
-    {
-        title: "제목",
-        dataIndex: "title",
-        key: "title",
-    },
-    {
-        title: "작성자",
-        dataIndex: "member_id",
-        key: "member_id"
-    },
-    {
-        title: "작성일",
-        dataIndex: "created_time",
-        key: "created_time"
-    },
+        {
+            title: "글 번호",
+            dataIndex: "no",
+            key: "no",
+        },
+        {
+            title: "제목",
+            dataIndex: "title",
+            key: "title",
+        },
+        {
+            title: "작성자",
+            dataIndex: "member_id",
+            key: "member_id"
+        },
+        {
+            title: "작성일",
+            dataIndex: "created_time",
+            key: "created_time"
+        },
     ];
     
     return (
@@ -80,19 +80,32 @@ export default function ListBoardComponent() {
             <Button type="primary" onClick={createBoard} >글 작성</Button>
         </div>
 
-        <div id='selectButton'>
-            <Select id='ListSelect' style={{width: 80, cursor: 'pointer'}} key={selected}
-            onChange={(selectChange)} value={selected}
-            options={[
-                { value : 'title', label : '제목' },
-                { value : 'member_id', label : '작성자'}
-            ]}/>
+        <div id='selectButton' style={{ display: 'flex', alignItems: 'center' }}>
+            <Select
+                id='ListSelect'
+                style={{ width: 80, cursor: 'pointer', marginRight: '8px' }}
+                key={selected}
+                onChange={selectChange}
+                value={selected}
+                options={[
+                    { value: 'title', label: '제목' },
+                    { value: 'member_id', label: '작성자' }
+                ]}
+            />
 
-            <Input placeholder='검색어를 입력해주세요' id='ListInput' onChange={InputSearch} value={inputted}/>
+            <Input
+                placeholder='검색어를 입력해주세요'
+                id='ListInput'
+                onChange={InputSearch}
+                value={inputted}
+                style={{ flex: '1', marginRight: '8px' }}
+            />
 
-            <Button style={{margin : '0'}} id='ListSearch' onClick={searchBoard}>검색</Button>
+            <Button style={{ margin: '0' }} id='ListSearch' onClick={searchBoard}>
+                검색
+            </Button>
         </div>
-        
+
         <Table columns={columns} dataSource={boards} 
         onRow={(record, rowIndex) => {
             return {
