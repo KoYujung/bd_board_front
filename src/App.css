@@ -49,6 +49,14 @@
   }
 }
 
+.create_div {
+  margin-top: 20px;
+}
+
+.create_input {
+  margin-bottom: 10px;
+}
+
 Footer {
   text-align: center;
   margin-top: 20px;
@@ -75,6 +83,6 @@ Table {
   float: right;
 }
 
-label {
-  margin-bottom: 20px;
+.subtitle {
+  margin-bottom: 30px;
 }

@@ -59,17 +59,17 @@ export default function UpdateBoardComponent() {
         <div>
             <h2>글 수정</h2>
             <form>
-                <div>
+                <div className='create_div'>
                     <label>제목</label>
-                    <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle}></Input>
+                    <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle} style={{marginTop: '7px'}}></Input>
                 </div>
-                <div>
+                <div className='create_div'>
                     <label>내용</label>
-                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents}></TextArea>
+                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
                 </div>
-                <div>
+                <div className='create_div'>
                     <label>작성자 번호</label>
-                    <Input value={data.member_id} onChange={changeMemberId}></Input>
+                    <Input value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}></Input>
                 </div>
             </form>
             <div className='row'>

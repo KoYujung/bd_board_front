@@ -37,17 +37,17 @@ export default function CreateBoardComponent() {
         <div>
             <h2>글 작성</h2>
             <form>
-                <div className='create_title'>
+                <div className='create_div'>
                     <label>제목</label>
-                    <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle}></Input>
+                    <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle} style={{marginTop: '7px'}}></Input>
                 </div>
-                <div className='create_contents'>
-                    <label>내용</label>
-                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents}></TextArea>
+                <div className='create_div'>
+                    <label className='label'>내용</label>
+                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
                 </div>
-                <div className='create_memberId'>
-                    <label>작성자 번호</label>
-                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId}></Input>
+                <div className='create_div'>
+                    <label className='label'>작성자 번호</label>
+                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}></Input>
                 </div>
             </form>
             <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>
