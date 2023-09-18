@@ -49,14 +49,14 @@
   }
 }
 
-Footer,Table {
+Footer {
   text-align: center;
   margin-top: 20px;
 }
 
-/* Table {
+Table {
   margin-top: 20px;
-} */
+}
 
 .board_content {
   margin: 2%;

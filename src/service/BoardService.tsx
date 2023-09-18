@@ -26,7 +26,7 @@ const BoardService = {
   //글 상세보기
   async getOneBoard(no : any) {
     try {
-      const res = await axios.get('/read_board/' + no, no);
+      const res = await axios.get('/read_board/' + no);
       return res.data;
     } catch(error) {
       console.error(error);
@@ -48,7 +48,7 @@ const BoardService = {
   //글 삭제하기
   async deleteBoard(no : any) {
     try {
-      const res = await axios.delete('/delete_board/' + no ,no);
+      const res = await axios.delete('/delete_board/' + no);
       return res.data;
     } catch(error) {
       console.error(error);
@@ -57,7 +57,7 @@ const BoardService = {
   },
 
   //글 검색하기
-  async searchBoard(type: any, keyword: any) {
+  async searchBoard(type: String, keyword: String) {
     try {
       const res = await axios.get('/search_board/' + type + '/' + keyword);
       return res.data;

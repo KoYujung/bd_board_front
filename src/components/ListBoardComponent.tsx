@@ -3,6 +3,7 @@ import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import { Button, Input, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { error } from 'console';
 
 interface DataType {
     no: string;
@@ -13,7 +14,7 @@ interface DataType {
 
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
-    const [selected, SetSelected] = useState<string>('제목');
+    const [selected, SetSelected] = useState<string>('title');
     const [inputted , setInput] = useState<string>('');
 
     const navigate = useNavigate();
@@ -48,7 +49,16 @@ export default function ListBoardComponent() {
     const searchBoard  = () => {
         if(inputted === '') {
             alert("검색어를 입력해주세요");
-        } else navigate('/search_board/' + selected + '/' + inputted);
+        } else {
+            BoardService.searchBoard(selected, inputted)
+            .then((data) => {
+                setBoards(data);
+            })
+            .catch((error) => {
+                console.log("글 검색 실패");
+                console.error(error);
+            })
+        }
     }
 
     const columns: ColumnsType<DataType> = [
@@ -92,7 +102,6 @@ export default function ListBoardComponent() {
                     { value: 'member_id', label: '작성자' }
                 ]}
             />
-
             <Input
                 placeholder='검색어를 입력해주세요'
                 id='ListInput'
@@ -100,13 +109,9 @@ export default function ListBoardComponent() {
                 value={inputted}
                 style={{ flex: '1', marginRight: '8px' }}
             />
-
-            <Button style={{ margin: '0' }} id='ListSearch' onClick={searchBoard}>
-                검색
-            </Button>
+            <Button style={{ margin: '0' }} id='ListSearch' onClick={searchBoard}>검색</Button>
         </div>
-
-        <Table columns={columns} dataSource={boards} 
+        <Table rowKey={(boards) => boards.no} columns={columns} dataSource={boards} 
         onRow={(record, rowIndex) => {
             return {
                 onClick : () => readBoard(record.no)
