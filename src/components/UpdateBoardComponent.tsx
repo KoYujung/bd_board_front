@@ -56,7 +56,7 @@ export default function UpdateBoardComponent() {
     }, [no]);
 
     return (
-        <div>
+        <div style={{marginRight: '70%'}}>
             <h2>글 수정</h2>
             <form>
                 <div className='create_div'>

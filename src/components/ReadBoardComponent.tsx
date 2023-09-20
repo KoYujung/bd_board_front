@@ -35,10 +35,6 @@ export default function ReadBoardComponent() {
       children: board.contents,
       span: 3,
     },
-    {
-      label: '작성자',
-      children: board.member_id,
-    },
   ]
 
   function deleteView() {

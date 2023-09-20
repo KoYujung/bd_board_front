@@ -27,6 +27,7 @@ const BoardService = {
   async getOneBoard(no : any) {
     try {
       const res = await axios.get('/read_board/' + no);
+      console.log(res.data);
       return res.data;
     } catch(error) {
       console.error(error);
