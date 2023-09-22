@@ -3,6 +3,8 @@ import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import { Button, Input, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { useSelector, useDispatch } from 'react-redux';
+import boardReducer, { setMember, setTitle } from '../modules/boardReducer';
 
 interface DataType {
     no: string;
@@ -13,10 +15,13 @@ interface DataType {
 
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
-    const [selected, SetSelected] = useState<string>('title');
     const [inputted , setInput] = useState<string>('');
 
+    const selected = useSelector((state: any) => (state.boardReducer).selected);
+    const search_type = useSelector((state: any) => (state.boardReducer).search_type);
+
     const navigate = useNavigate();
+    const disPath = useDispatch();
 
     useEffect(() => {
         BoardService.getBoards()
@@ -38,7 +43,13 @@ export default function ListBoardComponent() {
     }
 
     const selectChange = (e : string) => {
-        SetSelected(e);
+        if(e === 'title') {
+            disPath(setTitle(e));
+            console.log(disPath(setTitle(e)));
+        } else {
+            disPath(setMember(e));
+            console.log(disPath(setMember(e)));
+        }
     }
 
     const InputSearch = (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -46,10 +57,11 @@ export default function ListBoardComponent() {
     }
 
     const searchBoard  = () => {
+        console.log(search_type);
         if(inputted === '') {
             alert("검색어를 입력해주세요");
         } else {
-            BoardService.searchBoard(selected, inputted)
+            BoardService.searchBoard(search_type, inputted)
             .then((data) => {
                 setBoards(data);
             })

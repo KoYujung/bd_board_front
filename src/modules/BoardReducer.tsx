@@ -1,53 +1,45 @@
 // Action Type
-export const GET_BOARD = 'GET_BOARD';
-export const CREATE_BOARD = 'CREATE_BOARD';
-export const READ_BOARD = 'READ_BOARD';
-export const UPDATE_BOARD = 'UPDATE_BOARD';
+const SET_TITLE = 'SET_TITLE';
+const SET_MEMBER = 'SET_MEMBER';
 
 //Action Create Function
-export const getBoard = (BoardData: any) => ({
-    type: GET_BOARD,
-    BoardData: {
-        no: BoardData.no,
-        title: BoardData.title,
-        member_id: BoardData.member_id,
-        selected: BoardData.selected,
-        inputted: BoardData.inputted,
-    }
+export const setTitle = (e: any) => ({
+    type: SET_TITLE,
+    selected: '제목',
+    search_type: 'title'
 });
 
-export const createBoard = (BoardNo: any) => ({
-    type: CREATE_BOARD,
-    BoardNo
+export const setMember = (e: any) => ({
+    type:  SET_MEMBER,
+    selected: '작성자',
+    search_type: 'member_id'
 });
-
-export const readBoard = (BoardNo: any) => ({
-    type: READ_BOARD,
-    BoardNo
-});
-
-export const updateBoard = (BoardNo: any) => ({
-    type: UPDATE_BOARD,
-    BoardNo
-});
-
 
 //initalState
 const initalState = {
-    boards: [
-        
-    ]
-}
+    selected: '제목',
+    search_type: 'title'
+};
 
 // Reducer
-export default function BoardReducer(state = initalState, action: any) {
+const boardReducer = (state = initalState, action: any) => {
     switch(action.type) {
-        case GET_BOARD:
-        
-        case CREATE_BOARD:
-
-        case READ_BOARD:
-
-        case UPDATE_BOARD:
+        case SET_TITLE:
+            return { 
+                selected: action.selected,
+                search_type: action.search_type 
+            };
+        case SET_MEMBER:
+            return { 
+                selected : action.selected,
+                search_type: action.search_type 
+            };
+        default:
+            return { 
+                selected: state.selected,
+                search_type: action.search_type 
+            }
     }
 }
+
+export default boardReducer;

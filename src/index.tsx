@@ -8,23 +8,22 @@ import { Provider } from 'react-redux';
 import { legacy_createStore as createStore} from 'redux';
 import rootReducer from './modules/rootReducer';
 
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const store = createStore(rootReducer);
 
 root.render(
-  <Provider store={createStore(rootReducer)}>
-    <App />
+  <Provider store={store}>
+    <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>
   </Provider>
-);
 
-// root.render(
-//   <React.StrictMode>
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   </React.StrictMode>
-// );
+);
 
 reportWebVitals();
