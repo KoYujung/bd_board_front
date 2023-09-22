@@ -6,14 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { legacy_createStore as createStore} from 'redux';
-import rootReducer from './modules/rootReducer';
+import boardReducer from './modules/boardReducer';
 
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const store = createStore(rootReducer);
+const store = createStore(boardReducer);
 
 root.render(
   <Provider store={store}>

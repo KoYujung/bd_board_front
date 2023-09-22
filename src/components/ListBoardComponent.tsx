@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Input, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
-import boardReducer, { setMember, setTitle } from '../modules/boardReducer';
+import { setMember, setTitle } from '../modules/boardReducer';
 
 interface DataType {
     no: string;
@@ -17,8 +17,8 @@ export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
 
-    const selected = useSelector((state: any) => (state.boardReducer).selected);
-    const search_type = useSelector((state: any) => (state.boardReducer).search_type);
+    const selected = useSelector((state: any) => (state).selected);
+    const search_type = useSelector((state: any) => (state).search_type);
 
     const navigate = useNavigate();
     const disPath = useDispatch();
