@@ -1,5 +1,5 @@
 import { Button, Modal } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import BoardService from '../service/BoardService';
 
 interface Props {
@@ -21,15 +21,12 @@ export default function ModalComponent(props: Props) {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
     const prevModal = () => {
         showModal(props.prevNo);
-    }
-
+    };
     const nextModal = () => {
         showModal(props.nextNo);
-    }
-
+    };
     const showModal = (No: number) => {
         BoardService.getOneBoard(No)
         .then((data) => {
@@ -39,7 +36,7 @@ export default function ModalComponent(props: Props) {
         .catch((error) => {
             alert("글이 존재하지 않습니다.");
         })
-    }
+    };
 
     return (
         <>
