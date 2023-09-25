@@ -1,7 +1,6 @@
 import { Button, Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
-import { error } from 'console';
 
 interface Props {
     prevNo: number,
@@ -9,8 +8,6 @@ interface Props {
 }
 
 export default function ModalComponent(props: Props) {
-
-    // console.log("이전 게시글 번호 : " + props.prevNo + "\n 다음 게시글 번호 : " + props.nextNo );
     
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newData, setNewData] = useState({
@@ -26,26 +23,21 @@ export default function ModalComponent(props: Props) {
     };
 
     const prevModal = () => {
-        BoardService.getOneBoard(props.prevNo)
-        .then((data) => {
-            setNewData(data);
-            console.log("이전 글 제목 : "  + data.title);
-            setIsModalOpen(true);
-        })
-        .catch((error) => {
-            console.error(error);
-        })
+        showModal(props.prevNo);
     }
 
     const nextModal = () => {
-        BoardService.getOneBoard(props.nextNo)
+        showModal(props.nextNo);
+    }
+
+    const showModal = (No: number) => {
+        BoardService.getOneBoard(No)
         .then((data) => {
             setNewData(data);
-            console.log("다음 글 제목 : "  + data.title);
             setIsModalOpen(true);
         })
         .catch((error) => {
-            console.error(error);
+            alert("글이 존재하지 않습니다.");
         })
     }
 
