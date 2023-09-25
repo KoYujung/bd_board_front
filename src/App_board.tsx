@@ -7,6 +7,7 @@ import ReadBoardComponent from './components/ReadBoardComponent';
 import UpdateBoardComponent from './components/UpdateBoardComponent';
 import { Footer } from 'antd/es/layout/layout';
 import BoardHeaderComponent from './components/BoardHeaderComponent';
+import MainComponent from './components/MainComponent';
 
 export default function App_board() {
   return (
@@ -14,7 +15,7 @@ export default function App_board() {
     <BoardHeaderComponent />
     <div className='board_content'>
     <Routes>
-      <Route path='/' element={<ListBoardComponent />} />
+      <Route path='/' element={<MainComponent />} />
       <Route path='/board' element={<ListBoardComponent />} />
       <Route path='/search_board' element={<ListBoardComponent />} />
       <Route path='/create_board' element={<CreateBoardComponent />} />
