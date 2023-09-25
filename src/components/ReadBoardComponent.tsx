@@ -12,8 +12,6 @@ export default function ReadBoardComponent() {
     created_time: '' ,
   });
   const { no } = useParams();
-  console.log(typeof(no));
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,7 +56,7 @@ export default function ReadBoardComponent() {
     <Button className='MarginButton' onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
-    <ModalComponent title={board.title} contents={board.contents} />
+    <ModalComponent prevNo={Number(no) - 1} nextNo={Number(no) + 1}/>
     </>
   )
 }
