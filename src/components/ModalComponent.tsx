@@ -1,16 +1,14 @@
 import { Button, Modal } from 'antd'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 
 interface Props {
     title: string,
-    contents: string 
+    contents: string,
 }
 
 export default function ModalComponent(props: Props) {
     
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate();
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -21,9 +19,7 @@ export default function ModalComponent(props: Props) {
     const handleCancel = () => {
         setIsModalOpen(false);
     }
-
-    // console.log(props);
-
+    
     return (
         <>
         <Button className='MarginButton' type='primary' onClick={showModal}>이전 글</Button>

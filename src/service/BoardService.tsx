@@ -65,7 +65,19 @@ const BoardService = {
       console.error(error);
       throw error;
     }
-  }
+  },
+
+  // //이전 게시글 불러오기
+  // async prevBoard(no: any, board: any) {
+  //   try {
+  //     const res = await axios.get('/prev_board')
+
+  //   } catch(error) {
+  //     console.error(error);
+  //     throw error;
+  //   }
+  // }
 };
+
 
 export default BoardService;

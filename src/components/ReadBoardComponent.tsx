@@ -12,6 +12,8 @@ export default function ReadBoardComponent() {
     created_time: '' ,
   });
   const { no } = useParams();
+  console.log(typeof(no));
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,9 +58,7 @@ export default function ReadBoardComponent() {
     <Button className='MarginButton' onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
-    <ModalComponent title={board.title} contents={board.contents}/>
+    <ModalComponent title={board.title} contents={board.contents} />
     </>
   )
 }
-
-// typescript에서 props 전달할 때 타입 지정을 해줘야 함!

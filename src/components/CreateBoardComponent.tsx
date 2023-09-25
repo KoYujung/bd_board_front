@@ -28,7 +28,6 @@ export default function CreateBoardComponent() {
             contents : data.contents,
             member_id : data.member_id,
         };
-        console.log("new_board", JSON.stringify(new_board));
         BoardService.createBoard(new_board)
             .then(() => { navigate('/board') });
     };
