@@ -71,7 +71,11 @@ Footer {
   margin-right: 10px;
 }
 
-#createButton, #ListSelect,#ListInput {
+#deleteButton {
+  margin-left: 10px;
+}
+
+#createButton, #deleteButton, #ListSelect,#ListInput {
   float: left;
 }
 

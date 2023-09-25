@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Select, Table } from "antd";
+import { Button, Checkbox, Divider, Input, Radio, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
 import { setMember, setTitle } from '../modules/boardReducer';
@@ -16,6 +16,8 @@ interface DataType {
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
+    const [selectionType, setSelectionType] = useState<"checkbox" | "radio">("checkbox");
+    const [deleteNo, setDeleteNo] = useState<string | undefined>();
 
     const selected = useSelector((state: any) => (state).selected);
     const search_type = useSelector((state: any) => (state).search_type);
@@ -94,11 +96,38 @@ export default function ListBoardComponent() {
             key: "created_time"
         },
     ];
+
+    const deleteBoard = () => {
+        if(window.confirm("게시글을 삭제하시겠습니까? ")) {
+            BoardService.deleteBoard(deleteNo)
+              .then(res => {
+                console.log(JSON.stringify(res.status));
+                if(res != null) {
+                    window.location.replace("/");
+                } else alert("글 삭제를 실패하였습니다");
+              }) 
+          } 
+    }
+
+    const rowSelection = {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+            setDeleteNo(selectedRows[0].no);
+            console.log(
+                `selectedRowKeys: ${selectedRowKeys}`,
+                "selectedRows: ",
+                selectedRows
+            ); 
+        }
+      };
     
     return (
         <>
         <div id='createButton'>
-            <Button type="primary" onClick={createBoard} >글 작성</Button>
+            <Button onClick={createBoard} >글 작성</Button>
+        </div>
+
+        <div id='deleteButton'>
+            <Button danger onClick={deleteBoard} >글 삭제</Button>
         </div>
 
         <div id='selectButton' style={{ display: 'flex', alignItems: 'center' }}>
@@ -122,12 +151,23 @@ export default function ListBoardComponent() {
             />
             <Button style={{ margin: '0' }} id='ListSearch' onClick={searchBoard}>검색</Button>
         </div>
+
         <Table rowKey={(boards) => boards.no} columns={columns} dataSource={boards} 
         onRow={(record, rowIndex) => {
             return {
                 onClick : () => readBoard(record.no)
             }
-        }} style={{cursor: 'pointer'}}/>
+        }} rowSelection={{
+            type: selectionType,
+            ...rowSelection
+        }} 
+        style={{cursor: 'pointer'}}/>
+
+        <Radio.Group  onChange={({ target: { value } }) => {
+          setSelectionType(value);}} value={selectionType}>
+            <Radio value="checkbox">checkbox</Radio>
+            <Radio value="radio">radio</Radio>
+        </Radio.Group>
         </>
     )
 }

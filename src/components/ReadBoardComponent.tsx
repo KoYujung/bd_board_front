@@ -45,7 +45,7 @@ export default function ReadBoardComponent() {
           console.log(JSON.stringify(res.status));
           if(res != null) {
             navigate('/board');
-          } else alert("글 삭제 실패");
+          } else alert("글 삭제를 실패하였습니다");
         }) 
     } 
   }
