@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Divider, Input, Radio, Select, Table } from "antd";
+import { Button, Input, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
 import { setMember, setTitle } from '../modules/boardReducer';

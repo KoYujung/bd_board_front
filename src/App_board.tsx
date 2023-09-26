@@ -2,23 +2,20 @@ import React, { useState } from 'react';
 import './index.css';
 import './App.css';
 import { Layout, Menu, Button, theme } from 'antd';
-import ListBoardComponent from './components/ListBoardComponent';
+import ListBoardComponent from './pages/ListBoardComponent';
 import { Footer } from 'antd/es/layout/layout';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import MainComponent from './components/MainComponent';
-import CreateBoardComponent from './components/CreateBoardComponent';
-import UpdateBoardComponent from './components/UpdateBoardComponent';
-import ReadBoardComponent from './components/ReadBoardComponent';
+import MainComponent from './pages/MainComponent';
+import CreateBoardComponent from './pages/CreateBoardComponent';
+import UpdateBoardComponent from './pages/UpdateBoardComponent';
+import ReadBoardComponent from './pages/ReadBoardComponent';
 import {
     FormOutlined,
     HomeOutlined,
-    LoginOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     SmileOutlined,
   } from '@ant-design/icons';
-import LoginComponent from './components/LoginComponent';
-import RegisterComponent from './components/RegisterComponent';
 
 const { Header, Sider, Content } = Layout;
 
@@ -54,11 +51,6 @@ export default function App_menu() {
               icon: <FormOutlined />,
               label: '글 작성',
             },
-            {
-              key: '4',
-              icon: <LoginOutlined />,
-              label: '로그인',
-            },
           ]}
           onClick={({key}) => {
             switch(key) {
@@ -70,9 +62,6 @@ export default function App_menu() {
                     break;
                 case '3':
                     navigate('/create_board');
-                    break;
-                case '4':
-                    navigate('/login_board');
                     break;
             }
           }}
@@ -107,8 +96,6 @@ export default function App_menu() {
         <Route path='/create_board' element={<CreateBoardComponent />} />
         <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
         <Route path='/read_board/:no' element={<ReadBoardComponent />} />
-        <Route path='/login_board' element={<LoginComponent />} />
-        <Route path='/register_board' element={<RegisterComponent />} />
         </Routes>
         </div>
         </Content>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Descriptions, DescriptionsProps } from 'antd';
-import ModalComponent from './ModalComponent';
+import ModalComponent from '../components/ModalComponent';
 
 export default function ReadBoardComponent() {
   const [ board, setBoard] = useState({
