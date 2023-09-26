@@ -12,10 +12,12 @@ import ReadBoardComponent from './components/ReadBoardComponent';
 import {
     FormOutlined,
     HomeOutlined,
+    LoginOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     SmileOutlined,
   } from '@ant-design/icons';
+import LoginComponent from './components/LoginComponent';
 
 const { Header, Sider, Content } = Layout;
 
@@ -51,6 +53,11 @@ export default function App_menu() {
               icon: <FormOutlined />,
               label: '글 작성',
             },
+            {
+              key: '4',
+              icon: <LoginOutlined />,
+              label: '로그인',
+            },
           ]}
           onClick={({key}) => {
             switch(key) {
@@ -62,6 +69,9 @@ export default function App_menu() {
                     break;
                 case '3':
                     navigate('/create_board');
+                    break;
+                case '4':
+                    navigate('/login_board');
                     break;
             }
           }}
@@ -96,6 +106,7 @@ export default function App_menu() {
         <Route path='/create_board' element={<CreateBoardComponent />} />
         <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
         <Route path='/read_board/:no' element={<ReadBoardComponent />} />
+        <Route path='/login_board' element={<LoginComponent />} />
         </Routes>
         </div>
         </Content>

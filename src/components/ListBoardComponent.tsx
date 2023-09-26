@@ -36,10 +36,6 @@ export default function ListBoardComponent() {
             });
     }, []);
 
-    const createBoard = () => {
-        navigate('/create_board');
-    }
-
     const readBoard = (no: string) => {
         navigate(`/read_board/${no}`);
     }
@@ -122,11 +118,12 @@ export default function ListBoardComponent() {
     
     return (
         <>
-        <div id='createButton'>
-            <Button onClick={createBoard} >글 작성</Button>
-        </div>
-
         <div id='deleteButton'>
+            <Radio.Group  onChange={({ target: { value } }) => {
+            setSelectionType(value);}} value={selectionType}>
+                <Radio value="checkbox">checkbox</Radio>
+                <Radio value="radio">radio</Radio>
+            </Radio.Group>
             <Button danger onClick={deleteBoard} >글 삭제</Button>
         </div>
 
@@ -162,12 +159,6 @@ export default function ListBoardComponent() {
             ...rowSelection
         }} 
         style={{cursor: 'pointer'}}/>
-
-        <Radio.Group  onChange={({ target: { value } }) => {
-          setSelectionType(value);}} value={selectionType}>
-            <Radio value="checkbox">checkbox</Radio>
-            <Radio value="radio">radio</Radio>
-        </Radio.Group>
         </>
     )
 }
