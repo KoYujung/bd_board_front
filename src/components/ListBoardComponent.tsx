@@ -17,7 +17,7 @@ export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
     const [selectionType, setSelectionType] = useState<"checkbox" | "radio">("checkbox");
-    const [deleteNo, setDeleteNo] = useState<string | undefined>();
+    const [deleteNo, setDeleteNo] = useState<any>();
 
     const selected = useSelector((state: any) => (state).selected);
     const search_type = useSelector((state: any) => (state).search_type);
@@ -107,15 +107,10 @@ export default function ListBoardComponent() {
 
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-            setDeleteNo(selectedRows[0].no);
-            console.log(
-                `selectedRowKeys: ${selectedRowKeys}`,
-                "selectedRows: ",
-                selectedRows
-            ); 
+            setDeleteNo(selectedRowKeys);
         }
       };
-    
+    console.log(deleteNo);
     return (
         <>
         <div id='deleteButton'>

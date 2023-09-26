@@ -18,6 +18,7 @@ import {
     SmileOutlined,
   } from '@ant-design/icons';
 import LoginComponent from './components/LoginComponent';
+import RegisterComponent from './components/RegisterComponent';
 
 const { Header, Sider, Content } = Layout;
 
@@ -107,6 +108,7 @@ export default function App_menu() {
         <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
         <Route path='/read_board/:no' element={<ReadBoardComponent />} />
         <Route path='/login_board' element={<LoginComponent />} />
+        <Route path='/register_board' element={<RegisterComponent />} />
         </Routes>
         </div>
         </Content>
