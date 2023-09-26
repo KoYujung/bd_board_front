@@ -6,13 +6,13 @@ import CreateBoardComponent from './components/CreateBoardComponent';
 import ReadBoardComponent from './components/ReadBoardComponent';
 import UpdateBoardComponent from './components/UpdateBoardComponent';
 import { Footer } from 'antd/es/layout/layout';
-import BoardHeaderComponent from './components/BoardHeaderComponent';
+import HeaderComponent from './components/HeaderComponent';
 import MainComponent from './components/MainComponent';
 
 export default function App_board() {
   return (
     <div>
-    <BoardHeaderComponent />
+    <HeaderComponent />
     <div className='board_content'>
     <Routes>
       <Route path='/' element={<MainComponent />} />

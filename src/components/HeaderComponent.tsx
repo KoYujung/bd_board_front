@@ -33,7 +33,7 @@ export default function BoardHeaderComponent() {
   
   const items: MenuItem[] = [
     getItem('HOME', '1', <HomeOutlined />),
-    getItem('LOGIN', '2', <LoginOutlined  />),
+    getItem('BOARD', '2', <LoginOutlined  />),
   
     getItem('OTHERS', 'sub1', <SmileOutlined />, [
       getItem('Option 1', '3'),
@@ -42,39 +42,39 @@ export default function BoardHeaderComponent() {
   ];
 
   return (
-    <div>
-      <Header
-        style={{
-          position: 'sticky',
-          zIndex: 1,
-          display: 'flex',
-          fontSize : 20,
-          padding : 0
-        }}
-      >
-      <Button type="primary" onClick={toggleCollapsed} style={{ margin: 15 }}>
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
-      <a onClick={() => navigate('/')} style={{cursor: 'pointer', color: 'white', margin: 'auto'}}>게시판</a>
-      </Header>
+    <>
+    <Header
+      style={{
+        position: 'sticky',
+        zIndex: 1,
+        display: 'flex',
+        fontSize : 20,
+        padding : 0
+      }}
+    >
+    <Button type="primary" onClick={toggleCollapsed} style={{ margin: 15 }}>
+      {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+    </Button>
+    <a onClick={() => navigate('/')} style={{cursor: 'pointer', color: 'white', margin: 'auto'}}>게시판</a>
+    </Header>
 
-      <div style={{ width: 200 , height: "100%",}}>
-      <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
-        theme="dark"
-        inlineCollapsed={collapsed}
-        items={items}
-        onClick={({key}) => {
-          if(key === '1') {
-            navigate('/board');
-          } else if (key === '2') {
-            navigate('/create_board');
-          }
-        }}
-      />
+    <div style={{ width: 200 , height: "100%"}}>
+    <Menu
+      defaultSelectedKeys={['1']}
+      defaultOpenKeys={['sub1']}
+      mode="inline"
+      theme="dark"
+      inlineCollapsed={collapsed}
+      items={items}
+      onClick={({key}) => {
+        if(key === '1') {
+          navigate('/board');
+        } else if (key === '2') {
+          navigate('/create_board');
+        }
+      }}
+    />
     </div>
-    </div>
+    </>
   )
 }
