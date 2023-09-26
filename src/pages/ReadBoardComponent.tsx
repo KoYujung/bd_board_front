@@ -38,9 +38,9 @@ export default function ReadBoardComponent() {
     },
   ]
 
-  function deleteView() {
+  const deleteView = () => {
     if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-      BoardService.deleteBoard(no)
+      BoardService.changeUseYN(no)
         .then(res => {
           console.log(JSON.stringify(res.status));
           if(res != null) {
@@ -48,6 +48,13 @@ export default function ReadBoardComponent() {
           } else alert("글 삭제를 실패하였습니다");
         }) 
     } 
+  }
+
+  const checkYN = () => {
+    BoardService.getOneBoard(no)
+    .then(res => {
+      console.log(res);
+    })
   }
 
   return (
