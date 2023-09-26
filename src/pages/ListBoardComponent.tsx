@@ -95,13 +95,20 @@ export default function ListBoardComponent() {
 
     const deleteBoard = () => {
         if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-            BoardService.deleteBoard(deleteNo)
-              .then(res => {
-                console.log(JSON.stringify(res.status));
+            console.log("게시글 삭제 호출");
+            BoardService.changeUseYN(deleteNo)
+            .then(res => {
                 if(res != null) {
                     window.location.replace("/");
                 } else alert("글 삭제를 실패하였습니다");
-              }) 
+              })
+            // BoardService.deleteBoard(deleteNo)
+            //   .then(res => {
+            //     console.log(JSON.stringify(res.status));
+            //     if(res != null) {
+            //         window.location.replace("/");
+            //     } else alert("글 삭제를 실패하였습니다");
+            //   }) 
           } 
     }
 

@@ -45,6 +45,17 @@ const BoardService = {
     }
   },
 
+  //임시삭제 처리하기
+  async changeUseYN(no: any) {
+    try{
+      const res = await axios.post('/change_UseYN/' + no);
+      return res.data;
+    } catch(error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
   //글 삭제하기
   async deleteBoard(no : any) {
     try {
@@ -60,17 +71,6 @@ const BoardService = {
   async searchBoard(type: String, keyword: String) {
     try {
       const res = await axios.get('/search_board/' + type + '/' + keyword);
-      return res.data;
-    } catch(error) {
-      console.error(error);
-      throw error;
-    }
-  },
-
-  //회원정보 등록하기
-  async registerMember(board: any) {
-    try{
-      const res = await axios.post('/register_member', board);
       return res.data;
     } catch(error) {
       console.error(error);
