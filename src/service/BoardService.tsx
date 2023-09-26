@@ -65,6 +65,17 @@ const BoardService = {
       console.error(error);
       throw error;
     }
+  },
+
+  //회원정보 등록하기
+  async registerMember(board: any) {
+    try{
+      const res = await axios.post('/register_member', board);
+      return res.data;
+    } catch(error) {
+      console.error(error);
+      throw error;
+    }
   }
 };
 

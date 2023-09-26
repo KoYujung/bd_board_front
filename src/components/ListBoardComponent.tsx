@@ -16,7 +16,7 @@ interface DataType {
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
-    const [selectionType, setSelectionType] = useState<"checkbox" | "radio">("checkbox");
+    const [selectionType, setSelectionType] = useState<"checkbox">("checkbox");
     const [deleteNo, setDeleteNo] = useState<any>();
 
     const selected = useSelector((state: any) => (state).selected);
@@ -39,7 +39,7 @@ export default function ListBoardComponent() {
     const readBoard = (no: string) => {
         navigate(`/read_board/${no}`);
     }
-
+    
     const selectChange = (e : string) => {
         if(e === 'title') {
             disPath(setTitle(e));
@@ -110,15 +110,10 @@ export default function ListBoardComponent() {
             setDeleteNo(selectedRowKeys);
         }
       };
-    console.log(deleteNo);
+
     return (
         <>
         <div id='deleteButton'>
-            <Radio.Group  onChange={({ target: { value } }) => {
-            setSelectionType(value);}} value={selectionType}>
-                <Radio value="checkbox">checkbox</Radio>
-                <Radio value="radio">radio</Radio>
-            </Radio.Group>
             <Button danger onClick={deleteBoard} >글 삭제</Button>
         </div>
 
@@ -152,8 +147,7 @@ export default function ListBoardComponent() {
         }} rowSelection={{
             type: selectionType,
             ...rowSelection
-        }} 
-        style={{cursor: 'pointer'}}/>
+        }} style={{cursor: 'pointer'}}/>
         </>
     )
 }

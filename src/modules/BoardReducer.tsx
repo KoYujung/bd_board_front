@@ -36,8 +36,9 @@ const boardReducer = (state = initalState, action: any) => {
             };
         default:
             return { 
+                ...state,
                 selected: state.selected,
-                search_type: action.search_type 
+                search_type: state.search_type 
             }
     }
 }
