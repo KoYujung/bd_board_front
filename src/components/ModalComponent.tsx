@@ -1,10 +1,10 @@
+/* eslint-disable no-self-assign */
 import { Button, Modal } from 'antd'
 import { useState } from 'react'
 import BoardService from '../service/BoardService';
 
 interface Props {
-    prevNo: number,
-    nextNo: number
+    currentNo: number
 }
 
 export default function ModalComponent(props: Props) {
@@ -22,21 +22,55 @@ export default function ModalComponent(props: Props) {
         setIsModalOpen(false);
     };
     const prevModal = () => {
-        showModal(props.prevNo);
+        // checkYN(props.currentNo - 1);
+        PrecheckYN(props.currentNo - 1);
     };
     const nextModal = () => {
-        showModal(props.nextNo);
+        // checkYN(props.currentNo + 1);
+        NextcheckYN(props.currentNo + 1);
     };
-    const showModal = (No: number) => {
-        BoardService.getOneBoard(No)
-        .then((data) => {
+
+    // const checkYN = (num: any) => {
+    //     BoardService.getOneBoard(num)
+    //     .then(data => {
+    //         console.log(data);
+    //         data.useYN === 'Y' ? num = num : checkYN(num - 1);
+    //         setNewData(data);
+    //         setIsModalOpen(true);
+    //     })
+    //     .catch((error) => {
+    //         console.error(error);
+    //         alert("글이 존재하지 않습니다.");
+    //     })
+    // }
+    
+    const PrecheckYN = (num: any) => {
+        BoardService.getOneBoard(num)
+        .then(data => {
+            console.log(data);
+            data.useYN === 'Y' ? num = num : PrecheckYN(num - 1);
             setNewData(data);
             setIsModalOpen(true);
         })
         .catch((error) => {
+            console.error(error);
             alert("글이 존재하지 않습니다.");
         })
-    };
+    }
+    const NextcheckYN = (num: any) => {
+        BoardService.getOneBoard(num)
+        .then(data => {
+            console.log(data);
+            data.useYN === 'Y' ? num = num : NextcheckYN(num + 1);
+            setNewData(data);
+            setIsModalOpen(true);
+        })
+        .catch((error) => {
+            console.error(error);
+            alert("글이 존재하지 않습니다.");
+        })
+    }
+
 
     return (
         <>
@@ -49,3 +83,10 @@ export default function ModalComponent(props: Props) {
         </>
     )
 }
+
+/*
+useYN?
+Y -> 해당 번호의 게시글 내용 가져오기
+N -> 이전/다음 게시글 내용 가져오기 
+
+*/
