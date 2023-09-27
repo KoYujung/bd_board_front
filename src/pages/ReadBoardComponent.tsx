@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Descriptions, DescriptionsProps } from 'antd';
 import ModalComponent from '../components/ModalComponent';
-import { error } from 'console';
 
 export default function ReadBoardComponent() {
   const [ board, setBoard] = useState({
@@ -15,6 +14,9 @@ export default function ReadBoardComponent() {
 
   const { no } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // console.log(location.state);
 
   useEffect(() => {
     BoardService.getOneBoard(no)
@@ -58,8 +60,8 @@ export default function ReadBoardComponent() {
     <Button className='MarginButton' onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
-    {/* <ModalComponent prevNo={Number(no) - 1} nextNo={Number(no) + 1}/> */}
-    <ModalComponent currentNo={Number(no)}/>
+    {/* <ModalComponent currentNo={Number(no)} /> */}
+    <ModalComponent currentNo={location.state}/>
     </>
   )
 }

@@ -16,7 +16,6 @@ interface DataType {
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
-    const [selectionType, setSelectionType] = useState<"checkbox">("checkbox");
     const [deleteNo, setDeleteNo] = useState<any>();
 
     const selected = useSelector((state: any) => (state).selected);
@@ -36,8 +35,11 @@ export default function ListBoardComponent() {
             });
     }, []);
 
+    //props로 현재 no의 앞 뒤 값을 전달해주고(filter 처리?) ModalComponent에서는 props로 값이 보내지는 것을 확인할 수 있음 -> 기존에 작성한 것 처럼 PrecheckYN로 따로 나눠서 no 값을 전달할 필요가 X
     const readBoard = (no: string) => {
-        navigate(`/read_board/${no}`);
+        const newBoards = boards.filter( (data: any) => data);
+        console.log(newBoards);
+        // navigate(`/read_board/${no}`, {state : newBoards});
     }
     
     const selectChange = (e : string) => {
@@ -102,13 +104,6 @@ export default function ListBoardComponent() {
                     window.location.replace("/");
                 } else alert("글 삭제를 실패하였습니다");
               })
-            // BoardService.deleteBoard(deleteNo)
-            //   .then(res => {
-            //     console.log(JSON.stringify(res.status));
-            //     if(res != null) {
-            //         window.location.replace("/");
-            //     } else alert("글 삭제를 실패하였습니다");
-            //   }) 
           } 
     }
 
@@ -152,7 +147,7 @@ export default function ListBoardComponent() {
                 onClick : () => readBoard(record.no)
             }
         }} rowSelection={{
-            type: selectionType,
+            type: 'checkbox',
             ...rowSelection
         }} style={{cursor: 'pointer'}}/>
         </>

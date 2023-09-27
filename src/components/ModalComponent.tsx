@@ -22,27 +22,11 @@ export default function ModalComponent(props: Props) {
         setIsModalOpen(false);
     };
     const prevModal = () => {
-        // checkYN(props.currentNo - 1);
         PrecheckYN(props.currentNo - 1);
     };
     const nextModal = () => {
-        // checkYN(props.currentNo + 1);
         NextcheckYN(props.currentNo + 1);
     };
-
-    // const checkYN = (num: any) => {
-    //     BoardService.getOneBoard(num)
-    //     .then(data => {
-    //         console.log(data);
-    //         data.useYN === 'Y' ? num = num : checkYN(num - 1);
-    //         setNewData(data);
-    //         setIsModalOpen(true);
-    //     })
-    //     .catch((error) => {
-    //         console.error(error);
-    //         alert("글이 존재하지 않습니다.");
-    //     })
-    // }
     
     const PrecheckYN = (num: any) => {
         BoardService.getOneBoard(num)
@@ -57,6 +41,7 @@ export default function ModalComponent(props: Props) {
             alert("글이 존재하지 않습니다.");
         })
     }
+
     const NextcheckYN = (num: any) => {
         BoardService.getOneBoard(num)
         .then(data => {
@@ -70,7 +55,6 @@ export default function ModalComponent(props: Props) {
             alert("글이 존재하지 않습니다.");
         })
     }
-
 
     return (
         <>
