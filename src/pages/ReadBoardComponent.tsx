@@ -3,6 +3,7 @@ import BoardService from '../service/BoardService';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Descriptions, DescriptionsProps, Form, Input } from 'antd';
 import ModalComponent from '../components/ModalComponent';
+import { error } from 'console';
 
 export default function ReadBoardComponent() {
   const [ board, setBoard] = useState({
@@ -11,6 +12,7 @@ export default function ReadBoardComponent() {
     member_id: '',
     created_time: '' ,
   });
+  const [ comment, setComment ] = useState<string>('');
 
   const { no } = useParams();
   const navigate = useNavigate();
@@ -50,6 +52,19 @@ export default function ReadBoardComponent() {
         }) 
     } 
   }
+  
+  const InputComment = (e : React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+  }
+
+  const addComments = () => {
+    console.log(comment);
+    BoardService.addComment(no,comment)
+    .then(()=> navigate('/read_board/' + no))
+    .catch(error => {
+      console.error(error);
+    })
+  }
 
   return (
     <>
@@ -62,8 +77,9 @@ export default function ReadBoardComponent() {
     <h3 style={{marginTop: '60px'}}>댓글</h3>
 
     <Form style={{ display: 'flex', alignItems: 'center'}}>
-        <Input placeholder='댓글을 입력해주세요' style={{ width: '50%', height: '60px' ,marginRight: '10px'}}></Input>
-        <Button style={{height: '60px'}}>댓글 작성</Button>
+        <Input value={comment} onChange={InputComment} placeholder='댓글을 입력해주세요' 
+        style={{ width: '50%', height: '60px' ,marginRight: '10px'}}/>
+        <Button style={{height: '60px'}} onClick={addComments}>댓글 작성</Button>
     </Form>
     </>
   )

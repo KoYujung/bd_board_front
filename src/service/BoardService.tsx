@@ -82,6 +82,17 @@ const BoardService = {
       console.error(error);
       throw error;
     }
+  },
+
+  //댓글 작성하기
+  async addComment(no: any, comment: any) {
+    try{
+      const res = await axios.post('/add_comment/' + no, comment);
+      return res.data;
+    }catch(error) {
+      console.error(error);
+      throw error;
+    }
   }
 };
 
