@@ -3,13 +3,13 @@ const SET_TITLE = 'SET_TITLE';
 const SET_MEMBER = 'SET_MEMBER';
 
 //Action Create Function
-export const setTitle = (e: any) => ({
+export const setTitle = (e: string) => ({
     type: SET_TITLE,
     selected: '제목',
     search_type: 'title'
 });
 
-export const setMember = (e: any) => ({
+export const setMember = (e: string) => ({
     type:  SET_MEMBER,
     selected: '작성자',
     search_type: 'member_id'
@@ -21,8 +21,15 @@ const initalState = {
     search_type: 'title'
 };
 
+interface actionType {
+    type: string; 
+    selected: string; 
+    search_type: string;
+}
+
 // Reducer
-const boardReducer = (state = initalState, action: any) => {
+const boardReducer = (state = initalState, action: actionType) => {
+
     switch(action.type) {
         case SET_TITLE:
             return { 

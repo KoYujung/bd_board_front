@@ -17,15 +17,12 @@ export default function UpdateBoardComponent() {
     const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, title: event.target.value });
     };
-
     const changeContents = (event : React.ChangeEvent<HTMLTextAreaElement>) => {
         setData({ ...data, contents: event.target.value });
     };
-
     const changeMemberId = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, member_id: event.target.value });
     };
-
     const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         let new_board = {
@@ -33,7 +30,6 @@ export default function UpdateBoardComponent() {
             contents: data.contents,
             member_id: data.member_id,
         };
-        console.log("new_board", JSON.stringify(new_board));
         BoardService.updateBoard(no, new_board)
             .then(() => {
                 navigate('/read_board/' + no);
@@ -72,10 +68,8 @@ export default function UpdateBoardComponent() {
                     <Input value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}></Input>
                 </div>
             </form>
-            <div className='row'>
-                <Button className='MarginButton' onClick={updateBoard}>저장</Button>
-                <Button className='MarginButton' danger onClick={() => navigate(-1)}>취소</Button>
-            </div>
+            <Button className='MarginButton' onClick={updateBoard}>저장</Button>
+            <Button className='MarginButton' danger onClick={() => navigate(-1)}>취소</Button>
         </div>
     )
 }

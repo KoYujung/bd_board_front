@@ -21,9 +21,7 @@ const { Header, Sider, Content } = Layout;
 
 export default function App_menu() {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const {token: { colorBgContainer }} = theme.useToken();
   const navigate = useNavigate();
 
   return (
@@ -79,7 +77,7 @@ export default function App_menu() {
               height: 64,
             }}
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
-          /><a onClick={() => navigate('/')} style={{cursor: 'pointer', color: '##4774c9', fontSize: 20}}>게시판</a>
+          /><a onClick={() => navigate('/')} style={{cursor: 'pointer', color: '##4774c9', fontSize: 23}}>게시판</a>
         </Header>
         <Content 
           style={{

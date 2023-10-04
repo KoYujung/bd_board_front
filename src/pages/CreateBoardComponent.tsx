@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 
 export default function CreateBoardComponent() {
     const [data, setData] = useState({
@@ -28,17 +28,21 @@ export default function CreateBoardComponent() {
             contents : data.contents,
             member_id : data.member_id,
         };
-        BoardService.createBoard(new_board)
+        if(new_board.title === '') {
+            alert("제목을 입력해주세요");
+        } else {
+            BoardService.createBoard(new_board)
             .then(() => { navigate('/board') });
+        }
     };
     return (
         <div style={{marginRight: '70%'}}>
             <h2>글 작성</h2>
-            <form>
-                <div className='create_div'>
+            <Form>
+                <Form.Item className='create_div'>
                     <label>제목</label>
-                    <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle} style={{marginTop: '7px'}}></Input>
-                </div>
+                    <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onChange={changeTitle} style={{marginTop: '7px'}}></Input>
+                </Form.Item>
                 <div className='create_div'>
                     <label className='label'>내용</label>
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
@@ -47,7 +51,7 @@ export default function CreateBoardComponent() {
                     <label className='label'>작성자 번호</label>
                     <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}></Input>
                 </div>
-            </form>
+            </Form>
             <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>
             <Button className='MarginButton' onClick={() => {navigate(-1)}}>이전</Button>
         </div>

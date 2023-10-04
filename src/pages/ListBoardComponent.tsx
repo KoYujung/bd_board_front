@@ -30,25 +30,19 @@ export default function ListBoardComponent() {
                 setBoards(data);
             })
             .catch((error) => {
-                console.log("글 목록 api 호출 실패");
                 console.error(error);
             });
     }, []);
 
-    //props로 현재 no의 앞 뒤 값을 전달해주고(filter 처리?) ModalComponent에서는 props로 값이 보내지는 것을 확인할 수 있음 -> 기존에 작성한 것 처럼 PrecheckYN로 따로 나눠서 no 값을 전달할 필요가 X
     const readBoard = (no: string) => {
-        const newBoards = boards.filter( (data: any) => data);
-        console.log(newBoards);
-        navigate(`/read_board/${no}`, {state : newBoards});
+        navigate(`/read_board/${no}`);
     }
     
     const selectChange = (e : string) => {
         if(e === 'title') {
             disPath(setTitle(e));
-            console.log(disPath(setTitle(e)));
         } else {
             disPath(setMember(e));
-            console.log(disPath(setMember(e)));
         }
     }
 

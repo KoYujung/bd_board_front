@@ -14,9 +14,6 @@ export default function ReadBoardComponent() {
 
   const { no } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // console.log(location.state);
 
   useEffect(() => {
     BoardService.getOneBoard(no)
@@ -61,7 +58,6 @@ export default function ReadBoardComponent() {
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
     <ModalComponent currentNo={Number(no)} />
-    {/* <ModalComponent currentNo={location.state}/> */}
     </>
   )
 }
