@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Button, Descriptions, DescriptionsProps } from 'antd';
+import { Button, Descriptions, DescriptionsProps, Form, Input } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 
 export default function ReadBoardComponent() {
@@ -58,6 +58,13 @@ export default function ReadBoardComponent() {
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
     <ModalComponent currentNo={Number(no)} />
+
+    <h3 style={{marginTop: '60px'}}>댓글</h3>
+
+    <Form style={{ display: 'flex', alignItems: 'center'}}>
+        <Input placeholder='댓글을 입력해주세요' style={{ width: '50%', height: '60px' ,marginRight: '10px'}}></Input>
+        <Button style={{height: '60px'}}>댓글 작성</Button>
+    </Form>
     </>
   )
 }

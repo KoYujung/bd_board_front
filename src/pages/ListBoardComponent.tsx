@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setMember, setTitle } from '../modules/boardReducer';
 
 interface DataType {
-    no: string;
+    no: number;
     title: string;
     member_id: number;
     created_time: string;
@@ -16,7 +16,7 @@ interface DataType {
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
-    const [deleteNo, setDeleteNo] = useState<any>();
+    const [deleteNo, setDeleteNo] = useState<Object>([]);
 
     const selected = useSelector((state: any) => (state).selected);
     const search_type = useSelector((state: any) => (state).search_type);
@@ -34,7 +34,7 @@ export default function ListBoardComponent() {
             });
     }, []);
 
-    const readBoard = (no: string) => {
+    const readBoard = (no: number) => {
         navigate(`/read_board/${no}`);
     }
     
@@ -71,6 +71,7 @@ export default function ListBoardComponent() {
             title: "글 번호",
             dataIndex: "no",
             key: "no",
+            sorter: (a,b) => a.no - b.no
         },
         {
             title: "제목",
@@ -91,13 +92,15 @@ export default function ListBoardComponent() {
 
     const deleteBoard = () => {
         if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-            console.log("게시글 삭제 호출");
-            BoardService.changeUseYN(deleteNo)
-            .then(res => {
-                if(res != null) {
-                    window.location.replace("/");
-                } else alert("글 삭제를 실패하였습니다");
-              })
+            console.log("선택된 번호 : ", deleteNo);
+            console.log(typeof(deleteNo));
+            // BoardService.changeUseYN(deleteNo)
+            // .then(res => {
+            //     if(res != null) {
+            //         navigate('/board');
+            //         // window.location.replace("/board");
+            //     } else alert("글 삭제를 실패하였습니다");
+            //   })
           } 
     }
 
@@ -105,7 +108,7 @@ export default function ListBoardComponent() {
         onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
             setDeleteNo(selectedRowKeys);
         }
-      };
+    };
 
     return (
         <>
