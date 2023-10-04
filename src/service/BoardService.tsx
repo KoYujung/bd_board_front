@@ -85,15 +85,24 @@ const BoardService = {
   },
 
   //댓글 작성하기
-  async addComment(no: any, comment: any) {
-    try{
-      const res = await axios.post('/add_comment/' + no, comment);
+  async addComment(no: string | undefined, comment: string) {
+    try {
+      const res = await axios.post(
+        `/add_comment/${no}`,
+        { comment },
+        {
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+        }
+      );
       return res.data;
-    }catch(error) {
+    } catch (error) {
       console.error(error);
       throw error;
     }
   }
+  
 };
 
 export default BoardService;
