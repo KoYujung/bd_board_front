@@ -60,8 +60,8 @@ export default function ReadBoardComponent() {
     <Button className='MarginButton' onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
-    {/* <ModalComponent currentNo={Number(no)} /> */}
-    <ModalComponent currentNo={location.state}/>
+    <ModalComponent currentNo={Number(no)} />
+    {/* <ModalComponent currentNo={location.state}/> */}
     </>
   )
 }

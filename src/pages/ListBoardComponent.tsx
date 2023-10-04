@@ -39,7 +39,7 @@ export default function ListBoardComponent() {
     const readBoard = (no: string) => {
         const newBoards = boards.filter( (data: any) => data);
         console.log(newBoards);
-        // navigate(`/read_board/${no}`, {state : newBoards});
+        navigate(`/read_board/${no}`, {state : newBoards});
     }
     
     const selectChange = (e : string) => {

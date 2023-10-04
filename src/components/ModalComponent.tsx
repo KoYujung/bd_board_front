@@ -22,37 +22,27 @@ export default function ModalComponent(props: Props) {
         setIsModalOpen(false);
     };
     const prevModal = () => {
-        PrecheckYN(props.currentNo - 1);
+        checkYN(props.currentNo, 'prev');
     };
     const nextModal = () => {
-        NextcheckYN(props.currentNo + 1);
+        checkYN(props.currentNo, 'next');
     };
-    
-    const PrecheckYN = (num: any) => {
-        BoardService.getOneBoard(num)
-        .then(data => {
-            console.log(data);
-            data.useYN === 'Y' ? num = num : PrecheckYN(num - 1);
-            setNewData(data);
-            setIsModalOpen(true);
-        })
-        .catch((error) => {
-            console.error(error);
-            alert("글이 존재하지 않습니다.");
-        })
-    }
 
-    const NextcheckYN = (num: any) => {
-        BoardService.getOneBoard(num)
+    const checkYN = (num: any, direction: string) => {
+        let newNum = direction === 'prev' ? num - 1 : num + 1;
+
+        BoardService.getOneBoard(newNum)
         .then(data => {
-            console.log(data);
-            data.useYN === 'Y' ? num = num : NextcheckYN(num + 1);
-            setNewData(data);
-            setIsModalOpen(true);
+            if(data.useYN === 'Y') {
+                setNewData(data);
+                setIsModalOpen(true);
+            } else {
+                checkYN(newNum, direction);
+            }
         })
         .catch((error) => {
-            console.error(error);
-            alert("글이 존재하지 않습니다.");
+            console.log(error);
+            alert("글이 존재하지 않습니다");
         })
     }
 
@@ -67,10 +57,3 @@ export default function ModalComponent(props: Props) {
         </>
     )
 }
-
-/*
-useYN?
-Y -> 해당 번호의 게시글 내용 가져오기
-N -> 이전/다음 게시글 내용 가져오기 
-
-*/
