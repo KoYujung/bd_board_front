@@ -85,17 +85,9 @@ const BoardService = {
   },
 
   //댓글 작성하기
-  async addComment(no: string | undefined, comment: string) {
+  async addComment(no: string | undefined, c_contents: string) {
     try {
-      const res = await axios.post(
-        `/add_comment/${no}`,
-        { comment },
-        {
-          headers: {
-            'Content-Type': 'application/json', 
-          },
-        }
-      );
+      const res = await axios.post('/add_comment/' + no, { c_contents });
       return res.data;
     } catch (error) {
       console.error(error);

@@ -3,9 +3,8 @@ import BoardService from '../service/BoardService';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Descriptions, DescriptionsProps, Form, Input } from 'antd';
 import ModalComponent from '../components/ModalComponent';
-import { error } from 'console';
 
-export default function ReadBoardComponent() {
+export default function ReadBoardComponent(props: any)  {
   const [ board, setBoard] = useState({
     title: '',
     contents: '',
@@ -16,6 +15,9 @@ export default function ReadBoardComponent() {
 
   const { no } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location.state);
 
   useEffect(() => {
     BoardService.getOneBoard(no)
@@ -73,6 +75,7 @@ export default function ReadBoardComponent() {
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
     <ModalComponent currentNo={Number(no)} />
+    {/* <ModalComponent currentNo={Number(no)} /> */}
 
     <h3 style={{marginTop: '60px'}}>댓글</h3>
 

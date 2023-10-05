@@ -34,10 +34,10 @@ export default function ListBoardComponent() {
             });
     }, []);
 
-    const readBoard = (no: number) => {
-        navigate(`/read_board/${no}`);
+    const readBoard = (no: number, prevNo?: number, nextNo?: number) => {
+        navigate(`/read_board/${no}`, {state: {prevNo, nextNo}});
     }
-    
+  
     const selectChange = (e : string) => {
         if(e === 'title') {
             disPath(setTitle(e));
@@ -93,14 +93,12 @@ export default function ListBoardComponent() {
     const deleteBoard = () => {
         if(window.confirm("게시글을 삭제하시겠습니까? ")) {
             console.log("선택된 번호 : ", deleteNo);
-            console.log(typeof(deleteNo));
-            // BoardService.changeUseYN(deleteNo)
-            // .then(res => {
-            //     if(res != null) {
-            //         navigate('/board');
-            //         // window.location.replace("/board");
-            //     } else alert("글 삭제를 실패하였습니다");
-            //   })
+            BoardService.changeUseYN(deleteNo)
+            .then(res => {
+                if(res != null) {
+                    window.location.replace("/board");
+                } else alert("글 삭제를 실패하였습니다");
+              })
           } 
     }
 
@@ -141,7 +139,12 @@ export default function ListBoardComponent() {
         <Table rowKey={(boards) => boards.no} columns={columns} dataSource={boards} 
         onRow={(record, rowIndex) => {
             return {
-                onClick : () => readBoard(record.no)
+                onClick : () => {
+                    console.log(record);
+                    const prevNo = Number(rowIndex) - 1;
+                    const nextNo = Number(rowIndex) + 1;
+                    readBoard(record.no, prevNo, nextNo);
+                }
             }
         }} rowSelection={{
             type: 'checkbox',
