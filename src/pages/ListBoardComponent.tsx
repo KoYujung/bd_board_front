@@ -141,8 +141,8 @@ export default function ListBoardComponent() {
             return {
                 onClick : () => {
                     console.log(record);
-                    const prevNo = Number(rowIndex) - 1;
-                    const nextNo = Number(rowIndex) + 1;
+                    const prevNo = Number(record.no) - 1;
+                    const nextNo = Number(record.no) + 1;
                     readBoard(record.no, prevNo, nextNo);
                 }
             }

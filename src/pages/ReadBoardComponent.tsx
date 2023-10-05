@@ -12,16 +12,25 @@ export default function ReadBoardComponent(props: any)  {
     created_time: '' ,
   });
   const [ comment, setComment ] = useState<string>('');
+  const [ comList, setComList ] = useState<string>();
 
   const { no } = useParams();
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
+
+  // console.log(location.state);
 
   useEffect(() => {
     BoardService.getOneBoard(no)
       .then((data) => {
         setBoard(data);
-      })
+      });
+    
+    // BoardService.getComment(no)
+    //   .then((data) => {
+    //     setComList(data);
+    //   });
+    
   }, [no]);
 
   const items: DescriptionsProps['items'] = [
@@ -63,7 +72,10 @@ export default function ReadBoardComponent(props: any)  {
       alert("내용을 입력해주세요");
     } else {
       BoardService.addComment(no,comment)
-      .then(()=> navigate('/read_board/' + no))
+      .then(() => {
+        window.location.replace('/read_board/' + no);
+        setComList(comment);
+      })
       .catch(error => {
         console.error(error);
       });
@@ -76,8 +88,8 @@ export default function ReadBoardComponent(props: any)  {
     <Button className='MarginButton' onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
-    <ModalComponent currentNo={Number(no)} />
-    {/* <ModalComponent prevNo={location.state.prevNo} nextNo={location.state.nextNo} /> */}
+    {/* <ModalComponent currentNo={Number(no)} /> */}
+    <ModalComponent prevNo={location.state.prevNo} nextNo={location.state.nextNo} />
 
     <h3 style={{marginTop: '60px'}}>댓글</h3>
 
@@ -87,7 +99,7 @@ export default function ReadBoardComponent(props: any)  {
         <Button style={{height: '60px'}} onClick={addComments}>댓글 작성</Button>
     </Form>
     <h3>댓글 목록</h3>
-    
+    <p>{comList}</p>
     </>
   )
 }
