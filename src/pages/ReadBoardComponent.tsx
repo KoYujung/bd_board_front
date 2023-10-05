@@ -15,9 +15,7 @@ export default function ReadBoardComponent(props: any)  {
 
   const { no } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  console.log(location.state);
+  // const location = useLocation();
 
   useEffect(() => {
     BoardService.getOneBoard(no)
@@ -61,11 +59,15 @@ export default function ReadBoardComponent(props: any)  {
 
   const addComments = () => {
     console.log(comment);
-    BoardService.addComment(no,comment)
-    .then(()=> navigate('/read_board/' + no))
-    .catch(error => {
-      console.error(error);
-    })
+    if(comment === '') {
+      alert("내용을 입력해주세요");
+    } else {
+      BoardService.addComment(no,comment)
+      .then(()=> navigate('/read_board/' + no))
+      .catch(error => {
+        console.error(error);
+      });
+    }
   }
 
   return (
@@ -75,15 +77,17 @@ export default function ReadBoardComponent(props: any)  {
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
     <Descriptions bordered items={items}/>
     <ModalComponent currentNo={Number(no)} />
-    {/* <ModalComponent currentNo={Number(no)} /> */}
+    {/* <ModalComponent prevNo={location.state.prevNo} nextNo={location.state.nextNo} /> */}
 
     <h3 style={{marginTop: '60px'}}>댓글</h3>
 
-    <Form style={{ display: 'flex', alignItems: 'center'}}>
+    <Form style={{ display: 'flex', alignItems: 'center', marginBottom: '40px'}}>
         <Input value={comment} onChange={InputComment} placeholder='댓글을 입력해주세요' 
-        style={{ width: '50%', height: '60px' ,marginRight: '10px'}}/>
+        style={{ width: '40%', height: '60px', marginRight: '10px'}}/>
         <Button style={{height: '60px'}} onClick={addComments}>댓글 작성</Button>
     </Form>
+    <h3>댓글 목록</h3>
+    
     </>
   )
 }

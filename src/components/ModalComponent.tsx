@@ -7,6 +7,8 @@ import Input from 'antd/es/input/Input';
 import TextArea from 'antd/es/input/TextArea';
 
 interface Props {
+    prevNo?: number,
+    nextNo?: number,
     currentNo: number
 }
 
@@ -28,11 +30,25 @@ export default function ModalComponent(props: Props) {
         setIsModalOpen(false);
     };
     const prevModal = () => {
+        // checkYN(props.prevNo);
         checkYN(props.currentNo, 'prev');
     };
     const nextModal = () => {
+        // checkYN(props.nextNo);
         checkYN(props.currentNo, 'next');
     };
+
+    // const checkYN = (num: any) => {
+    //     BoardService.getOneBoard(num)
+    //     .then(data => {
+    //         setNewData(data);
+    //         setIsModalOpen(true);
+    //         setNewNum(num);
+    //     })
+    //     .catch(()=>{
+    //         alert("글이 존재하지 않습니다.");
+    //     })
+    // }
 
     const checkYN = (num: any, direction: string) => {
         let newNum = direction === 'prev' ? num - 1 : num + 1;
@@ -61,7 +77,6 @@ export default function ModalComponent(props: Props) {
 
         <Button className='MarginButton' type='primary' onClick={prevModal}>이전 글</Button>
         <Button className='MarginButton' type='primary' onClick={nextModal}>다음 글</Button>
-
         </>
     )
 }
