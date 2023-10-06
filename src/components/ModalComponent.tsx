@@ -22,7 +22,7 @@ export default function ModalComponent(props: Props) {
 
     const handleOk = (num: any) => {
         setIsModalOpen(false);
-        navigate('/read_board/' + newNumber);
+        // navigate('/read_board/' + newNumber);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -46,9 +46,7 @@ export default function ModalComponent(props: Props) {
         .catch(()=>{
             alert("글이 존재하지 않습니다.");
         })
-    }
-
-    console.log(newNumber);
+    };
 
     // const checkYN = (num: any, direction: string) => {
     //     let newNum = direction === 'prev' ? num - 1 : num + 1;

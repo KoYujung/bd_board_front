@@ -4,21 +4,29 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Descriptions, DescriptionsProps, Form, Input } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 
-export default function ReadBoardComponent(props: any)  {
+interface commentType{
+  cno: number,
+  bno: number,
+  c_created_time: Date,
+  c_contents: string
+}
+
+export default function ReadBoardComponent()  {
   const [ board, setBoard] = useState({
     title: '',
     contents: '',
     member_id: '',
     created_time: '' ,
   });
-  const [ comment, setComment ] = useState<string>('');
-  const [ comList, setComList ] = useState<string>();
+  const [ comment, setComment ] = useState<any>('');
+  const [ comList, setComList ] = useState<commentType>();
 
   const { no } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
   // console.log(location.state);
+  console.log(comList);
 
   useEffect(() => {
     BoardService.getOneBoard(no)
@@ -26,10 +34,10 @@ export default function ReadBoardComponent(props: any)  {
         setBoard(data);
       });
     
-    // BoardService.getComment(no)
-    //   .then((data) => {
-    //     setComList(data);
-    //   });
+    BoardService.getComment(no)
+      .then((data) => {
+        setComList(data);
+      });
     
   }, [no]);
 
@@ -99,7 +107,7 @@ export default function ReadBoardComponent(props: any)  {
         <Button style={{height: '60px'}} onClick={addComments}>댓글 작성</Button>
     </Form>
     <h3>댓글 목록</h3>
-    <p>{comList}</p>
+    <p></p>
     </>
   )
 }

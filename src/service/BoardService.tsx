@@ -97,10 +97,10 @@ const BoardService = {
   },
 
   //댓글 가져오기
-  async getComment(no: string | undefined) {
+  async getComment(bno: string | undefined) {
+    // console.log(comment);
     try {
-      const res = await axios.post('/get_comment/' + no);
-      
+      const res = await axios.get('/get_comment/' + bno);
       return res.data;
     } catch (error) {
       console.error(error);
