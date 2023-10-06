@@ -92,7 +92,6 @@ export default function ListBoardComponent() {
 
     const deleteBoard = () => {
         if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-            console.log("선택된 번호 : ", deleteNo);
             BoardService.changeUseYN(deleteNo)
             .then(res => {
                 if(res != null) {
@@ -137,7 +136,7 @@ export default function ListBoardComponent() {
         </div>
 
         <Table rowKey={(boards) => boards.no} columns={columns} dataSource={boards} 
-        onRow={(record, rowIndex) => {
+        onRow={(record) => {
             return {
                 onClick : () => {
                     console.log(record);

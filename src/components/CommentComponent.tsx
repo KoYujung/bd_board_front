@@ -20,7 +20,6 @@ export default function CommentComponent() {
     useEffect(() => {        
         BoardService.getComment(no)
           .then((data) => {
-            console.log(data)
             setComList(data);
           });
     }, [no]);
@@ -47,13 +46,11 @@ export default function CommentComponent() {
     return (
         <>
         <h3 style={{marginTop: '60px'}}>댓글</h3>
-
-        <Form style={{ display: 'flex', alignItems: 'center', marginBottom: '50px'}}>
+        <Form style={{ display: 'flex', alignItems: 'center', marginBottom: '30px'}}>
             <Input value={comment} onChange={InputComment} placeholder='댓글을 입력해주세요' 
             style={{ width: '40%', height: '60px', marginRight: '10px'}}/>
             <Button style={{height: '60px'}} onClick={addComments}>댓글 작성</Button>
         </Form>
-        <h3>댓글 목록</h3>
         <List
             itemLayout="horizontal"
             dataSource={comList}
@@ -61,8 +58,8 @@ export default function CommentComponent() {
                 <List.Item>
                     <List.Item.Meta 
                     avatar= {<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-                    title={comList?.c_contents}
-                    description={comList?.c_created_time}
+                    title={comList.c_contents}
+                    description={comList.c_created_time}
                     />
                 </List.Item>
             )}
