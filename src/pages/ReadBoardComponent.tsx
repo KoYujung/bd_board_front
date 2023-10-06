@@ -17,9 +17,6 @@ export default function ReadBoardComponent()  {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // console.log(location.state);
-  // console.log(comList);
-
   useEffect(() => {
     BoardService.getOneBoard(no)
       .then((data) => {
