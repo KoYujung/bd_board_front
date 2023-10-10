@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Select, Table } from "antd";
+import { Button, Input, Pagination, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
 import { setMember, setTitle } from '../modules/boardReducer';
@@ -135,7 +135,7 @@ export default function ListBoardComponent() {
             <Button style={{ margin: '0' }} id='ListSearch' onClick={searchBoard}>검색</Button>
         </div>
 
-        <Table rowKey={(boards) => boards.no} columns={columns} dataSource={boards} 
+        <Table rowKey={(boards) => boards.no} columns={columns} dataSource={boards}
         onRow={(record) => {
             return {
                 onClick : () => {
@@ -148,7 +148,13 @@ export default function ListBoardComponent() {
         }} rowSelection={{
             type: 'checkbox',
             ...rowSelection
-        }} style={{cursor: 'pointer'}}/>
+        }} style={{cursor: 'pointer'}}
+
+        pagination={{
+            defaultPageSize: 7,
+            defaultCurrent: 1,
+        }}
+        />
         </>
     )
 }
