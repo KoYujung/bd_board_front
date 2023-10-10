@@ -20,7 +20,7 @@ export default function ModalComponent(props: Props) {
     const [newNumber, setNewNum] = useState();
     const navigate = useNavigate();
 
-    const handleOk = (num: any) => {
+    const handleOk = () => {
         setIsModalOpen(false);
         navigate('/read_board/' + newNumber);
     };
@@ -70,7 +70,7 @@ export default function ModalComponent(props: Props) {
 
     return (
         <>
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} cancelText={"닫기"} okText={"이동"}>
             <h2>{newData.title}</h2>
             <p>{newData.contents}</p>
         </Modal>

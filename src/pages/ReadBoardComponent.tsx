@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Button, Descriptions, DescriptionsProps, Form, Input } from 'antd';
+import { Button, Descriptions, DescriptionsProps } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 import CommentComponent from '../components/CommentComponent';
 
@@ -15,7 +15,7 @@ export default function ReadBoardComponent()  {
 
   const { no } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
     BoardService.getOneBoard(no)
@@ -61,7 +61,7 @@ export default function ReadBoardComponent()  {
     <Descriptions bordered items={items}/>
     {/* <ModalComponent prevNo={location.state.prevNo} nextNo={location.state.nextNo} /> */}
     <ModalComponent currentNo={Number(no)} />
-    <CommentComponent />
+    <CommentComponent currentNo={Number(no)}/>
     </>
   )
 }

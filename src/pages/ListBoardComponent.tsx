@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Pagination, Select, Table } from "antd";
+import { Button, Input, Select, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
-import { setMember, setTitle } from '../modules/boardReducer';
+import { setContent, setMember, setTitle } from '../modules/boardReducer';
 
 interface DataType {
     no: number;
     title: string;
     member_id: number;
     created_time: string;
+    content: string;
 }
 
 export default function ListBoardComponent() {
@@ -41,8 +42,10 @@ export default function ListBoardComponent() {
     const selectChange = (e : string) => {
         if(e === 'title') {
             disPath(setTitle(e));
-        } else {
+        } else if(e === 'member_id') {
             disPath(setMember(e));
+        } else {
+            disPath(setContent(e));
         }
     }
 
@@ -122,7 +125,8 @@ export default function ListBoardComponent() {
                 value={selected}
                 options={[
                     { value: 'title', label: '제목' },
-                    { value: 'member_id', label: '작성자' }
+                    { value: 'member_id', label: '작성자' },
+                    { value: 'content', label: '내용' }
                 ]}
             />
             <Input

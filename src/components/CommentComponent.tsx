@@ -1,28 +1,24 @@
 import { Avatar, Button, Form, Input, List } from 'antd'
 import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
-import { useParams } from 'react-router-dom';
 
 interface commentType{
-    cno: number,
-    bno: number,
-    c_created_time: string,
-    c_contents: string
-  }
+    currentNo: number,
+    c_created_time?: string,
+    c_contents?: string
+  };
 
-export default function CommentComponent() {
+export default function CommentComponent(props: commentType) {
 
     const [ comment, setComment ] = useState<any>('');
     const [ comList, setComList ] = useState<Array<commentType>>();
 
-    const { no } = useParams();
-
     useEffect(() => {        
-        BoardService.getComment(no)
+        BoardService.getComment(props.currentNo)
           .then((data) => {
             setComList(data);
           });
-    }, [no]);
+    }, [props.currentNo]);
 
     const InputComment = (e : React.ChangeEvent<HTMLInputElement>) => {
         setComment(e.target.value);
@@ -32,9 +28,9 @@ export default function CommentComponent() {
         if(comment === '') {
             alert("내용을 입력해주세요");
         } else {
-            BoardService.addComment(no,comment)
+            BoardService.addComment(props.currentNo,comment)
                 .then(() => {
-                window.location.replace('/read_board/' + no);
+                window.location.replace('/read_board/' + props.currentNo);
                 setComList(comment);
                 })
                 .catch(error => {
