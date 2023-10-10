@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Descriptions, DescriptionsProps } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 import CommentComponent from '../components/CommentComponent';
@@ -18,7 +18,7 @@ export default function ReadBoardComponent()  {
   // const location = useLocation();
 
   useEffect(() => {
-    BoardService.getOneBoard(no)
+    BoardService.getOneBoard(Number(no))
       .then((data) => {
         setBoard(data);
       });
@@ -43,7 +43,7 @@ export default function ReadBoardComponent()  {
 
   const deleteView = () => {
     if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-      BoardService.changeUseYN(no)
+      BoardService.changeUseYN(Number(no))
         .then(res => {
           console.log(JSON.stringify(res.status));
           if(res != null) {

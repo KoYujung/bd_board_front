@@ -95,7 +95,7 @@ export default function ListBoardComponent() {
 
     const deleteBoard = () => {
         if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-            BoardService.changeUseYN(deleteNo)
+            BoardService.changeUseYN(Number(deleteNo))
             .then(res => {
                 if(res != null) {
                     window.location.replace("/board");

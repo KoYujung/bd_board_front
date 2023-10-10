@@ -3,8 +3,16 @@ import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, Form, Input } from 'antd';
+import UpModalComponent from '../components/UpModalComponent';
 
-export default function CreateBoardComponent() {
+interface Props {
+    Update?: any
+}
+
+export default function CreateBoardComponent(props: Props) {
+
+    console.log(props.Update);
+    
     const [data, setData] = useState({
         title: '',
         contents: '',
@@ -35,9 +43,10 @@ export default function CreateBoardComponent() {
             .then(() => { navigate('/board') });
         }
     };
+
     return (
         <div style={{marginRight: '70%'}}>
-            <h2>글 작성</h2>
+            <UpModalComponent />
             <Form>
                 <Form.Item className='create_div'>
                     <label>제목</label>

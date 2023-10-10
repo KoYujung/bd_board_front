@@ -30,7 +30,7 @@ const BoardService = {
   },
 
   //글 상세보기
-  async getOneBoard(no : string | undefined) {
+  async getOneBoard(no : number) {
     try {
       const res = await axios.get('/read_board/' + no);
       return res.data;
@@ -41,7 +41,7 @@ const BoardService = {
   },
 
   //글 수정하기
-  async updateBoard(no : string | undefined, board : BoardType) {
+  async updateBoard(no : number, board : BoardType) {
     try {
       const res = await axios.put('/update_board/' + no, board);
       return res.data;
@@ -52,7 +52,7 @@ const BoardService = {
   },
 
   //임시삭제 처리하기
-  async changeUseYN(no: any) {
+  async changeUseYN(no: number) {
     try{
       const res = await axios.put('/change_UseYN', no);
       return res.data;
@@ -63,7 +63,7 @@ const BoardService = {
   },
 
   //글 삭제하기
-  async deleteBoard(no : Number) {
+  async deleteBoard(no : number) {
     try {
       const res = await axios.delete('/delete_board/' + no);
       return res.data;
@@ -74,7 +74,7 @@ const BoardService = {
   },
 
   //글 검색하기
-  async searchBoard(type: String, keyword: String) {
+  async searchBoard(type: string, keyword: string) {
     try {
       const res = await axios.get('/search_board/' + type + '/' + keyword);
       return res.data;

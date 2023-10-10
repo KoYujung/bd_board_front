@@ -30,14 +30,14 @@ export default function UpdateBoardComponent() {
             contents: data.contents,
             member_id: data.member_id,
         };
-        BoardService.updateBoard(no, new_board)
+        BoardService.updateBoard(Number(no), new_board)
             .then(() => {
                 navigate('/read_board/' + no);
             });
     };
 
     useEffect(() => {
-        BoardService.getOneBoard(no)
+        BoardService.getOneBoard(Number(no))
             .then((res) => {
                 console.log(res);
                 setData({
