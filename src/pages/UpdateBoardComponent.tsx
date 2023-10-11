@@ -68,7 +68,7 @@ export default function UpdateBoardComponent() {
                     <Input value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}></Input>
                 </div>
             </form>
-            <Button className='MarginButton' onClick={updateBoard}>저장</Button>
+            <Button className='MarginButton' onClick={updateBoard}>완료</Button>
             <Button className='MarginButton' danger onClick={() => navigate(-1)}>취소</Button>
         </div>
     )
