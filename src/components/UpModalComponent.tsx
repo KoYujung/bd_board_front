@@ -10,8 +10,10 @@ interface boardType {
 }
 
 interface Props {
-    newNo: any,
-    setNewNo: any,
+    newNo: number,
+    setNewNo: Function,
+    showNo: number
+    setShowNo: Function,
 }
 
 export default function UpModalComponent(props: Props) {
@@ -23,15 +25,13 @@ export default function UpModalComponent(props: Props) {
         setModal(true);
     };
     const Ok = () => {
+        props.setNewNo(props.showNo);
         setModal(false);
     };
     const Cancel = () => {
         props.setNewNo(0);
-        // console.log(props.newNo);
         setModal(false);
     };
-
-    console.log(props.newNo);
 
     useEffect(() => {
         BoardService.getBoards()
@@ -46,7 +46,7 @@ export default function UpModalComponent(props: Props) {
     const radioChange = (e: RadioChangeEvent) => {
         const updateNumber  = boards?.map(i => i.no)[e.target.value];
         setValue(e.target.value);
-        props.setNewNo(updateNumber);
+        props.setShowNo(updateNumber);
     }
     
     return (

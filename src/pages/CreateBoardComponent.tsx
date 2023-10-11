@@ -5,14 +5,10 @@ import TextArea from 'antd/es/input/TextArea';
 import { Button, Form, Input } from 'antd';
 import UpModalComponent from '../components/UpModalComponent';
 
-interface Props {
-    newNo?: any,
-    setNewNo?: any,
-}
-
-export default function CreateBoardComponent(props: Props) {
+export default function CreateBoardComponent() {
 
     const [newNo, setNewNo] = useState(0);   
+    const [showNo, setShowNo] = useState(0);   
     const [data, setData] = useState({
         title: '',
         contents: '',
@@ -100,7 +96,7 @@ export default function CreateBoardComponent(props: Props) {
         </Form>
         <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>
         <UpModalComponent 
-        newNo={newNo} setNewNo={setNewNo}
+        newNo={newNo} setNewNo={setNewNo} showNo={showNo} setShowNo={setShowNo}
         />
         </div>
         {/* 컴포넌트에 useState 값과 함수 2개를 넘겨주고 받아오는 형식으로 해야함  게시글 번호 : newNo*/}
