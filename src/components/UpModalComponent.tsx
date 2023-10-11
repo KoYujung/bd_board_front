@@ -26,8 +26,12 @@ export default function UpModalComponent(props: Props) {
         setModal(false);
     };
     const Cancel = () => {
+        props.setNewNo(0);
+        // console.log(props.newNo);
         setModal(false);
     };
+
+    console.log(props.newNo);
 
     useEffect(() => {
         BoardService.getBoards()
@@ -47,7 +51,7 @@ export default function UpModalComponent(props: Props) {
     
     return (
         <>
-        <Modal open={ModalOpen} onOk={Ok} onCancel={Cancel} cancelText={"닫기"} okText={"선택"} width={700} closeIcon={false}>
+        <Modal open={ModalOpen} onOk={Ok} onCancel={Cancel} cancelText={"취소"} okText={"선택"} width={700} closeIcon={false}>
             {/* 작성된 글 목록을 출력하고 하나의 글을 선택해서 수정 버튼 누르면 create_board 화면에 해당 글에 대한 데이터가 나올 수 있도록*/}
 
             <List 
@@ -62,10 +66,6 @@ export default function UpModalComponent(props: Props) {
                     </Radio.Group>
                 </List.Item>
             )}
-            pagination={{
-                defaultPageSize: 5,
-                defaultCurrent: 1,                
-            }}
             />
         </Modal>
 

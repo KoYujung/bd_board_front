@@ -30,7 +30,8 @@ export default function CreateBoardComponent(props: Props) {
     const changeMemberId = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, member_id: event.target.value });
     };
-    let new_board = {
+
+    const new_board = {
         title : data.title,
         contents : data.contents,
         member_id : data.member_id,
@@ -40,9 +41,9 @@ export default function CreateBoardComponent(props: Props) {
         event.preventDefault();
         if(new_board.title === '') {
             alert("제목을 입력해주세요");
-        } 
+        }  
         else if(newNo !== 0) {
-            BoardService.updateBoard(newNo,new_board)
+            BoardService.updateBoard(newNo, new_board)
             .then(() => { navigate('/board') });
         }
 
@@ -68,6 +69,13 @@ export default function CreateBoardComponent(props: Props) {
             });
 
             setTitle("기존 글을 수정합니다.");
+        } else if(newNo === 0) {
+            setTitle('새 글을 작성합니다.');
+            setData({
+                title: '',
+                contents: '',
+                member_id: '',
+            });
         }
     }, [newNo]);
     return (
