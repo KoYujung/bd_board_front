@@ -18,6 +18,7 @@ export default function CreateBoardComponent(props: Props) {
         contents: '',
         member_id: '',
     });
+    const [title, setTitle] = useState('새 글을 작성합니다.');
     const navigate = useNavigate();
 
     const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
@@ -65,13 +66,15 @@ export default function CreateBoardComponent(props: Props) {
             .catch((error) => {
                 console.error("수정 글 가져오기 실패", error);
             });
+
+            setTitle("기존 글을 수정합니다.");
         }
     }, [newNo]);
     return (
         <>
         <div style={{marginRight: '70%'}}>
 
-        <h2>글 작성</h2>
+        <h2>{title}</h2>
         
         <Form>
             <Form.Item className='create_div'>

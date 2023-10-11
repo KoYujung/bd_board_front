@@ -17,7 +17,7 @@ interface DataType {
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
-    const [deleteNo, setDeleteNo] = useState<Object>([]);
+    const [deleteNo, setDeleteNo] = useState<object>([]);
 
     const selected = useSelector((state: any) => (state).selected);
     const search_type = useSelector((state: any) => (state).search_type);
@@ -95,7 +95,7 @@ export default function ListBoardComponent() {
 
     const deleteBoard = () => {
         if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-            BoardService.changeUseYN(Number(deleteNo))
+            BoardService.changeUseYN(deleteNo)
             .then(res => {
                 if(res != null) {
                     window.location.replace("/board");
@@ -107,6 +107,7 @@ export default function ListBoardComponent() {
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
             setDeleteNo(selectedRowKeys);
+            console.log(typeof(deleteNo));
         }
     };
 

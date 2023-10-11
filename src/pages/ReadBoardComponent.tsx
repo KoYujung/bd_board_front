@@ -43,7 +43,7 @@ export default function ReadBoardComponent()  {
 
   const deleteView = () => {
     if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-      BoardService.changeUseYN(Number(no))
+      BoardService.changeUseYN(no)
         .then(res => {
           console.log(JSON.stringify(res.status));
           if(res != null) {

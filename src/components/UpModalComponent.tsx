@@ -1,7 +1,6 @@
 import { Button, List, Modal, Radio, RadioChangeEvent } from 'antd'
 import { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
-import CreateBoardComponent from '../pages/CreateBoardComponent';
 import { SearchOutlined } from '@ant-design/icons';
 
 interface boardType {
@@ -19,7 +18,6 @@ export default function UpModalComponent(props: Props) {
     const [ModalOpen, setModal] = useState(false);
     const [boards, setBoards] = useState<Array<boardType>>();
     const [value, setValue] = useState(0);
-    const [newNo, setNewNo] = useState<number | undefined>();
 
     const showModal = () => {
         setModal(true);
