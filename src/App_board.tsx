@@ -76,6 +76,7 @@ export default function App_menu() {
               width: 64,
               height: 64,
             }}
+
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
           /><a onClick={() => navigate('/')} style={{cursor: 'pointer', color: '##4774c9', fontSize: 23}}>게시판</a>
         </Header>
@@ -87,14 +88,13 @@ export default function App_menu() {
           }}
         >
         <div className='board_content'>
-        <Routes>
-        <Route path='/' element={<MainComponent />} />
-        <Route path='/board' element={<ListBoardComponent />} />
-        <Route path='/search_board' element={<ListBoardComponent />} />
-        <Route path='/create_board' element={<CreateBoardComponent />} />
-        <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
-        <Route path='/read_board/:no' element={<ReadBoardComponent />} />
-        </Routes>
+          <Routes>
+            <Route path='/' element={<MainComponent />} />
+            <Route path='/board' element={<ListBoardComponent />} />
+            <Route path='/create_board' element={<CreateBoardComponent />} />
+            <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
+            <Route path='/read_board/:no' element={<ReadBoardComponent />} />
+          </Routes>
         </div>
         </Content>
       </Layout>

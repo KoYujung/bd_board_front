@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import UpModalComponent from '../components/UpModalComponent';
 
 export default function CreateBoardComponent() {
@@ -15,6 +15,7 @@ export default function CreateBoardComponent() {
         member_id: '',
     });
     const [title, setTitle] = useState('새 글을 작성합니다.');
+    const [mes, setMes] = message.useMessage();    
     const navigate = useNavigate();
 
     const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
@@ -36,13 +37,15 @@ export default function CreateBoardComponent() {
     const createBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if(new_board.title === '') {
-            alert("제목을 입력해주세요");
+            mes.open({
+                content: '제목을 입력해주세요',
+                type: 'warning'
+            });
         }  
         else if(newNo !== 0) {
             BoardService.updateBoard(newNo, new_board)
             .then(() => { navigate('/board') });
         }
-
         else {
             BoardService.createBoard(new_board)
             .then(() => { navigate('/board') });
@@ -65,7 +68,7 @@ export default function CreateBoardComponent() {
             });
 
             setTitle("기존 글을 수정합니다.");
-        } else if(newNo === 0) {
+        } else {
             setTitle('새 글을 작성합니다.');
             setData({
                 title: '',
@@ -74,8 +77,10 @@ export default function CreateBoardComponent() {
             });
         }
     }, [newNo]);
+    
     return (
         <>
+        {setMes}
         <div style={{marginRight: '70%'}}>
 
         <h2>{title}</h2>
@@ -83,7 +88,7 @@ export default function CreateBoardComponent() {
         <Form>
             <Form.Item className='create_div'>
                 <label>제목</label>
-                <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onChange={changeTitle} style={{marginTop: '7px'}}></Input>
+                <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} style={{marginTop: '7px'}}></Input>
             </Form.Item>
             <div className='create_div'>
                 <label className='label'>내용</label>
@@ -95,11 +100,11 @@ export default function CreateBoardComponent() {
             </div>
         </Form>
         <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>
+
         <UpModalComponent 
         newNo={newNo} setNewNo={setNewNo} showNo={showNo} setShowNo={setShowNo}
         />
         </div>
-        {/* 컴포넌트에 useState 값과 함수 2개를 넘겨주고 받아오는 형식으로 해야함  게시글 번호 : newNo*/}
         </>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Select, Table } from "antd";
+import { Button, Input, Select, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
 import { setContent, setMember, setTitle } from '../modules/boardReducer';
@@ -18,6 +18,7 @@ export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
     const [deleteNo, setDeleteNo] = useState<object>([]);
+    const [mes, setMes] = message.useMessage();
 
     const selected = useSelector((state: any) => (state).selected);
     const search_type = useSelector((state: any) => (state).search_type);
@@ -53,17 +54,19 @@ export default function ListBoardComponent() {
         setInput(e.target.value);
     }
 
-    const searchBoard  = () => {
+    const searchBoard = () => {
         console.log(search_type);
         if(inputted === '') {
-            alert("검색어를 입력해주세요");
+            mes.open({
+                content: '검색어를 입력해주세요',
+                type: 'warning'
+            });
         } else {
             BoardService.searchBoard(search_type, inputted)
             .then((data) => {
                 setBoards(data);
             })
             .catch((error) => {
-                console.log("글 검색 실패");
                 console.error(error);
             })
         }
@@ -73,23 +76,19 @@ export default function ListBoardComponent() {
         {
             title: "글 번호",
             dataIndex: "no",
-            key: "no",
             sorter: (a,b) => a.no - b.no
         },
         {
             title: "제목",
             dataIndex: "title",
-            key: "title",
         },
         {
             title: "작성자",
             dataIndex: "member_id",
-            key: "member_id"
         },
         {
             title: "작성일",
             dataIndex: "created_time",
-            key: "created_time"
         },
     ];
 
@@ -98,21 +97,27 @@ export default function ListBoardComponent() {
             BoardService.changeUseYN(deleteNo)
             .then(res => {
                 if(res != null) {
+                    
                     window.location.replace("/board");
-                } else alert("글 삭제를 실패하였습니다");
+                } else {
+                    mes.open({
+                        content: '글 삭제를 실패하였습니다',
+                        type: 'error'
+                    });
+                }
               })
           } 
-    }
+    };
 
     const rowSelection = {
-        onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+        onChange: (selectedRowKeys: React.Key[]) => {
             setDeleteNo(selectedRowKeys);
-            console.log(typeof(deleteNo));
         }
     };
 
     return (
         <>
+        {setMes}
         <div id='deleteButton'>
             <Button danger onClick={deleteBoard} >글 삭제</Button>
         </div>
@@ -144,7 +149,6 @@ export default function ListBoardComponent() {
         onRow={(record) => {
             return {
                 onClick : () => {
-                    console.log(record);
                     const prevNo = Number(record.no) - 1;
                     const nextNo = Number(record.no) + 1;
                     readBoard(record.no, prevNo, nextNo);
