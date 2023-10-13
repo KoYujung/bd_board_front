@@ -85,9 +85,9 @@ const BoardService = {
   },
 
   //댓글 작성하기
-  async addComment(no: number, c_contents: string) {
+  async addComment(bno: number, c_contents: string) {
     try {
-      const res = await axios.post('/add_comment/' + no, { c_contents },
+      const res = await axios.post('/add_comment/' + bno, { c_contents },
         {headers: {'Content-Type': 'application/json'}});
       return res.data;
     } catch (error) {
@@ -98,13 +98,24 @@ const BoardService = {
 
   //댓글 가져오기
   async getComment(bno: number) {
-    // console.log(comment);
     try {
       const res = await axios.get('/get_comment/' + bno);
       return res.data;
     } catch (error) {
       console.error(error);
       throw error;
+    }
+  },
+
+  //조회수 증가하기
+  async addView(no: number) {
+    try{
+      const res = await axios.put('/add_view/'+ no);
+      return res;
+    }
+    catch(error) {
+      console.error(error);
+      throw(error);
     }
   }
 };

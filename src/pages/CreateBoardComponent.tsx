@@ -56,7 +56,6 @@ export default function CreateBoardComponent() {
         if(newNo !== 0) {
             BoardService.getOneBoard(newNo)
             .then((data) => {
-                console.log(data);
                 setData({
                     title: data.title,
                     contents: data.contents,

@@ -12,6 +12,7 @@ interface DataType {
     member_id: number;
     created_time: string;
     content: string;
+    view: number;
 }
 
 export default function ListBoardComponent() {
@@ -76,19 +77,28 @@ export default function ListBoardComponent() {
         {
             title: "글 번호",
             dataIndex: "no",
-            sorter: (a,b) => a.no - b.no
+            sorter: (a,b) => a.no - b.no,
+            width: "180px",
         },
         {
             title: "제목",
             dataIndex: "title",
+            width: "400px",
         },
         {
             title: "작성자",
             dataIndex: "member_id",
+            width: "150px",
         },
         {
             title: "작성일",
             dataIndex: "created_time",
+            width: "250px",
+        },
+        {
+            title: "조회수",
+            dataIndex: "view",
+            width: "100px",
         },
     ];
 
@@ -145,20 +155,23 @@ export default function ListBoardComponent() {
             <Button style={{ margin: '0' }} id='ListSearch' onClick={searchBoard}>검색</Button>
         </div>
 
-        <Table rowKey={(boards) => boards.no} columns={columns} dataSource={boards}
+        <Table 
+        rowKey={(boards) => boards.no} columns={columns} dataSource={boards}
         onRow={(record) => {
             return {
                 onClick : () => {
                     const prevNo = Number(record.no) - 1;
                     const nextNo = Number(record.no) + 1;
                     readBoard(record.no, prevNo, nextNo);
+                    BoardService.addView(record.no);
                 }
             }
-        }} rowSelection={{
+        }} 
+        rowSelection={{
             type: 'checkbox',
             ...rowSelection
-        }} style={{cursor: 'pointer'}}
-
+        }} 
+        style={{cursor: 'pointer'}}
         pagination={{
             defaultPageSize: 7,
             defaultCurrent: 1,

@@ -20,7 +20,7 @@ export default function UpModalComponent(props: Props) {
     const [ModalOpen, setModal] = useState(false);
     const [boards, setBoards] = useState<Array<boardType>>();
     const [value, setValue] = useState(0);
-    // const [content, setContent] = useState<string>();
+    const [content, setContent] = useState<any>();
 
     const showModal = () => {
         setModal(true);
@@ -37,10 +37,11 @@ export default function UpModalComponent(props: Props) {
         const updateNumber  = boards?.map(i => i.no)[e.target.value];
         setValue(e.target.value);
         props.setShowNo(updateNumber);
-
-        // const popContent = boards?.map(i=>i.contents)[e.target.value];
-        // setContent(popContent);
     };
+
+    const setCon = (index: number) => {
+        setContent(boards?.map(i=>i.contents)[index]);
+    }
 
     useEffect(() => {
         BoardService.getBoards()
@@ -55,7 +56,7 @@ export default function UpModalComponent(props: Props) {
     useEffect(() => {
         props.setShowNo(boards?.map(i => i.no)[value]); 
     });
-    
+
     return (
         <>
         <Modal open={ModalOpen} onOk={Ok} onCancel={Cancel} cancelText={"취소"} okText={"선택"} width={700} closeIcon={false}>
@@ -66,22 +67,18 @@ export default function UpModalComponent(props: Props) {
             bordered
             dataSource={boards}
             renderItem={(boards, index) => (
-                <List.Item>
-                    {/* <Radio.Group onChange={radioChange} value={value} >
+                <List.Item onMouseOver={() => setCon(index)}>
+                    <Radio.Group onChange={radioChange} value={value} >
                         <Popover content={content} placement="right">
                             <Radio value={index}>제목 : {boards.title}</Radio>
                         </Popover>
-                    </Radio.Group> */}
-
-                    <Radio.Group onChange={radioChange} value={value}>
-                        <Radio value={index}>제목 : {boards.title}</Radio>
                     </Radio.Group>
                 </List.Item>
             )}
-            pagination={{
-                defaultPageSize: 5,
-                defaultCurrent: 1,
-            }}
+            // pagination={{
+            //     defaultPageSize: 5,
+            //     defaultCurrent: 1,
+            // }}
             />
         </Modal>
 
