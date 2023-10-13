@@ -83,16 +83,3 @@ Footer {
 .subtitle {
   margin-bottom: 30px;
 }
-
-.login-form {
-  max-width: 300px;
-}
-.login-form-forgot {
-  float: right;
-}
-.ant-col-rtl .login-form-forgot {
-  float: left;
-}
-.login-form-button {
-  width: 100%;
-}

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, Form, Input, message } from 'antd';
 import UpModalComponent from '../components/UpModalComponent';
+import { UserOutlined } from '@ant-design/icons';
 
 export default function CreateBoardComponent() {
 
@@ -14,7 +15,7 @@ export default function CreateBoardComponent() {
         contents: '',
         member_id: '',
     });
-    const [title, setTitle] = useState('새 글을 작성합니다.');
+    const [title, setTitle] = useState('새 글을 작성합니다');
     const [mes, setMes] = message.useMessage();    
     const navigate = useNavigate();
 
@@ -65,9 +66,9 @@ export default function CreateBoardComponent() {
             .catch((error) => {
                 console.error("수정 글 가져오기 실패", error);
             });
-            setTitle("기존 글을 수정합니다.");
+            setTitle("기존 글을 수정합니다");
         } else {
-            setTitle('새 글을 작성합니다.');
+            setTitle('새 글을 작성합니다');
             setData({
                 title: '',
                 contents: '',
@@ -79,22 +80,29 @@ export default function CreateBoardComponent() {
     return (
         <>
         {setMes}
-        <div style={{marginRight: '70%'}}>
+        <div style={{alignItems: "center"}}>
 
-        <h2>{title}</h2>
+        <h1 style={{textAlign: "center"}}>{title}</h1>
         
         <Form>
-            <Form.Item className='create_div'>
+            {/* <Form.Item className='create_div'>
                 <label>제목</label>
                 <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} style={{marginTop: '7px'}}></Input>
+            </Form.Item> */}
+            <Form.Item className='create_div'
+            label="제목"
+            name="title"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+            >
+            <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onInput={changeTitle} />
             </Form.Item>
             <div className='create_div'>
                 <label className='label'>내용</label>
-                <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
+                <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
             </div>
             <div className='create_div'>
                 <label className='label'>작성자 번호</label>
-                <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}></Input>
+                <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}  prefix={<UserOutlined className="site-form-item-icon" />}></Input>
             </div>
         </Form>
         <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>

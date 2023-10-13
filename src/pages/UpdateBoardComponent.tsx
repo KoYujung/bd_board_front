@@ -52,8 +52,9 @@ export default function UpdateBoardComponent() {
     }, [no]);
 
     return (
-        <div style={{marginRight: '70%'}}>
-            <h2>글 수정</h2>
+        <div style={{alignItems: "center"}}>
+
+        <h1 style={{textAlign: "center"}}>기존 글을 수정합니다</h1>
             <form>
                 <div className='create_div'>
                     <label>제목</label>

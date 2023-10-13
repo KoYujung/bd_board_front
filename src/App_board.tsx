@@ -83,7 +83,7 @@ export default function App_menu() {
         <Content 
           style={{
             margin: '24px 16px',
-            minHeight: '75vh',
+            minHeight: '78vh',
             background: colorBgContainer,
           }}
         >
