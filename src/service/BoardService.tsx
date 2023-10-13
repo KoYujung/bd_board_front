@@ -107,6 +107,17 @@ const BoardService = {
     }
   },
 
+  //댓글 수 가져오기
+  async countComment(bno: number) {
+    try{
+      const res = await axios.get("/count_comment/" + bno);
+      return res;
+    } catch(error) {
+      console.error(error);
+      throw(error);
+    }
+  },
+
   //조회수 증가하기
   async addView(no: number) {
     try{

@@ -5,6 +5,7 @@ import { Button, Input, Select, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
 import { setContent, setMember, setTitle } from '../modules/boardReducer';
+import ReadBoardComponent from './ReadBoardComponent';
 
 interface DataType {
     no: number;

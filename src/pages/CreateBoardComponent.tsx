@@ -65,7 +65,6 @@ export default function CreateBoardComponent() {
             .catch((error) => {
                 console.error("수정 글 가져오기 실패", error);
             });
-
             setTitle("기존 글을 수정합니다.");
         } else {
             setTitle('새 글을 작성합니다.');

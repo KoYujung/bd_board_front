@@ -5,19 +5,25 @@ import BoardService from '../service/BoardService';
 interface commentType{
     currentNo: number,
     c_created_time?: string,
-    c_contents?: string
+    c_contents?: string,
   };
 
 export default function CommentComponent(props: commentType) {
 
     const [ comment, setComment ] = useState<any>('');
     const [ comList, setComList ] = useState<Array<commentType>>();
+    const [ count, setCount ] = useState<any>(0);
 
     useEffect(() => {        
         BoardService.getComment(props.currentNo)
-          .then((data) => {
+        .then((data) => {
             setComList(data);
-          });
+        });
+
+        BoardService.countComment(props.currentNo)
+        .then((res) => {
+            setCount(res.data);
+        })
     }, [props.currentNo]);
 
     const InputComment = (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +47,7 @@ export default function CommentComponent(props: commentType) {
 
     return (
         <>
-        <h3 style={{marginTop: '60px'}}>댓글</h3>
+        <h3 style={{marginTop: '60px'}}>댓글<span style={{marginLeft: "10px", color: "#1677ff"}}>{count}</span></h3>
         <Form style={{ display: 'flex', alignItems: 'center', marginBottom: '30px'}}>
             <Input value={comment} onChange={InputComment} placeholder='댓글을 입력해주세요' 
             style={{ width: '40%', height: '60px', marginRight: '10px'}}/>
