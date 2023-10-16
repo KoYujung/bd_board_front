@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Descriptions, DescriptionsProps } from 'antd';
+import { Button, Descriptions, DescriptionsProps, message } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 import CommentComponent from '../components/CommentComponent';
 
@@ -17,6 +17,7 @@ export default function ReadBoardComponent()  {
 
   const { no } = useParams();
   const navigate = useNavigate();
+  const [mes, setMes] = message.useMessage();
   // const location = useLocation();
 
   useEffect(() => {
@@ -45,18 +46,23 @@ export default function ReadBoardComponent()  {
 
   const deleteView = () => {
     if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-      BoardService.changeUseYN(no)
+      BoardService.changeUseYN(Object([no]))
         .then(res => {
-          console.log(JSON.stringify(res.status));
           if(res != null) {
             navigate('/board');
-          } else alert("글 삭제를 실패하였습니다");
+          } else {
+            mes.open({
+              content: '글 삭제를 실패하였습니다',
+              type: 'error'
+          });
+          }
         }) 
     } 
   }
 
   return (
     <>
+    {setMes}
     <Button className='MarginButton' onClick={() => navigate('/board')}>글 목록</Button>
     <Button className='MarginButton' onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
     <Button className='MarginButton' danger onClick={deleteView}>글 삭제</Button>
