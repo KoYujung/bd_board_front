@@ -80,36 +80,27 @@ export default function CreateBoardComponent() {
     return (
         <>
         {setMes}
-        <div style={{alignItems: "center"}}>
+        <h1 style={{textAlign: "center", marginTop: "3%"}}>{title}</h1>
+        <div style={{marginLeft: "15%", marginRight: "15%", marginTop: "3%"}}>
+            <Form>
+                <Form.Item className='create_div'>
+                    <label>제목</label>
+                    <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} style={{marginTop: '7px'}}></Input>
+                </Form.Item>
+                <div className='create_div'>
+                    <label className='label'>내용</label>
+                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
+                </div>
+                <div className='create_div'>
+                    <label className='label'>작성자 번호</label>
+                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}  prefix={<UserOutlined className="site-form-item-icon" />}></Input>
+                </div>
+            </Form>
+            <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>
 
-        <h1 style={{textAlign: "center"}}>{title}</h1>
-        
-        <Form>
-            {/* <Form.Item className='create_div'>
-                <label>제목</label>
-                <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} style={{marginTop: '7px'}}></Input>
-            </Form.Item> */}
-            <Form.Item className='create_div'
-            label="제목"
-            name="title"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-            >
-            <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onInput={changeTitle} />
-            </Form.Item>
-            <div className='create_div'>
-                <label className='label'>내용</label>
-                <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
-            </div>
-            <div className='create_div'>
-                <label className='label'>작성자 번호</label>
-                <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}  prefix={<UserOutlined className="site-form-item-icon" />}></Input>
-            </div>
-        </Form>
-        <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>
-
-        <UpModalComponent 
-        newNo={newNo} setNewNo={setNewNo} showNo={showNo} setShowNo={setShowNo}
-        />
+            <UpModalComponent 
+            newNo={newNo} setNewNo={setNewNo} showNo={showNo} setShowNo={setShowNo}
+            />
         </div>
         </>
     );

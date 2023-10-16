@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BoardService from '../service/BoardService';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 export default function UpdateBoardComponent() {
     const [data, setData] = useState({
@@ -52,26 +53,27 @@ export default function UpdateBoardComponent() {
     }, [no]);
 
     return (
-        <div style={{alignItems: "center"}}>
-
-        <h1 style={{textAlign: "center"}}>기존 글을 수정합니다</h1>
-            <form>
-                <div className='create_div'>
+        <>
+        <h1 style={{textAlign: "center", marginTop: "3%"}}>기존 글을 수정합니다</h1>
+        <div style={{marginLeft: "15%", marginRight: "15%", marginTop: "3%"}}>
+            <Form>
+                <Form.Item className='create_div'>
                     <label>제목</label>
-                    <Input type='text' placeholder='제목을 입력해주세요' value={data.title} onChange={changeTitle} style={{marginTop: '7px'}}></Input>
+                    <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} style={{marginTop: '7px'}}></Input>
+                </Form.Item>
+                <div className='create_div'>
+                    <label className='label'>내용</label>
+                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
                 </div>
                 <div className='create_div'>
-                    <label>내용</label>
-                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
+                    <label className='label'>작성자 번호</label>
+                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}  prefix={<UserOutlined className="site-form-item-icon" />}></Input>
                 </div>
-                <div className='create_div'>
-                    <label>작성자 번호</label>
-                    <Input value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}></Input>
-                </div>
-            </form>
+            </Form>
             <Button className='MarginButton' onClick={updateBoard}>완료</Button>
             <Button className='MarginButton' danger onClick={() => navigate(-1)}>취소</Button>
         </div>
+        </>
     )
 }
 
