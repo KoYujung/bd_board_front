@@ -16,12 +16,21 @@ export default function MainComponent() {
   useEffect(() => {
     BoardService.getTop4Board()
     .then((board) => {
-      console.log(board);
       setBoards(board.data);
-    })
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    // for(let i = 0; i < 4; i ++) {
+    //   BoardService.getComment(Number(boards?.map(i => i.no)[i]))
+    //   .then((comment) => {
+    //     console.log(comment);
+    //   })
+    // }
+
   }, []);
 
-  console.log(boards);
+  console.log(boards?.map(i => i.no)[0]);
 
   return (
     <>
@@ -31,7 +40,7 @@ export default function MainComponent() {
     grid={{column:5 }}
     renderItem={(boards) => {
       return <List.Item>
-        <Card title={boards.title} extra={<p onClick={() => navigate('/read_board/')} className="mainP">More</p>}
+        <Card hoverable title={boards.title} extra={<p onClick={() => navigate('/read_board/' + boards.no)} className="mainP">More</p>}
           className="mainC">
           <p>{boards.contents}</p>
         </Card>
