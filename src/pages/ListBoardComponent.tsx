@@ -5,6 +5,8 @@ import { Button, Input, Select, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
 import { setContent, setMember, setTitle } from '../modules/boardReducer';
+import DeleteComponent from '../components/DeleteComponent';
+import ReadBoardComponent from './ReadBoardComponent';
 
 interface DataType {
     no: number;
@@ -102,22 +104,6 @@ export default function ListBoardComponent() {
         },
     ];
 
-    const deleteBoard = () => {
-        if(window.confirm("게시글을 삭제하시겠습니까? ")) {
-            BoardService.changeUseYN(deleteNo)
-            .then(res => {
-                if(res != null) {
-                    window.location.replace("/board");
-                } else {
-                    mes.open({
-                        content: '글 삭제를 실패하였습니다',
-                        type: 'error'
-                    });
-                }
-              })
-          } 
-    };
-
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[]) => {
             setDeleteNo(selectedRowKeys);
@@ -128,7 +114,7 @@ export default function ListBoardComponent() {
         <>
         {setMes}
         <div id='deleteButton'>
-            <Button danger onClick={deleteBoard} >글 삭제</Button>
+            <DeleteComponent deleteNo={deleteNo}/>
         </div>
 
         <div id='selectButton' style={{ display: 'flex', alignItems: 'center' }}>
