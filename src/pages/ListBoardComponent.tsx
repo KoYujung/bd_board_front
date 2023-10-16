@@ -19,7 +19,7 @@ interface DataType {
 export default function ListBoardComponent() {
     const [boards, setBoards] = useState<any>([]);
     const [inputted , setInput] = useState<string>('');
-    const [deleteNo, setDeleteNo] = useState<object>([]);
+    const [deleteNo, setDeleteNo] = useState<Object>([]);
     const [mes, setMes] = message.useMessage();
 
     const selected = useSelector((state: any) => (state).selected);

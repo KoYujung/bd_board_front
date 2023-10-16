@@ -123,8 +123,18 @@ const BoardService = {
     try{
       const res = await axios.put('/add_view/'+ no);
       return res;
+    } catch(error) {
+      console.error(error);
+      throw(error);
     }
-    catch(error) {
+  }, 
+
+  //조회수 순으로 글 4개 가져오기
+  async getTop4Board() {
+    try{
+      const res = await axios.get('get_Top4Boards');
+      return res;
+    } catch(error) {
       console.error(error);
       throw(error);
     }

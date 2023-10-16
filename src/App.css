@@ -83,3 +83,13 @@ Footer {
 .subtitle {
   margin-bottom: 30px;
 }
+
+.mainP {
+  color: #1677ff;
+  cursor: pointer;
+}
+
+.mainC {
+  width: 300px;
+  height: 230px;
+}

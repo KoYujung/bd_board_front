@@ -12,6 +12,7 @@ import ReadBoardComponent from './pages/ReadBoardComponent';
 import {
     FormOutlined,
     HomeOutlined,
+    LoginOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     SmileOutlined,
@@ -49,6 +50,11 @@ export default function App_menu() {
               icon: <FormOutlined />,
               label: '글 작성',
             },
+            {
+              key: '4',
+              icon: <LoginOutlined />,
+              label: '로그인',
+            },
           ]}
           onClick={({key}) => {
             switch(key) {
@@ -60,6 +66,9 @@ export default function App_menu() {
                     break;
                 case '3':
                     navigate('/create_board');
+                    break;
+                case '4':
+                    navigate('/login_board');
                     break;
             }
           }}
@@ -78,7 +87,7 @@ export default function App_menu() {
             }}
 
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
-          /><a onClick={() => navigate('/')} style={{cursor: 'pointer', color: '##4774c9', fontSize: 23}}>게시판</a>
+          /><a onClick={() => navigate('/')} style={{cursor: 'pointer', color: '#1677ff', fontSize: 23}}>게시판</a>
         </Header>
         <Content 
           style={{

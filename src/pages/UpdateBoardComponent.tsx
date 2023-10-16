@@ -40,7 +40,6 @@ export default function UpdateBoardComponent() {
     useEffect(() => {
         BoardService.getOneBoard(Number(no))
             .then((res) => {
-                console.log(res);
                 setData({
                     title: res.title,
                     contents: res.contents,
