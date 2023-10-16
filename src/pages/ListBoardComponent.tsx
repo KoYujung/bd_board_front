@@ -5,8 +5,7 @@ import { Button, Input, Select, Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
 import { setContent, setMember, setTitle } from '../modules/boardReducer';
-import DeleteComponent from '../components/DeleteComponent';
-import ReadBoardComponent from './ReadBoardComponent';
+import DeleteComponent from '../components/DelModalComponent';
 
 interface DataType {
     no: number;
@@ -80,7 +79,7 @@ export default function ListBoardComponent() {
             title: "글 번호",
             dataIndex: "no",
             sorter: (a,b) => a.no - b.no,
-            width: "180px",
+            width: "100px",
         },
         {
             title: "제목",
@@ -101,6 +100,7 @@ export default function ListBoardComponent() {
             title: "조회수",
             dataIndex: "view",
             width: "100px",
+            sorter: (a,b) => a.view - b.view,
         },
     ];
 

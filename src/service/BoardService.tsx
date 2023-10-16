@@ -52,7 +52,7 @@ const BoardService = {
   },
 
   //임시삭제 처리하기
-  async changeUseYN(no: any) {
+  async changeUseYN(no: Object) {
     try{
       const res = await axios.put('/change_UseYN', no);
       return res.data;

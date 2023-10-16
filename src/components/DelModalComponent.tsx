@@ -1,9 +1,9 @@
 import { Button, Modal, message } from 'antd'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import BoardService from '../service/BoardService';
 
 interface Props {
-    deleteNo: any
+    deleteNo: Object
 }
 
 export default function DeleteComponent(props: Props) {

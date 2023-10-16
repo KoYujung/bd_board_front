@@ -1,4 +1,3 @@
-/* eslint-disable no-self-assign */
 import { Button, Modal } from 'antd'
 import { useState } from 'react'
 import BoardService from '../service/BoardService';

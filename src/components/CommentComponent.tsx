@@ -1,4 +1,4 @@
-import { Avatar, Button, Form, Input, List } from 'antd'
+import { Avatar, Button, Form, Input, List, message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 
@@ -13,6 +13,7 @@ export default function CommentComponent(props: commentType) {
     const [ comment, setComment ] = useState<any>('');
     const [ comList, setComList ] = useState<Array<commentType>>();
     const [ count, setCount ] = useState<any>(0);
+    const [mes, setMes] = message.useMessage();
 
     useEffect(() => {        
         BoardService.getComment(props.currentNo)
@@ -32,7 +33,10 @@ export default function CommentComponent(props: commentType) {
 
     const addComments = () => {
         if(comment === '') {
-            alert("내용을 입력해주세요");
+            mes.open({
+                content: '내용을 입력해주세요',
+                type: 'warning'
+            });
         } else {
             BoardService.addComment(props.currentNo,comment)
                 .then(() => {
@@ -47,6 +51,7 @@ export default function CommentComponent(props: commentType) {
 
     return (
         <>
+        {setMes}
         <h3 style={{marginTop: '60px'}}>댓글<span style={{marginLeft: "10px", color: "#1677ff"}}>{count}</span></h3>
         <Form style={{ display: 'flex', alignItems: 'center', marginBottom: '30px'}}>
             <Input value={comment} onChange={InputComment} placeholder='댓글을 입력해주세요' 

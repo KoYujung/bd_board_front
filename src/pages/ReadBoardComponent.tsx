@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Descriptions, DescriptionsProps } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 import CommentComponent from '../components/CommentComponent';
-import DeleteComponent from '../components/DeleteComponent';
+import DeleteComponent from '../components/DelModalComponent';
 
 export default function ReadBoardComponent()  {
   const [ board, setBoard] = useState({
@@ -47,7 +47,7 @@ export default function ReadBoardComponent()  {
     <>
     <Button className='MarginButton' onClick={() => navigate('/board')}>글 목록</Button>
     <Button className='MarginButton' onClick={() => navigate('/update_board/' + no)}>글 수정</Button>
-    <DeleteComponent deleteNo={no}/>
+    <DeleteComponent deleteNo={Object([no])}/>
     <p style={{float: "right", marginTop: "30px", marginRight: "20px", color: "#1677ff"}}>조회수 : {board.view}</p>
     <Descriptions bordered items={items}/>
     {/* <ModalComponent prevNo={location.state.prevNo} nextNo={location.state.nextNo} /> */}

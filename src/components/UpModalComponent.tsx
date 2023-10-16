@@ -75,10 +75,6 @@ export default function UpModalComponent(props: Props) {
                     </Radio.Group>
                 </List.Item>
             )}
-            // pagination={{
-            //     defaultPageSize: 5,
-            //     defaultCurrent: 1,
-            // }}
             />
         </Modal>
 
