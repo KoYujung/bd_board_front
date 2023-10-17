@@ -22,8 +22,6 @@ export default function MainComponent() {
     });
   }, []);
 
-  console.log(boards?.map(i => i.no)[0]);
-
   return (
     <>
     <h2 className="subtitle">조회수 TOP 4</h2>
