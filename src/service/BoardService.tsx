@@ -85,10 +85,9 @@ const BoardService = {
   },
 
   //댓글 작성하기
-  async addComment(bno: number, c_contents: string) {
+  async addComment(bno: number, comment: Object) {
     try {
-      const res = await axios.post('/add_comment/' + bno, { c_contents },
-        {headers: {'Content-Type': 'application/json'}});
+      const res = await axios.post('/add_comment/' + bno, comment);
       return res.data;
     } catch (error) {
       console.error(error);
@@ -107,6 +106,7 @@ const BoardService = {
     }
   },
 
+  //댓글 삭제처리하기
   async delComment(bno: number) {
     try{
       const res = await axios.put('/delete_comment/' + bno);
