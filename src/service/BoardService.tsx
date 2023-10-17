@@ -107,6 +107,15 @@ const BoardService = {
     }
   },
 
+  async delComment(bno: number) {
+    try{
+      const res = await axios.put('/delete_comment/' + bno);
+      return  res;
+    } catch(error) {
+      console.error(error);
+    }
+  },
+
   //댓글 수 가져오기
   async countComment(bno: number) {
     try{

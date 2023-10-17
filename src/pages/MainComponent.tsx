@@ -20,14 +20,6 @@ export default function MainComponent() {
     }).catch((error) => {
       console.log(error);
     });
-
-    // for(let i = 0; i < 4; i ++) {
-    //   BoardService.getComment(Number(boards?.map(i => i.no)[i]))
-    //   .then((comment) => {
-    //     console.log(comment);
-    //   })
-    // }
-
   }, []);
 
   console.log(boards?.map(i => i.no)[0]);
@@ -37,10 +29,11 @@ export default function MainComponent() {
     <h2 className="subtitle">조회수 TOP 4</h2>
     <List 
     dataSource={boards}
-    grid={{column:5 }}
+    grid={{column:4 }}
     renderItem={(boards) => {
       return <List.Item>
-        <Card hoverable title={boards.title} extra={<p onClick={() => navigate('/read_board/' + boards.no)} className="mainP">More</p>}
+        <Card onClick={() => navigate('/read_board/' + boards.no)}
+        hoverable title={boards.title} extra={<p onClick={() => navigate('/read_board/' + boards.no)} className="mainP">More</p>}
           className="mainC">
           <p>{boards.contents}</p>
         </Card>

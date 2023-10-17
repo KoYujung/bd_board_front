@@ -76,7 +76,7 @@ export default function ListBoardComponent() {
 
     const columns: ColumnsType<DataType> = [
         {
-            title: "글 번호",
+            title: "NO",
             dataIndex: "no",
             sorter: (a,b) => a.no - b.no,
             width: "100px",
@@ -90,17 +90,20 @@ export default function ListBoardComponent() {
             title: "작성자",
             dataIndex: "member_id",
             width: "150px",
+            align: "center"
         },
         {
             title: "작성일",
             dataIndex: "created_time",
             width: "250px",
+            align: "center"
         },
         {
             title: "조회수",
             dataIndex: "view",
             width: "100px",
             sorter: (a,b) => a.view - b.view,
+            align: "center"
         },
     ];
 
