@@ -19,8 +19,9 @@ export default function CommentComponent(props: commentType) {
     });
     const [ comList, setComList ] = useState<Array<commentType>>();
     const [ count, setCount ] = useState<any>(0);
-    const [ModalOpen, setModalOpen] = useState(false);
-    const [inputNo, setInputNo] = useState<string>('');
+    const [ ModalOpen, setModalOpen] = useState(false);
+    const [ inputNo, setInputNo ] = useState<string>('');
+    const [ index, setIndex ] = useState<number | any>(0);
 
     const [mes, setMes] = message.useMessage();
 
@@ -71,11 +72,11 @@ export default function CommentComponent(props: commentType) {
 
     const Ok = () => {
         // console.log("입력된 작성자 번호 : " + inputNo);
-        // console.log("댓글 번호 : " + comList?.map(i => i.cno)[0]);
-        // console.log(String(comList?.map(i => i.c_member_id)));
+        // console.log("댓글 번호 : " + comList?.map(i => i.cno)[index]);
+        // console.log(comList?.map(i => i.c_member_id)[index]);
 
-        if(String(comList?.map(i => i.c_member_id)) === inputNo) {
-            BoardService.delComment(props.currentNo)
+        if(String(comList?.map(i => i.c_member_id)[index]) === inputNo) {
+            BoardService.delComment(comList?.map(i => i.cno)[index])
             .then(() => window.location.replace('/read_board/' + props.currentNo));
         } else {
             mes.open({
@@ -91,7 +92,8 @@ export default function CommentComponent(props: commentType) {
         setInputNo('');
     };
 
-    const delComment = () => {
+    const delComment = (i: number) => {
+        setIndex(i);
         setModalOpen(true);
     }
 
@@ -134,7 +136,7 @@ export default function CommentComponent(props: commentType) {
         dataSource={comList}
         renderItem={(comList, index) => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <List.Item actions={[<a onClick={delComment}><DeleteOutlined /></a>,<a onClick={upComment}><EditOutlined /></a>, ]}>
+            <List.Item actions={[<a onClick={() => delComment(index)}><DeleteOutlined /></a>,<a onClick={upComment}><EditOutlined /></a>, ]}>
                 <List.Item.Meta 
                 avatar= {<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                 title={comList.c_contents}

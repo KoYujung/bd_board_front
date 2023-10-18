@@ -113,7 +113,7 @@ const BoardService = {
   },
 
   //댓글 삭제처리하기
-  async delComment(bno: number) {
+  async delComment(bno: any) {
     try{
       const res = await axios.put('/delete_comment/' + bno);
       return  res;
