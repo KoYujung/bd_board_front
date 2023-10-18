@@ -34,7 +34,7 @@ export default function DeleteComponent(props: Props) {
         <>
         {setMes}
         <Button danger onClick={showModal}>글 삭제</Button>
-        <Modal closable={false} open={ModalOpen} onOk={Ok} onCancel={Cancel} cancelText={"취소"} okText={"삭제"} >
+        <Modal closable={false} open={ModalOpen} onOk={Ok} onCancel={Cancel} cancelText={"취소"} okText={"삭제"} okType='danger' >
             <h2 style={{textAlign: "center", marginBottom: "7%"}}>게시글을 삭제하시겠습니까? </h2>
         </Modal>
         </>

@@ -18,10 +18,10 @@ export default function CommentComponent(props: commentType) {
         c_member_id: ''
     });
     const [ comList, setComList ] = useState<Array<commentType>>();
-    const [ count, setCount ] = useState<any>(0);
+    const [ count, setCount ] = useState<number>(0);
     const [ ModalOpen, setModalOpen] = useState(false);
     const [ inputNo, setInputNo ] = useState<string>('');
-    const [ index, setIndex ] = useState<number | any>(0);
+    const [ index, setIndex ] = useState<number>(0);
 
     const [mes, setMes] = message.useMessage();
 
@@ -98,7 +98,7 @@ export default function CommentComponent(props: commentType) {
     }
 
     const upComment = () => {
-        setModalOpen(true);
+        // setModalOpen(true);
     }
 
     const checkNo = (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -136,7 +136,7 @@ export default function CommentComponent(props: commentType) {
         dataSource={comList}
         renderItem={(comList, index) => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <List.Item actions={[<a onClick={() => delComment(index)}><DeleteOutlined /></a>,<a onClick={upComment}><EditOutlined /></a>, ]}>
+            <List.Item actions={[<a onClick={() => delComment(index)}><DeleteOutlined /></a>,<a onClick={upComment}><EditOutlined /></a> ]}>
                 <List.Item.Meta 
                 avatar= {<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                 title={comList.c_contents}

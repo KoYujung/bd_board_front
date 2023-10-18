@@ -113,7 +113,7 @@ const BoardService = {
   },
 
   //댓글 삭제처리하기
-  async delComment(bno: any) {
+  async delComment(bno: number | undefined) {
     try{
       const res = await axios.put('/delete_comment/' + bno);
       return  res;
@@ -156,7 +156,7 @@ const BoardService = {
   },
 
   //회원가입하기
-  async registerMember(member: memberType | undefined) {
+  async registerMember(member: memberType) {
     try{
       const res = await axios.post('/register_member', member);
       return res.data;

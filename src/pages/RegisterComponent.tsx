@@ -38,11 +38,15 @@ interface memberType {
 };
 
 export default function RegisterComponent() {
-  const [ member, setMember ] = useState<memberType>();
+  const [ member, setMember ] = useState<memberType>({
+    uid: '',
+    uname: '',
+    upass: ''
+  });
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: memberType) => {
     setMember(values);
 
     BoardService.registerMember(member)
