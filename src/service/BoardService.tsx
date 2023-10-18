@@ -6,6 +6,12 @@ interface BoardType {
   member_id: string;
 }
 
+interface memberType {
+  uid: string,
+  uname: string,
+  upass: string
+}
+
 const BoardService = {
 
   // 글 목록 불러오기
@@ -19,7 +25,7 @@ const BoardService = {
   },
 
   //글 작성하기
-  async createBoard(board : object) {
+  async createBoard(board : Object) {
     try {
       const res = await axios.post('/create_board', board);
       return res.data;
@@ -141,13 +147,25 @@ const BoardService = {
   //조회수 순으로 글 4개 가져오기
   async getTop4Board() {
     try{
-      const res = await axios.get('get_Top4Boards');
+      const res = await axios.get('/get_Top4Boards');
       return res;
     } catch(error) {
       console.error(error);
       throw(error);
     }
+  },
+
+  //회원가입하기
+  async registerMember(member: memberType | undefined) {
+    try{
+      const res = await axios.post('/register_member', member);
+      return res.data;
+    } catch(error){
+      console.error(error);
+      throw(error);
+    }
   }
+
 };
 
 export default BoardService;
