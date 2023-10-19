@@ -41,7 +41,7 @@ export default function LoginComponent() {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">로그인</Button>
-        <a onClick={() => navigate('/register_board')}>회원가입</a>
+        <a onClick={() => navigate('/register_member')}>회원가입</a>
       </Form.Item>
     </Form>
   )

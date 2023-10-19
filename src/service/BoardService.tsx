@@ -164,6 +164,17 @@ const BoardService = {
       console.error(error);
       throw(error);
     }
+  },
+
+  //회원 목록 불러오기
+  async getAllMembers() {
+    try{
+      const res = await axios.get('/get_member');
+      return res;
+    } catch(error) {
+      console.error(error);
+      throw(error);
+    }
   }
 
 };

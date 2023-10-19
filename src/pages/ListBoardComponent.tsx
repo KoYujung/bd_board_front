@@ -110,6 +110,7 @@ export default function ListBoardComponent() {
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[]) => {
             setDeleteNo(selectedRowKeys);
+            console.log(selectedRowKeys.length);
         }
     };
 

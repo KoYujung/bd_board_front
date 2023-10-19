@@ -3,7 +3,6 @@ import './index.css';
 import './App.css';
 import { Layout, Menu, Button, theme } from 'antd';
 import ListBoardComponent from './pages/ListBoardComponent';
-import { Footer } from 'antd/es/layout/layout';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import MainComponent from './pages/MainComponent';
 import CreateBoardComponent from './pages/CreateBoardComponent';
@@ -19,6 +18,8 @@ import {
   } from '@ant-design/icons';
 import LoginComponent from './pages/LoginComponent';
 import RegisterComponent from './pages/RegisterComponent';
+import MemberComponent from './pages/MemberComponent';
+import FooterComponent from './components/FooterComponent';
 
 const { Header, Sider, Content } = Layout;
 
@@ -70,7 +71,7 @@ export default function App_menu() {
                   navigate('/create_board');
                   break;
                 case '4':
-                  navigate('/login_board');
+                  navigate('/login_member');
                   break;
             }
           }}
@@ -105,14 +106,15 @@ export default function App_menu() {
             <Route path='/create_board' element={<CreateBoardComponent />} />
             <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
             <Route path='/read_board/:no' element={<ReadBoardComponent />} />
-            <Route path='/login_board' element={<LoginComponent />} />
-            <Route path='/register_board' element={<RegisterComponent />} />
+            <Route path='/login_member' element={<LoginComponent />} />
+            <Route path='/register_member' element={<RegisterComponent />} />
+            <Route path='/manage_member' element={<MemberComponent />} />
           </Routes>
         </div>
         </Content>
       </Layout>
     </Layout>
-    <Footer>©2023 Created by yuu</Footer>
+    <FooterComponent />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd'
+import { Button, Modal, message } from 'antd'
 import { useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
@@ -10,14 +10,15 @@ interface Props {
 }
 
 export default function ModalComponent(props: Props) {
-    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newData, setNewData] = useState({
         title: '',
         contents: ''
     });
     const [newNumber, setNewNum] = useState();
+    const [mes, setMes] = message.useMessage();
     const navigate = useNavigate();
+    
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -63,12 +64,16 @@ export default function ModalComponent(props: Props) {
             }
         })
         .catch(() => {
-            alert("글이 존재하지 않습니다");
+            mes.open({
+                content: '게시글이 존재하지 않습니다',
+                type: 'error'
+            });
         })
     }
 
     return (
         <>
+        {setMes}
         <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} cancelText={"닫기"} okText={"이동"}>
             <h2>{newData.title}</h2>
             <p>{newData.contents}</p>
