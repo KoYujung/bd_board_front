@@ -53,11 +53,11 @@ export default function App_menu() {
               icon: <FormOutlined />,
               label: '글 작성',
             },
-            {
-              key: '4',
-              icon: <LoginOutlined  />,
-              label: '로그인',
-            },
+            // {
+            //   key: '4',
+            //   icon: <LoginOutlined  />,
+            //   label: '로그인',
+            // },
           ]}
           onClick={({key}) => {
             switch(key) {
@@ -106,15 +106,15 @@ export default function App_menu() {
             <Route path='/create_board' element={<CreateBoardComponent />} />
             <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
             <Route path='/read_board/:no' element={<ReadBoardComponent />} />
-            <Route path='/login_member' element={<LoginComponent />} />
+            {/* <Route path='/login_member' element={<LoginComponent />} />
             <Route path='/register_member' element={<RegisterComponent />} />
-            <Route path='/manage_member' element={<MemberComponent />} />
+            <Route path='/manage_member' element={<MemberComponent />} /> */}
           </Routes>
         </div>
         </Content>
       </Layout>
     </Layout>
-    <FooterComponent />
+    {/* <FooterComponent /> */}
     </>
   );
 };

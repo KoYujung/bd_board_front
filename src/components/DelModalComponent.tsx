@@ -21,7 +21,7 @@ export default function DeleteComponent(props: Props) {
     };
   
     const Ok = () => {
-        BoardService.changeUseYN(Object([props.deleteNo]))
+        BoardService.changeUseYN(Object(props.deleteNo))
             .then(() => window.location.replace("/board"));
         setModalOpen(false);
     };

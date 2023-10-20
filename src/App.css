@@ -53,6 +53,16 @@
   margin-top: 20px;
 }
 
+.inputBoard {
+  margin-top: 7px;
+  font-size: 17px;
+}
+
+.label {
+  font-size: 17px;
+  margin-bottom: 0;
+}
+
 .create_input {
   margin-bottom: 10px;
 }

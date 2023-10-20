@@ -54,19 +54,19 @@ export default function UpdateBoardComponent() {
     return (
         <>
         <h1 style={{textAlign: "center", marginTop: "3%"}}>기존 글을 수정합니다</h1>
-        <div style={{marginLeft: "15%", marginRight: "15%", marginTop: "3%"}}>
+        <div style={{marginLeft: "15%", marginRight: "15%" }}>
             <Form>
                 <Form.Item className='create_div'>
-                    <label>제목</label>
-                    <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} style={{marginTop: '7px'}}></Input>
+                    <p className='label'>제목</p>
+                    <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} className='inputBoard'></Input>
                 </Form.Item>
                 <div className='create_div'>
-                    <label className='label'>내용</label>
-                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} style={{marginTop: '7px'}}></TextArea>
+                    <p className='label'>내용</p>
+                    <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
                 </div>
                 <div className='create_div'>
-                    <label className='label'>작성자 번호</label>
-                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} style={{marginTop: '7px'}}  prefix={<UserOutlined className="site-form-item-icon" />}></Input>
+                    <p className='label'>작성자 번호</p>
+                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard'  prefix={<UserOutlined className="site-form-item-icon" />}></Input>
                 </div>
             </Form>
             <Button className='MarginButton' onClick={updateBoard}>완료</Button>
