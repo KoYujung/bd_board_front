@@ -113,8 +113,6 @@ export default function ListBoardComponent() {
         }
     };
 
-    console.log(deleteNo);
-
     return (
         <>
         {setMes}
