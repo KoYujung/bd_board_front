@@ -1,10 +1,4 @@
-import axios from 'axios';
-
-interface BoardType {
-  title: string,
-  contents: string,
-  member_id: string;
-}
+import axios, { AxiosRequestConfig } from 'axios';
 
 interface memberType {
   uid: string,
@@ -25,9 +19,12 @@ const BoardService = {
   },
 
   //글 작성하기
-  async createBoard(board : Object) {
+  async createBoard(board : FormData) {
+    const config: AxiosRequestConfig = {
+      headers: { 'content-type': 'multipart/form-data' }
+    }; 
     try {
-      const res = await axios.post('/create_board', board);
+      const res = await axios.post('/create_board', board, config);
       return res.data;
     } catch (error) {
       console.error(error);
@@ -47,13 +44,17 @@ const BoardService = {
   },
 
   //글 수정하기
-  async updateBoard(no : number, board : BoardType) {
+  async updateBoard(no: number, board: FormData) {
+    const config: AxiosRequestConfig = {
+      headers: { 'content-type': 'multipart/form-data' }
+    }; 
+    
     try {
-      const res = await axios.put('/update_board/' + no, board);
-      return res.data;
-    } catch(error) {
-      console.error(error);
-      throw error;
+        const res = await axios.put('/update_board/' + no, board, config);
+        return res.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
   },
 

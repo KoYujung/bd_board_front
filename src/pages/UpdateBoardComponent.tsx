@@ -11,7 +11,7 @@ export default function UpdateBoardComponent() {
         contents: '',
         member_id: '',
     });
-
+    const [ files, setFiles ] = useState<File[]>([]);
     const { no } = useParams();
     const navigate = useNavigate();
 
@@ -26,15 +26,29 @@ export default function UpdateBoardComponent() {
     };
     const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        let new_board = {
-            title: data.title,
-            contents: data.contents,
-            member_id: data.member_id,
-        };
-        BoardService.updateBoard(Number(no), new_board)
-            .then(() => {
-                navigate('/read_board/' + no);
-            });
+
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('contents', data.contents);
+        formData.append('member_id', data.member_id);
+
+        for(let i = 0; i < files.length; i ++) {
+            formData.append(`files[${i}]`, files[i]);
+        }
+
+        // BoardService.updateBoard(Number(no), formData)
+        //     .then(() => {
+        //         navigate('/read_board/' + no);
+        //     });
+    };
+
+    const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFiles = e.target.files;
+
+        if(selectedFiles) {
+            const uploadFiles = Array.from(selectedFiles);
+            setFiles(uploadFiles);
+        }
     };
 
     useEffect(() => {
@@ -63,6 +77,10 @@ export default function UpdateBoardComponent() {
                 <div className='create_div'>
                     <p className='label'>내용</p>
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
+                </div>
+                <div className='create_div'>
+                    <p className='label'>첨부파일</p>
+                    <input type='file' multiple className='inputBoard' onChange={uploadFile}></input>
                 </div>
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>

@@ -14,10 +14,9 @@ export default function CreateBoardComponent() {
         title: '',
         contents: '',
         member_id: '',
-        files: '',
-        fid: [],
-        fname: '',
     });
+    const [ files, setFiles ] = useState<File[]>([]);
+
     const [title, setTitle] = useState('새 글을 작성합니다');
     const [mes, setMes] = message.useMessage();    
     const navigate = useNavigate();
@@ -58,22 +57,34 @@ export default function CreateBoardComponent() {
                 type: 'warning'
             });
         }
-        // else if(newNo !== 0) {
-        //     BoardService.updateBoard(newNo, new_board)
-        //     .then(() => { navigate('/board') });
-        // }
-        // else {
-        //     BoardService.createBoard(new_board)
-        //     .then(() => { navigate('/board') });
-        // }
+        else {
+            const formData = new FormData();
+            formData.append('title', data.title);
+            formData.append('contents', data.contents);
+            formData.append('member_id', data.member_id);
+
+            for(let i = 0; i < files.length; i ++) {
+                formData.append(`files[${i}]`, files[i]);
+            }
+            if (newNo !== 0) {
+                formData.append('newNo', newNo.toString());
+                BoardService.updateBoard(newNo, formData)
+                    .then(() => { navigate('/board') });
+            } else {
+                BoardService.createBoard(formData)
+                    .then(() => { navigate('/board') });
+            }
+        }
     };
 
     const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // setData({...data, fid: Array.from(e.target.files || []).map(i => i.lastModified});
-        // setData({...data, fname: Array.from(e.target.files || []).map(i => i.name)})
-        console.log(Array.from(e.target.files || []).map(i => i.name));
-        console.log(e.target.files);
-    }
+        const selectedFiles = e.target.files;
+
+        if(selectedFiles) {
+            const uploadFiles = Array.from(selectedFiles);
+            setFiles(uploadFiles);
+        }
+    };
 
     useEffect(() => {
         if(newNo !== 0) {
@@ -83,9 +94,6 @@ export default function CreateBoardComponent() {
                     title: data.title,
                     contents: data.contents,
                     member_id: data.member_id,
-                    files: data.files,
-                    fid: data.fid,
-                    fname: data.fname
                 });
             })
             .catch((error) => {
@@ -98,9 +106,6 @@ export default function CreateBoardComponent() {
                 title: '',
                 contents: '',
                 member_id: '',
-                files: '',
-                fid: [],
-                fname: '',
             });
         }
     }, [newNo]);
