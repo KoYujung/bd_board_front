@@ -59,6 +59,7 @@ export default function CreateBoardComponent() {
         }
         else {
             const formData = new FormData();
+
             formData.append('title', data.title);
             formData.append('contents', data.contents);
             formData.append('member_id', data.member_id);
@@ -66,6 +67,7 @@ export default function CreateBoardComponent() {
             for(let i = 0; i < files.length; i ++) {
                 formData.append(`files[${i}]`, files[i]);
             }
+            
             if (newNo !== 0) {
                 formData.append('newNo', newNo.toString());
                 BoardService.updateBoard(newNo, formData)

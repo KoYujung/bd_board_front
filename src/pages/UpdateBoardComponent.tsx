@@ -10,6 +10,7 @@ export default function UpdateBoardComponent() {
         title: '',
         contents: '',
         member_id: '',
+        fname: '',
     });
     const [ files, setFiles ] = useState<File[]>([]);
     const { no } = useParams();
@@ -58,6 +59,7 @@ export default function UpdateBoardComponent() {
                     title: res.title,
                     contents: res.contents,
                     member_id: res.member_id,
+                    fname: res.fname,
                 });
             })
             .catch((error) => {
@@ -80,7 +82,7 @@ export default function UpdateBoardComponent() {
                 </div>
                 <div className='create_div'>
                     <p className='label'>첨부파일</p>
-                    <input type='file' multiple className='inputBoard' onChange={uploadFile}></input>
+                    <input type='file' multiple value={String(data.fname)} onChange={uploadFile} className='inputBoard'></input>
                 </div>
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>

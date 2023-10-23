@@ -13,7 +13,14 @@ export default function ReadBoardComponent()  {
     member_id: '',
     created_time: '' ,
     view: '',
+    fid: '',
     fname: '',
+    fpath: '',
+    files: '',
+  });
+
+  const [ files, setFiles ] = useState({
+    fi
   });
 
   const { no } = useParams();
@@ -25,6 +32,11 @@ export default function ReadBoardComponent()  {
       .then((data) => {
         setBoard(data);
       });
+
+    BoardService.download(board.fid)
+      .then((data) => {
+        
+      })
   }, [no]);
 
   const items: DescriptionsProps['items'] = [
@@ -49,7 +61,7 @@ export default function ReadBoardComponent()  {
     },
     {
       label: '첨부파일',
-      children: board.fname,
+      children: <a href={"http://localhost:8080/tomcatImg/" + board.fid} target='_blank' rel="noreferrer" download>{board.fname}</a>,
       span: 3,
     },
   ]
@@ -67,3 +79,5 @@ export default function ReadBoardComponent()  {
     </>
   )
 }
+
+//download api도 따로 추가해서 서버에서 다운로드할 수 있는 형식으로 처리해서 클라이언트로 받아와야함

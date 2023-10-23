@@ -43,6 +43,17 @@ const BoardService = {
     }
   },
 
+  //파일 다운로드
+  async download(fid : String) {
+    try{
+      const res = await axios.get('/download/' + fid);
+      return res.data;
+    } catch(error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
   //글 수정하기
   async updateBoard(no: number, board: FormData) {
     const config: AxiosRequestConfig = {
