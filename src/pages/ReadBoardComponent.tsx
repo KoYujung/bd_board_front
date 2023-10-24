@@ -5,6 +5,7 @@ import { Button, Descriptions, DescriptionsProps } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 import CommentComponent from '../components/CommentComponent';
 import DeleteComponent from '../components/DelModalComponent';
+import { couldStartTrivia } from 'typescript';
 
 export default function ReadBoardComponent()  {
   const [ board, setBoard] = useState({
@@ -19,10 +20,6 @@ export default function ReadBoardComponent()  {
     files: '',
   });
 
-  const [ files, setFiles ] = useState({
-    fi
-  });
-
   const { no } = useParams();
   const navigate = useNavigate();
   // const location = useLocation();
@@ -32,12 +29,15 @@ export default function ReadBoardComponent()  {
       .then((data) => {
         setBoard(data);
       });
-
-    BoardService.download(board.fid)
-      .then((data) => {
-        
-      })
   }, [no]);
+
+  const download = (id: string) => {
+    BoardService.download(id)
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+  }
 
   const items: DescriptionsProps['items'] = [
     {
@@ -61,7 +61,7 @@ export default function ReadBoardComponent()  {
     },
     {
       label: '첨부파일',
-      children: <a href={"http://localhost:8080/tomcatImg/" + board.fid} target='_blank' rel="noreferrer" download>{board.fname}</a>,
+      children: <a href={"http://localhost:8080/download/" + board.fid} target='_blank' rel="noreferrer" download>{board.fname}</a>,
       span: 3,
     },
   ]

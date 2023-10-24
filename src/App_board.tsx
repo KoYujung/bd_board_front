@@ -106,6 +106,7 @@ export default function App_menu() {
             <Route path='/create_board' element={<CreateBoardComponent />} />
             <Route path='/update_board/:no' element={<UpdateBoardComponent />} />
             <Route path='/read_board/:no' element={<ReadBoardComponent />} />
+            <Route path='/download/:no' element={<ReadBoardComponent />} />
             {/* <Route path='/login_member' element={<LoginComponent />} />
             <Route path='/register_member' element={<RegisterComponent />} />
             <Route path='/manage_member' element={<MemberComponent />} /> */}
