@@ -128,7 +128,7 @@ export default function CreateBoardComponent() {
                 </div>
                 <div className='create_div'>
                     <p className='label'>첨부파일</p>
-                    <input type='file' multiple className='inputBoard' onChange={uploadFile}></input>
+                    <input type='file' multiple onChange={uploadFile} className='inputBoard'></input>
                 </div>
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>

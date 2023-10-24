@@ -10,7 +10,9 @@ export default function UpdateBoardComponent() {
         title: '',
         contents: '',
         member_id: '',
+        fid: '',
         fname: '',
+        fpath: '',
     });
     const [ files, setFiles ] = useState<File[]>([]);
     const { no } = useParams();
@@ -37,10 +39,10 @@ export default function UpdateBoardComponent() {
             formData.append(`files[${i}]`, files[i]);
         }
 
-        // BoardService.updateBoard(Number(no), formData)
-        //     .then(() => {
-        //         navigate('/read_board/' + no);
-        //     });
+        BoardService.updateBoard(Number(no), formData)
+            .then(() => {
+                navigate('/read_board/' + no);
+            });
     };
 
     const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,19 +55,33 @@ export default function UpdateBoardComponent() {
     };
 
     useEffect(() => {
+
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('contents', data.contents);
+        formData.append('member_id', data.member_id);
+
+        for(let i = 0; i < files.length; i ++) {
+            formData.append(`files[${i}]`, files[i]);
+        }
+
         BoardService.getOneBoard(Number(no))
             .then((res) => {
                 setData({
                     title: res.title,
                     contents: res.contents,
                     member_id: res.member_id,
+                    fid: res.fid,
                     fname: res.fname,
+                    fpath: res.fpath,
                 });
             })
             .catch((error) => {
                 console.error("Error fetching board data:", error);
             });
     }, [no]);
+
+    console.log(data);
 
     return (
         <>
@@ -82,7 +98,7 @@ export default function UpdateBoardComponent() {
                 </div>
                 <div className='create_div'>
                     <p className='label'>첨부파일</p>
-                    <input type='file' multiple value={String(data.fname)} onChange={uploadFile} className='inputBoard'></input>
+                    <input type='file' multiple onChange={uploadFile} className='inputBoard'></input>
                 </div>
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>

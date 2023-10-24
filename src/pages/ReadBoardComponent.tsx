@@ -31,14 +31,6 @@ export default function ReadBoardComponent()  {
       });
   }, [no]);
 
-  const download = (id: string) => {
-    BoardService.download(id)
-    .then((data) => {
-      console.log(data);
-      return data;
-    })
-  }
-
   const items: DescriptionsProps['items'] = [
     {
       label: '제목',
@@ -66,6 +58,7 @@ export default function ReadBoardComponent()  {
     },
   ]
 
+
   return (
     <>
     <Button className='MarginButton' onClick={() => navigate('/board')}>글 목록</Button>
@@ -79,5 +72,3 @@ export default function ReadBoardComponent()  {
     </>
   )
 }
-
-//download api도 따로 추가해서 서버에서 다운로드할 수 있는 형식으로 처리해서 클라이언트로 받아와야함
