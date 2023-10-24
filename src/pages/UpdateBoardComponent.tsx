@@ -54,16 +54,11 @@ export default function UpdateBoardComponent() {
         }
     };
 
+    const deleteFile = (index: number) => {
+
+    }
+
     useEffect(() => {
-
-        const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('contents', data.contents);
-        formData.append('member_id', data.member_id);
-
-        for(let i = 0; i < files.length; i ++) {
-            formData.append(`files[${i}]`, files[i]);
-        }
 
         BoardService.getOneBoard(Number(no))
             .then((res) => {
@@ -75,6 +70,7 @@ export default function UpdateBoardComponent() {
                     fname: res.fname,
                     fpath: res.fpath,
                 });
+
             })
             .catch((error) => {
                 console.error("Error fetching board data:", error);
@@ -99,6 +95,12 @@ export default function UpdateBoardComponent() {
                 <div className='create_div'>
                     <p className='label'>첨부파일</p>
                     <input type='file' multiple onChange={uploadFile} className='inputBoard'></input>
+                    {files.map((file, index) => (
+                            <div key={index}>
+                                <p>{file.name}</p>
+                                <Button onClick={() => deleteFile(index)}>삭제</Button>
+                            </div>
+                        ))}
                 </div>
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>
