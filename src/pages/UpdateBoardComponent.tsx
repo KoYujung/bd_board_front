@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BoardService from '../service/BoardService';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Upload } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 export default function UpdateBoardComponent() {
@@ -13,7 +13,9 @@ export default function UpdateBoardComponent() {
         fid: '',
         fname: '',
         fpath: '',
+        fileYN: '',
     });
+    const [testFIleData, setTestFileData] = useState([]);
     const [ files, setFiles ] = useState<File[]>([]);
     const { no } = useParams();
     const navigate = useNavigate();
@@ -46,15 +48,13 @@ export default function UpdateBoardComponent() {
             .then(() => {
                 navigate('/read_board/' + no);
             });
-        
     };
 
-    const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFiles = e.target.files;
+    const uploadFile = (e: any) => {
+        const selectedFiles = e.file;
 
         if(selectedFiles) {
-            const uploadFiles = Array.from(selectedFiles);
-            setFiles(uploadFiles);
+            setFiles(selectedFiles);
         }
     };
 
@@ -75,6 +75,7 @@ export default function UpdateBoardComponent() {
                     fid: res.fid,
                     fname: res.fname,
                     fpath: res.fpath,
+                    fileYN: res.fileYN,
                 });
 
             })
@@ -83,7 +84,8 @@ export default function UpdateBoardComponent() {
             });
     }, [no]);
 
-    console.log(data);
+    console.log(files);
+    // console.log(testFIleData);
 
     return (
         <>
@@ -98,14 +100,25 @@ export default function UpdateBoardComponent() {
                     <p className='label'>내용</p>
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
                 </div>
-                <div className='create_div'>
+                {/* <div className='create_div'>
                     <p className='label'>첨부파일</p>
                     <input type='file' multiple onChange={uploadFile} className='inputBoard' style={{display: 'inline'}}></input>
                     <div style={{marginTop: '10px'}}>
                         <p style={{display: 'inline', marginRight: '15px'}}>{data.fname}</p>
                         <a onClick={() => deleteFile(data.fid)} style={{color: 'red'}}>삭제</a>
                     </div>
-                </div>
+                </div> */}
+                <Form.Item
+                label='첨부파일'
+                >
+                    <Upload.Dragger
+                    fileList={testFIleData}
+                    name='file'
+                    multiple={true}
+                    onChange={uploadFile}
+                    />
+                </Form.Item>
+                
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>
                     <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard'  prefix={<UserOutlined className="site-form-item-icon" />}></Input>

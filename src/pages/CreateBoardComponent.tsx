@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, Upload, message } from 'antd';
 import UpModalComponent from '../components/UpModalComponent';
 import { UserOutlined } from '@ant-design/icons';
 
@@ -19,7 +19,7 @@ export default function CreateBoardComponent() {
         files: '',
     });
     const [ files, setFiles ] = useState<File[]>([]);
-
+    const [testFIleData, setTestFileData] = useState([]);
     const [title, setTitle] = useState('새 글을 작성합니다');
     const [mes, setMes] = message.useMessage();    
     const navigate = useNavigate();
@@ -70,9 +70,9 @@ export default function CreateBoardComponent() {
             formData.append('contents', data.contents);
             formData.append('member_id', data.member_id);
 
-            for(let i = 0; i < files.length; i ++) {
-                formData.append(`files[${i}]`, files[i]);
-            }
+            for(let i = 0; i < testFIleData.length; i ++) {
+                formData.append(`testFIleData[${i}]`, testFIleData[i]);
+            };
             
             if (newNo !== 0) {
                 formData.append('newNo', newNo.toString());
@@ -83,15 +83,17 @@ export default function CreateBoardComponent() {
                     .then(() => { navigate('/board') });
             }
         }
+        
     };
 
-    const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFiles = e.target.files;
+    const uploadFile = (e: any) => {
+        // const selectedFiles = e.fileList;
 
-        if(selectedFiles) {
-            const uploadFiles = Array.from(selectedFiles);
-            setFiles(uploadFiles);
-        }
+        // if(selectedFiles) {
+        //     setFiles(selectedFiles);
+        // }
+        // console.log(e);
+        setTestFileData(e.fileList);
     };
 
     useEffect(() => {
@@ -138,10 +140,22 @@ export default function CreateBoardComponent() {
                     <p className='label'>내용</p>
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
                 </div>
-                <div className='create_div'>
+                {/* <div className='create_div'>
                     <p className='label'>첨부파일</p>
                     <input type='file' multiple onChange={uploadFile} className='inputBoard'></input>
-                </div>
+                </div> */}
+
+                <Form.Item
+                label='첨부파일'
+                >
+                    <Upload.Dragger
+                    fileList={testFIleData}
+                    name='file'
+                    multiple={true}
+                    onChange={uploadFile}
+                    beforeUpload={(e) => false}
+                    >testFile</Upload.Dragger>
+                </Form.Item>
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>
                     <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard' prefix={<UserOutlined className="site-form-item-icon" />}></Input>
