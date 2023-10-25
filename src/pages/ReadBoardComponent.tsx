@@ -5,7 +5,6 @@ import { Button, Descriptions, DescriptionsProps } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 import CommentComponent from '../components/CommentComponent';
 import DeleteComponent from '../components/DelModalComponent';
-import { couldStartTrivia } from 'typescript';
 
 export default function ReadBoardComponent()  {
   const [ board, setBoard] = useState({
@@ -17,7 +16,6 @@ export default function ReadBoardComponent()  {
     fid: '',
     fname: '',
     fpath: '',
-    files: '',
   });
 
   const { no } = useParams();
@@ -53,11 +51,12 @@ export default function ReadBoardComponent()  {
     },
     {
       label: '첨부파일',
-      children: <a href={"http://localhost:8080/download/" + board.fid} target='_blank' rel="noreferrer" download>{board.fname}</a>,
+      children: <a href={"http://localhost:8080/download_file/" + board.fid} target='_blank' rel="noreferrer" download>{board.fname}</a>,
       span: 3,
     },
   ]
 
+  console.log(board);
 
   return (
     <>

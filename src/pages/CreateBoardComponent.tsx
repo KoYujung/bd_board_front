@@ -14,6 +14,9 @@ export default function CreateBoardComponent() {
         title: '',
         contents: '',
         member_id: '',
+        fid: '',
+        fname: '',
+        files: '',
     });
     const [ files, setFiles ] = useState<File[]>([]);
 
@@ -35,6 +38,9 @@ export default function CreateBoardComponent() {
         title : data.title,
         contents : data.contents,
         member_id : data.member_id,
+        fid: data.fid,
+        fname: data.fname,
+        files: data.files,
     };
 
     const createBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
@@ -90,12 +96,15 @@ export default function CreateBoardComponent() {
 
     useEffect(() => {
         if(newNo !== 0) {
-            BoardService.getOneBoard(newNo)
+            BoardService.getOneBoard(newNo, files)
             .then((data) => {
                 setData({
                     title: data.title,
                     contents: data.contents,
                     member_id: data.member_id,
+                    fid: data.fid,
+                    fname: data.fname,
+                    files: data.files,
                 });
             })
             .catch((error) => {
@@ -108,6 +117,9 @@ export default function CreateBoardComponent() {
                 title: '',
                 contents: '',
                 member_id: '',
+                fid: '',
+                fname: '',
+                files: '',
             });
         }
     }, [newNo]);

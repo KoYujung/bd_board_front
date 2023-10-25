@@ -17,6 +17,7 @@ export default function UpdateBoardComponent() {
     const [ files, setFiles ] = useState<File[]>([]);
     const { no } = useParams();
     const navigate = useNavigate();
+    const formData = new FormData();
 
     const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, title: event.target.value });
@@ -30,10 +31,12 @@ export default function UpdateBoardComponent() {
     const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        const formData = new FormData();
         formData.append('title', data.title);
         formData.append('contents', data.contents);
         formData.append('member_id', data.member_id);
+        formData.append('fid', data.fid);
+        formData.append('fname', data.fname);
+        formData.append('fpath', data.fpath);
 
         for(let i = 0; i < files.length; i ++) {
             formData.append(`files[${i}]`, files[i]);
@@ -43,6 +46,7 @@ export default function UpdateBoardComponent() {
             .then(() => {
                 navigate('/read_board/' + no);
             });
+        
     };
 
     const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,12 +58,14 @@ export default function UpdateBoardComponent() {
         }
     };
 
-    const deleteFile = (index: number) => {
-
-    }
+    const deleteFile = (fid: String) => {
+        BoardService.deleteFile(fid)
+        .then(() =>{
+            window.location.reload();
+        })
+    };
 
     useEffect(() => {
-
         BoardService.getOneBoard(Number(no))
             .then((res) => {
                 setData({
@@ -81,7 +87,7 @@ export default function UpdateBoardComponent() {
 
     return (
         <>
-        <h1 style={{textAlign: "center", marginTop: "3%"}}>기존 글을 수정합니다</h1>
+        <h2 style={{textAlign: "center", marginTop: "3%"}}>기존 글을 수정합니다</h2>
         <div style={{marginLeft: "15%", marginRight: "15%" }}>
             <Form>
                 <Form.Item className='create_div'>
@@ -94,13 +100,11 @@ export default function UpdateBoardComponent() {
                 </div>
                 <div className='create_div'>
                     <p className='label'>첨부파일</p>
-                    <input type='file' multiple onChange={uploadFile} className='inputBoard'></input>
-                    {files.map((file, index) => (
-                            <div key={index}>
-                                <p>{file.name}</p>
-                                <Button onClick={() => deleteFile(index)}>삭제</Button>
-                            </div>
-                        ))}
+                    <input type='file' multiple onChange={uploadFile} className='inputBoard' style={{display: 'inline'}}></input>
+                    <div style={{marginTop: '10px'}}>
+                        <p style={{display: 'inline', marginRight: '15px'}}>{data.fname}</p>
+                        <a onClick={() => deleteFile(data.fid)} style={{color: 'red'}}>삭제</a>
+                    </div>
                 </div>
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>

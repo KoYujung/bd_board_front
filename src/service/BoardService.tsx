@@ -33,9 +33,9 @@ const BoardService = {
   },
 
   //글 상세보기
-  async getOneBoard(no : number) {
+  async getOneBoard(no : number, files?: any) {
     try {
-      const res = await axios.get('/read_board/' + no);
+      const res = await axios.get('/read_board/' + no, files);
       return res.data;
     } catch(error) {
       console.error(error);
@@ -44,13 +44,24 @@ const BoardService = {
   },
 
   //파일 다운로드
-  async download(fid : String) {
+  async downloadFile(fid : String) {
     try{
-      const res = await axios.get('/download/' + fid);
+      const res = await axios.get('/download_file/' + fid);
       return res.data;
     } catch(error) {
       console.error(error);
       throw error;
+    }
+  },
+
+  //파일 삭제하기
+  async deleteFile(fid : String) {
+    try{
+      const res = await axios.put('/delete_file/' + fid);
+      return res;
+    } catch(error) {
+      console.error(error);
+      throw(error);
     }
   },
 
