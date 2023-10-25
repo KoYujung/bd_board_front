@@ -18,8 +18,8 @@ export default function CreateBoardComponent() {
         fname: '',
         files: '',
     });
-    const [ files, setFiles ] = useState<File[]>([]);
-    const [testFIleData, setTestFileData] = useState([]);
+    // const [ files, setFiles ] = useState<File[]>([]);
+    const [testFIleData, setTestFileData] = useState<any[]>([]);
     const [title, setTitle] = useState('새 글을 작성합니다');
     const [mes, setMes] = message.useMessage();    
     const navigate = useNavigate();
@@ -70,9 +70,10 @@ export default function CreateBoardComponent() {
             formData.append('contents', data.contents);
             formData.append('member_id', data.member_id);
 
-            for(let i = 0; i < testFIleData.length; i ++) {
-                formData.append(`testFIleData[${i}]`, testFIleData[i]);
-            };
+            for (let i = 0; i < testFIleData.length; i++) {
+                const file = testFIleData[i].originFileObj;
+                formData.append(`files[${i}]`, file);
+            }
             
             if (newNo !== 0) {
                 formData.append('newNo', newNo.toString());
@@ -87,18 +88,14 @@ export default function CreateBoardComponent() {
     };
 
     const uploadFile = (e: any) => {
-        // const selectedFiles = e.fileList;
-
-        // if(selectedFiles) {
-        //     setFiles(selectedFiles);
-        // }
-        // console.log(e);
         setTestFileData(e.fileList);
     };
 
+    console.log(testFIleData);
+
     useEffect(() => {
         if(newNo !== 0) {
-            BoardService.getOneBoard(newNo, files)
+            BoardService.getOneBoard(newNo, testFIleData)
             .then((data) => {
                 setData({
                     title: data.title,
@@ -140,11 +137,6 @@ export default function CreateBoardComponent() {
                     <p className='label'>내용</p>
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
                 </div>
-                {/* <div className='create_div'>
-                    <p className='label'>첨부파일</p>
-                    <input type='file' multiple onChange={uploadFile} className='inputBoard'></input>
-                </div> */}
-
                 <Form.Item
                 label='첨부파일'
                 >
