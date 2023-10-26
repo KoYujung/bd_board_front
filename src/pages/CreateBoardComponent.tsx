@@ -15,12 +15,12 @@ export default function CreateBoardComponent() {
         contents: '',
         member_id: '',
     });
-    const [fileData, setFileData] = useState<Array<any>>([{
-        fid: '',
-        fname: '',
-        fpath: '',
-    }]);
-    // const [fileData, setFileData] = useState<any[]>([])
+    // const [fileData, setFileData] = useState<Array<any>>([{
+    //     fid: '',
+    //     fname: '',
+    //     fpath: '',
+    // }]);
+    const [fileData, setFileData] = useState<any[]>([])
 
     const [testFIleData, setTestFileData] = useState<UploadFile[]>([]);
     const [boardNo, setBoardNo] = useState();
@@ -45,8 +45,11 @@ export default function CreateBoardComponent() {
         member_id : data.member_id,
     };
 
-    const createBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
+    const createBoard = async (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+
+        console.log(new_board, fileData);
+
         if(new_board.title === '') {
             mes.open({
                 content: '제목을 입력해주세요',
@@ -71,18 +74,21 @@ export default function CreateBoardComponent() {
                     .then(() => { navigate('/board') });
             } else {      
                 try{
-                    BoardService.createBoard(new_board)
-                        .then((data) => setBoardNo(data));  
-                
-                    const formData = new FormData();
-
-                    for(let i = 0; i < fileData.length; i ++) {
-                        const files = fileData[i].originFileObj;
-                        formData.append(`files[${i}]`, files[i]);
+                    const data = await BoardService.createBoard(new_board);
+                    setBoardNo(data);
+                    
+                    if (fileData.length > 0) {
+                        const formData = new FormData();
+                    
+                        for (let i = 0; i < fileData.length; i++) {
+                            const files = fileData[i].originFileObj;
+                            formData.append(`files[${i}]`, files);
+                        }
+                    
+                        await BoardService.createFile(formData, boardNo);
                     }
                     
-                    BoardService.createFile(formData, boardNo)
-                    .then(() => { navigate('/board') });
+                    navigate('/board');
 
                 } catch(error) {
                     console.error(error);
@@ -93,7 +99,6 @@ export default function CreateBoardComponent() {
     };
 
     const uploadFile = (e: any) => {
-        console.log(e.fileList);
         setTestFileData(e.fileList);
         setFileData(e.fileList);
     };
@@ -127,7 +132,11 @@ export default function CreateBoardComponent() {
         {setMes}
         <h1 style={{textAlign: "center", marginTop: "3%"}}>{title}</h1>
         <div style={{marginLeft: "15%", marginRight: "15%"}}>
-            <Form action='/create_board' method='post' encType='multipart/form-data'>
+            <Form>
+            <div className='create_div'>
+                    <p className='label'>작성자 번호</p>
+                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard' prefix={<UserOutlined className="site-form-item-icon" />}></Input>
+                </div>
                 <Form.Item className='create_div'>
                     <p className='label'>제목</p>
                     <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} className='inputBoard'></Input>
@@ -151,10 +160,6 @@ export default function CreateBoardComponent() {
                     <p className="ant-upload-text">Click or drag file to this area to upload</p>
                     </Upload.Dragger>
                 </Form.Item>
-                <div className='create_div'>
-                    <p className='label'>작성자 번호</p>
-                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard' prefix={<UserOutlined className="site-form-item-icon" />}></Input>
-                </div>
             </Form>
             <Button className='MarginButton' type='primary' onClick={createBoard}>완료</Button>
 
