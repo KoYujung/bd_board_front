@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BoardService from '../service/BoardService';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Form, Input, Upload } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Upload, UploadFile } from 'antd';
+import { InboxOutlined, UserOutlined } from '@ant-design/icons';
 
 export default function UpdateBoardComponent() {
     const [data, setData] = useState({
@@ -13,10 +13,22 @@ export default function UpdateBoardComponent() {
         fid: '',
         fname: '',
         fpath: '',
-        fileYN: '',
     });
+
+    const [fileData, setFileData] = useState({
+        fid: '',
+        fname: '',
+        fpath: '',
+    })
+
+    const [fileList, setFileList] = useState<UploadFile[]>([
+        {
+            uid: '',
+            name: '',
+            status: 'done',
+        }
+    ]);
     const [testFIleData, setTestFileData] = useState([]);
-    const [ files, setFiles ] = useState<File[]>([]);
     const { no } = useParams();
     const navigate = useNavigate();
     const formData = new FormData();
@@ -33,36 +45,25 @@ export default function UpdateBoardComponent() {
     const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        formData.append('title', data.title);
-        formData.append('contents', data.contents);
-        formData.append('member_id', data.member_id);
-        formData.append('fid', data.fid);
-        formData.append('fname', data.fname);
-        formData.append('fpath', data.fpath);
+        // formData.append('title', data.title);
+        // formData.append('contents', data.contents);
+        // formData.append('member_id', data.member_id);
+        // formData.append('fid', data.fid);
+        // formData.append('fname', data.fname);
+        // formData.append('fpath', data.fpath);
 
-        for(let i = 0; i < files.length; i ++) {
-            formData.append(`files[${i}]`, files[i]);
-        }
+        // for(let i = 0; i < testFIleData.length; i ++) {
+        //     formData.append(`files[${i}]`, testFIleData[i]);
+        // }
 
-        BoardService.updateBoard(Number(no), formData)
+        BoardService.updateBoard(Number(no), data, fileData)
             .then(() => {
                 navigate('/read_board/' + no);
             });
     };
 
     const uploadFile = (e: any) => {
-        const selectedFiles = e.file;
-
-        if(selectedFiles) {
-            setFiles(selectedFiles);
-        }
-    };
-
-    const deleteFile = (fid: String) => {
-        BoardService.deleteFile(fid)
-        .then(() =>{
-            window.location.reload();
-        })
+        setTestFileData(e.fileList);
     };
 
     useEffect(() => {
@@ -75,17 +76,18 @@ export default function UpdateBoardComponent() {
                     fid: res.fid,
                     fname: res.fname,
                     fpath: res.fpath,
-                    fileYN: res.fileYN,
                 });
 
+                // setFileList(...res, fileList.map)
             })
             .catch((error) => {
                 console.error("Error fetching board data:", error);
             });
+
     }, [no]);
 
-    console.log(files);
-    // console.log(testFIleData);
+    console.log(data);
+    console.log(fileList);
 
     return (
         <>
@@ -100,23 +102,19 @@ export default function UpdateBoardComponent() {
                     <p className='label'>내용</p>
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
                 </div>
-                {/* <div className='create_div'>
+                <Form.Item>
                     <p className='label'>첨부파일</p>
-                    <input type='file' multiple onChange={uploadFile} className='inputBoard' style={{display: 'inline'}}></input>
-                    <div style={{marginTop: '10px'}}>
-                        <p style={{display: 'inline', marginRight: '15px'}}>{data.fname}</p>
-                        <a onClick={() => deleteFile(data.fid)} style={{color: 'red'}}>삭제</a>
-                    </div>
-                </div> */}
-                <Form.Item
-                label='첨부파일'
-                >
                     <Upload.Dragger
                     fileList={testFIleData}
                     name='file'
                     multiple={true}
                     onChange={uploadFile}
-                    />
+                    beforeUpload={(e) => false}
+                    defaultFileList={fileList}
+                    >
+                        <p className="ant-upload-drag-icon"><InboxOutlined /></p>
+                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                    </Upload.Dragger>
                 </Form.Item>
                 
                 <div className='create_div'>

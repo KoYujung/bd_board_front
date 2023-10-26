@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Form, Input, Upload, message } from 'antd';
+import { Button, Form, Input, Upload, UploadFile, message } from 'antd';
 import UpModalComponent from '../components/UpModalComponent';
-import { UserOutlined } from '@ant-design/icons';
+import { InboxOutlined, UserOutlined } from '@ant-design/icons';
 
 export default function CreateBoardComponent() {
 
@@ -14,13 +14,18 @@ export default function CreateBoardComponent() {
         title: '',
         contents: '',
         member_id: '',
+    });
+    const [fileData, setFileData] = useState<Array<any>>([{
         fid: '',
         fname: '',
-        files: '',
-    });
-    // const [ files, setFiles ] = useState<File[]>([]);
-    const [testFIleData, setTestFileData] = useState<any[]>([]);
+        fpath: '',
+    }]);
+    // const [fileData, setFileData] = useState<any[]>([])
+
+    const [testFIleData, setTestFileData] = useState<UploadFile[]>([]);
+    const [boardNo, setBoardNo] = useState();
     const [title, setTitle] = useState('새 글을 작성합니다');
+
     const [mes, setMes] = message.useMessage();    
     const navigate = useNavigate();
 
@@ -38,9 +43,6 @@ export default function CreateBoardComponent() {
         title : data.title,
         contents : data.contents,
         member_id : data.member_id,
-        fid: data.fid,
-        fname: data.fname,
-        files: data.files,
     };
 
     const createBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
@@ -64,34 +66,37 @@ export default function CreateBoardComponent() {
             });
         }
         else {
-            const formData = new FormData();
-
-            formData.append('title', data.title);
-            formData.append('contents', data.contents);
-            formData.append('member_id', data.member_id);
-
-            for (let i = 0; i < testFIleData.length; i++) {
-                const file = testFIleData[i].originFileObj;
-                formData.append(`files[${i}]`, file);
-            }
-            
             if (newNo !== 0) {
-                formData.append('newNo', newNo.toString());
-                BoardService.updateBoard(newNo, formData)
+                BoardService.updateBoard(newNo, new_board, fileData)
                     .then(() => { navigate('/board') });
-            } else {
-                BoardService.createBoard(formData)
+            } else {      
+                try{
+                    BoardService.createBoard(new_board)
+                        .then((data) => setBoardNo(data));  
+                
+                    const formData = new FormData();
+
+                    for(let i = 0; i < fileData.length; i ++) {
+                        const files = fileData[i].originFileObj;
+                        formData.append(`files[${i}]`, files[i]);
+                    }
+                    
+                    BoardService.createFile(formData, boardNo)
                     .then(() => { navigate('/board') });
+
+                } catch(error) {
+                    console.error(error);
+                }
             }
         }
         
     };
 
     const uploadFile = (e: any) => {
+        console.log(e.fileList);
         setTestFileData(e.fileList);
+        setFileData(e.fileList);
     };
-
-    console.log(testFIleData);
 
     useEffect(() => {
         if(newNo !== 0) {
@@ -101,9 +106,6 @@ export default function CreateBoardComponent() {
                     title: data.title,
                     contents: data.contents,
                     member_id: data.member_id,
-                    fid: data.fid,
-                    fname: data.fname,
-                    files: data.files,
                 });
             })
             .catch((error) => {
@@ -116,9 +118,6 @@ export default function CreateBoardComponent() {
                 title: '',
                 contents: '',
                 member_id: '',
-                fid: '',
-                fname: '',
-                files: '',
             });
         }
     }, [newNo]);
@@ -137,16 +136,20 @@ export default function CreateBoardComponent() {
                     <p className='label'>내용</p>
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
                 </div>
-                <Form.Item
-                label='첨부파일'
-                >
+                <Form.Item>
+                    <p className='label'>첨부파일</p>
                     <Upload.Dragger
                     fileList={testFIleData}
                     name='file'
                     multiple={true}
                     onChange={uploadFile}
                     beforeUpload={(e) => false}
-                    >testFile</Upload.Dragger>
+                    >    
+                    <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                    </p>
+                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                    </Upload.Dragger>
                 </Form.Item>
                 <div className='create_div'>
                     <p className='label'>작성자 번호</p>

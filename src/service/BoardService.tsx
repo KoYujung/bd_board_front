@@ -19,12 +19,23 @@ const BoardService = {
   },
 
   //글 작성하기
-  async createBoard(board : FormData) {
+  async createBoard(board: object) {
+    try {
+      const res = await axios.post('/create_board', board);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+  //파일 업로드하기
+  async createFile(files: FormData, bno: any) {
     const config: AxiosRequestConfig = {
       headers: { 'content-type': 'multipart/form-data' }
     }; 
     try {
-      const res = await axios.post('/create_board', board, config);
+      const res = await axios.post('/create_file/' + bno, files, config);
       return res.data;
     } catch (error) {
       console.error(error);
@@ -66,7 +77,7 @@ const BoardService = {
   },
 
   //글 수정하기
-  async updateBoard(no: number, board: FormData) {
+  async updateBoard(no: number, board: object, file: object) {
     const config: AxiosRequestConfig = {
       headers: { 'content-type': 'multipart/form-data' }
     }; 
