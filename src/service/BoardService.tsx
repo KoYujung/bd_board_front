@@ -44,9 +44,20 @@ const BoardService = {
   },
 
   //글 상세보기
-  async getOneBoard(no : number, files?: any) {
+  async getOneBoard(no : number, board?: any) {
     try {
-      const res = await axios.get('/read_board/' + no, files);
+      const res = await axios.get('/read_board/' + no, board);
+      return res.data;
+    } catch(error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+  //파일 불러오기
+  async getFileByNo(no : number, files?: any) {
+    try {
+      const res = await axios.get('/read_file/' + no, files);
       return res.data;
     } catch(error) {
       console.error(error);

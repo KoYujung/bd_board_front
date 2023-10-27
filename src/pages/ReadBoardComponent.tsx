@@ -13,9 +13,6 @@ export default function ReadBoardComponent()  {
     member_id: '',
     created_time: '' ,
     view: '',
-    fid: '',
-    fname: '',
-    fpath: '',
   });
 
   const { no } = useParams();
@@ -27,6 +24,11 @@ export default function ReadBoardComponent()  {
       .then((data) => {
         setBoard(data);
       });
+
+    BoardService.getFileByNo(Number(no))
+      .then((data) => {
+        console.log(data);
+      })
   }, [no]);
 
   const items: DescriptionsProps['items'] = [
@@ -49,14 +51,12 @@ export default function ReadBoardComponent()  {
       children: board.contents,
       span: 3,
     },
-    {
-      label: '첨부파일',
-      children: <a href={"http://localhost:8080/download_file/" + board.fid} target='_blank' rel="noreferrer" download>{board.fname}</a>,
-      span: 3,
-    },
+    // {
+    //   label: '첨부파일',
+    //   children: <a href={"http://localhost:8080/download_file/" + board.fid} target='_blank' rel="noreferrer" download>{board.fname}</a>,// 수정해야함
+    //   span: 3,
+    // },
   ]
-
-  console.log(board);
 
   return (
     <>

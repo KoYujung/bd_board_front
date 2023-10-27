@@ -15,15 +15,9 @@ export default function CreateBoardComponent() {
         contents: '',
         member_id: '',
     });
-    // const [fileData, setFileData] = useState<Array<any>>([{
-    //     fid: '',
-    //     fname: '',
-    //     fpath: '',
-    // }]);
     const [fileData, setFileData] = useState<any[]>([])
 
     const [testFIleData, setTestFileData] = useState<UploadFile[]>([]);
-    const [boardNo, setBoardNo] = useState();
     const [title, setTitle] = useState('새 글을 작성합니다');
 
     const [mes, setMes] = message.useMessage();    
@@ -74,9 +68,8 @@ export default function CreateBoardComponent() {
                     .then(() => { navigate('/board') });
             } else {      
                 try{
-                    const data = await BoardService.createBoard(new_board);
-                    setBoardNo(data);
-                    
+                    BoardService.createBoard(new_board)
+                    .then((res) => {
                     if (fileData.length > 0) {
                         const formData = new FormData();
                     
@@ -84,15 +77,14 @@ export default function CreateBoardComponent() {
                             const files = fileData[i].originFileObj;
                             formData.append(`files[${i}]`, files);
                         }
-                    
-                        await BoardService.createFile(formData, boardNo);
+                        BoardService.createFile(formData, res);
+                        }
+                        navigate('/board');
+                        });
+                        
+                    } catch(error) {
+                        console.error(error);
                     }
-                    
-                    navigate('/board');
-
-                } catch(error) {
-                    console.error(error);
-                }
             }
         }
         
@@ -132,10 +124,10 @@ export default function CreateBoardComponent() {
         {setMes}
         <h1 style={{textAlign: "center", marginTop: "3%"}}>{title}</h1>
         <div style={{marginLeft: "15%", marginRight: "15%"}}>
-            <Form>
+            <Form encType='multipart/form-data'>
             <div className='create_div'>
-                    <p className='label'>작성자 번호</p>
-                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard' prefix={<UserOutlined className="site-form-item-icon" />}></Input>
+                    <p className='label'>작성자</p>
+                    <Input placeholder='작성자를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard' prefix={<UserOutlined className="site-form-item-icon" />}></Input>
                 </div>
                 <Form.Item className='create_div'>
                     <p className='label'>제목</p>
