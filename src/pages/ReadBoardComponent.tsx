@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Descriptions, DescriptionsProps } from 'antd';
+import { Button, Descriptions, DescriptionsProps, Typography } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 import CommentComponent from '../components/CommentComponent';
 import DeleteComponent from '../components/DelModalComponent';
@@ -15,6 +15,8 @@ export default function ReadBoardComponent()  {
     view: '',
   });
 
+  const [file, setFile] = useState<Array<any>>();
+
   const { no } = useParams();
   const navigate = useNavigate();
   // const location = useLocation();
@@ -27,7 +29,7 @@ export default function ReadBoardComponent()  {
 
     BoardService.getFileByNo(Number(no))
       .then((data) => {
-        console.log(data);
+        setFile(data);
       })
   }, [no]);
 
@@ -45,17 +47,27 @@ export default function ReadBoardComponent()  {
     {
       label: '작성자',
       children: board.member_id,
+      span: 1,
     },
     {
       label: '내용',
       children: board.contents,
       span: 3,
     },
-    // {
-    //   label: '첨부파일',
-    //   children: <a href={"http://localhost:8080/download_file/" + board.fid} target='_blank' rel="noreferrer" download>{board.fname}</a>,// 수정해야함
-    //   span: 3,
-    // },
+    {
+      label: '첨부파일',
+      children: 
+      (
+        <ul style={{ listStyleType: "square"}}>
+          {file?.map((i) => (
+            <li key={i.fid}>
+              <a href={`http://localhost:8080/download_file/${i.fid}`} target='_blank' rel="noreferrer">{i.fname}</a>
+            </li>
+          ))}
+        </ul>
+      ),
+      span: 3,
+    },
   ]
 
   return (
