@@ -12,20 +12,8 @@ export default function UpdateBoardComponent() {
         member_id: '',
     });
 
-    const [fileData, setFileData] = useState({
-        fid: '',
-        fname: '',
-        fpath: '',
-    })
-
-    const [fileList, setFileList] = useState<UploadFile[]>([
-        {
-            uid: '',
-            name: '',
-            status: 'done',
-        }
-    ]);
-    const [testFIleData, setTestFileData] = useState([]);
+    const [fileData, setFileData] = useState<any[]>([]);
+    const [fileList, setFileList] = useState<any[]>([]);
     const { no } = useParams();
     const navigate = useNavigate();
     const formData = new FormData();
@@ -42,25 +30,17 @@ export default function UpdateBoardComponent() {
     const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        // formData.append('title', data.title);
-        // formData.append('contents', data.contents);
-        // formData.append('member_id', data.member_id);
-        // formData.append('fid', data.fid);
-        // formData.append('fname', data.fname);
-        // formData.append('fpath', data.fpath);
+        console.log(fileList);
 
-        // for(let i = 0; i < testFIleData.length; i ++) {
-        //     formData.append(`files[${i}]`, testFIleData[i]);
-        // }
-
-        BoardService.updateBoard(Number(no), data)
-            .then(() => {
-                navigate('/read_board/' + no);
-            });
+        BoardService.updateBoard(Number(no), data);
+            // .then(() => {
+            //     navigate('/read_board/' + no);
+            // });
     };
 
     const uploadFile = (e: any) => {
-        setTestFileData(e.fileList);
+        setFileList(e.fileList);
+        setFileData(e.fileList);
     };
 
     useEffect(() => {
@@ -76,9 +56,26 @@ export default function UpdateBoardComponent() {
                 console.error("Error fetching board data:", error);
             });
 
+        BoardService.getFileByNo(Number(no))
+        .then((data) => {
+            setFileData(data);
+
+            const defaultFiles = data.map((file: { fid: string; fname: string; fpath: string; }) => ({
+                uid: file.fid,
+                name: file.fname,
+                status: 'done',
+                url: file.fpath,
+            }));
+
+            setFileList(defaultFiles);
+        })
+        .catch((error) => {
+            console.error("파일 가져오기 실패", error);
+        });   
+
     }, [no]);
 
-    console.log(data);
+    console.log(fileData);
     console.log(fileList);
 
     return (
@@ -101,7 +98,7 @@ export default function UpdateBoardComponent() {
                 <Form.Item>
                     <p className='label'>첨부파일</p>
                     <Upload.Dragger
-                    fileList={testFIleData}
+                    fileList={fileList}
                     name='file'
                     multiple={true}
                     onChange={uploadFile}
