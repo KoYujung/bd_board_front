@@ -15,9 +15,8 @@ export default function CreateBoardComponent() {
         contents: '',
         member_id: '',
     });
-    const [fileData, setFileData] = useState<any[]>([])
-
-    const [testFIleData, setTestFileData] = useState<UploadFile[]>([]);
+    const [fileData, setFileData] = useState<any[]>([]);
+    const [fileList, setFileList] = useState();
     const [title, setTitle] = useState('새 글을 작성합니다');
 
     const [mes, setMes] = message.useMessage();    
@@ -41,7 +40,6 @@ export default function CreateBoardComponent() {
 
     const createBoard = async (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-
         console.log(new_board, fileData);
 
         if(new_board.title === '') {
@@ -63,41 +61,45 @@ export default function CreateBoardComponent() {
             });
         }
         else {
-            if (newNo !== 0) {
-                BoardService.updateBoard(newNo, new_board, fileData)
-                    .then(() => { navigate('/board') });
-            } else {      
+            if (newNo !== 0) { // 글 수정
+                console.log(fileData);
+                BoardService.updateBoard(newNo, new_board);                
+                BoardService.createFile(fileData,newNo)
+                .then(() => { navigate('/board') });
+            } 
+            else { // 글 작성
+                console.log(fileData);      
                 try{
                     BoardService.createBoard(new_board)
                     .then((res) => {
-                    if (fileData.length > 0) {
+                    if (fileData.length > 0) {{}
                         const formData = new FormData();
                     
                         for (let i = 0; i < fileData.length; i++) {
                             const files = fileData[i].originFileObj;
                             formData.append(`files[${i}]`, files);
                         }
-                        BoardService.createFile(formData, res);
-                        }
-                        navigate('/board');
-                        });
                         
+                        BoardService.createFile(formData, res);
+                    }
+
+                    navigate('/board')});
+
                     } catch(error) {
                         console.error(error);
                     }
             }
         }
-        
     };
 
     const uploadFile = (e: any) => {
-        setTestFileData(e.fileList);
+        setFileList(e.fileList);
         setFileData(e.fileList);
     };
 
     useEffect(() => {
         if(newNo !== 0) {
-            BoardService.getOneBoard(newNo, testFIleData)
+            BoardService.getOneBoard(newNo, fileData)
             .then((data) => {
                 setData({
                     title: data.title,
@@ -108,8 +110,26 @@ export default function CreateBoardComponent() {
             .catch((error) => {
                 console.error("수정 글 가져오기 실패", error);
             });
+
+            BoardService.getFileByNo(newNo)
+            .then((data) => {
+                setFileData(data);
+
+                const defaultFiles = data.map((file: { fid: string; fname: string; fpath: string; }) => ({
+                    uid: file.fid,
+                    name: file.fname,
+                    status: 'done',
+                    url: file.fpath,
+                }));
+
+                setFileList(defaultFiles);
+            })
+            .catch((error) => {
+                console.error("파일 가져오기 실패", error);
+            });           
             setTitle("기존 글을 수정합니다");
-        } else {
+        } 
+        else {
             setTitle('새 글을 작성합니다');
             setData({
                 title: '',
@@ -118,17 +138,20 @@ export default function CreateBoardComponent() {
             });
         }
     }, [newNo]);
-    
+
+    // console.log(fileData);
+    // console.log(fileList);
+
     return (
         <>
         {setMes}
         <h1 style={{textAlign: "center", marginTop: "3%"}}>{title}</h1>
         <div style={{marginLeft: "15%", marginRight: "15%"}}>
             <Form encType='multipart/form-data'>
-            <div className='create_div'>
-                    <p className='label'>작성자</p>
-                    <Input placeholder='작성자를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard' prefix={<UserOutlined className="site-form-item-icon" />}></Input>
-                </div>
+                <Form.Item className='create_div'>
+                    <p className='label'><UserOutlined style={{marginRight: '10px'}}/>작성자</p>
+                    <Input type='text' placeholder='작성자를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard' ></Input>
+                </Form.Item>
                 <Form.Item className='create_div'>
                     <p className='label'>제목</p>
                     <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} className='inputBoard'></Input>
@@ -140,7 +163,7 @@ export default function CreateBoardComponent() {
                 <Form.Item>
                     <p className='label'>첨부파일</p>
                     <Upload.Dragger
-                    fileList={testFIleData}
+                    fileList={fileList}
                     name='file'
                     multiple={true}
                     onChange={uploadFile}

@@ -10,9 +10,6 @@ export default function UpdateBoardComponent() {
         title: '',
         contents: '',
         member_id: '',
-        fid: '',
-        fname: '',
-        fpath: '',
     });
 
     const [fileData, setFileData] = useState({
@@ -56,7 +53,7 @@ export default function UpdateBoardComponent() {
         //     formData.append(`files[${i}]`, testFIleData[i]);
         // }
 
-        BoardService.updateBoard(Number(no), data, fileData)
+        BoardService.updateBoard(Number(no), data)
             .then(() => {
                 navigate('/read_board/' + no);
             });
@@ -73,12 +70,7 @@ export default function UpdateBoardComponent() {
                     title: res.title,
                     contents: res.contents,
                     member_id: res.member_id,
-                    fid: res.fid,
-                    fname: res.fname,
-                    fpath: res.fpath,
                 });
-
-                // setFileList(...res, fileList.map)
             })
             .catch((error) => {
                 console.error("Error fetching board data:", error);
@@ -94,6 +86,10 @@ export default function UpdateBoardComponent() {
         <h2 style={{textAlign: "center", marginTop: "3%"}}>기존 글을 수정합니다</h2>
         <div style={{marginLeft: "15%", marginRight: "15%" }}>
             <Form>
+            <Form.Item className='create_div'>
+                    <p className='label'><UserOutlined style={{marginRight: '10px'}}/>작성자</p>
+                    <Input type='text' placeholder='작성자를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard' ></Input>
+                </Form.Item>
                 <Form.Item className='create_div'>
                     <p className='label'>제목</p>
                     <Input type='text' placeholder='제목을 입력해주세요'  value={data.title} onInput={changeTitle} className='inputBoard'></Input>
@@ -116,11 +112,7 @@ export default function UpdateBoardComponent() {
                         <p className="ant-upload-text">Click or drag file to this area to upload</p>
                     </Upload.Dragger>
                 </Form.Item>
-                
-                <div className='create_div'>
-                    <p className='label'>작성자 번호</p>
-                    <Input placeholder='작성자 번호를 입력해주세요' value={data.member_id} onChange={changeMemberId} className='inputBoard'  prefix={<UserOutlined className="site-form-item-icon" />}></Input>
-                </div>
+            
             </Form>
             <Button className='MarginButton' onClick={updateBoard}>완료</Button>
             <Button className='MarginButton' danger onClick={() => navigate(-1)}>취소</Button>

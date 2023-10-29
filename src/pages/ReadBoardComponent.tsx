@@ -30,7 +30,8 @@ export default function ReadBoardComponent()  {
     BoardService.getFileByNo(Number(no))
       .then((data) => {
         setFile(data);
-      })
+      });
+      
   }, [no]);
 
   const items: DescriptionsProps['items'] = [
@@ -69,6 +70,8 @@ export default function ReadBoardComponent()  {
       span: 3,
     },
   ]
+
+  console.log(file);
 
   return (
     <>

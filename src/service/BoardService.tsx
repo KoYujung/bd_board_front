@@ -30,7 +30,7 @@ const BoardService = {
   },
 
   //파일 업로드하기
-  async createFile(files: FormData, bno: any) {
+  async createFile(files: any, bno: any) {
     const config: AxiosRequestConfig = {
       headers: { 'content-type': 'multipart/form-data' }
     }; 
@@ -88,7 +88,7 @@ const BoardService = {
   },
 
   //글 수정하기
-  async updateBoard(no: number, board: object, file: object) {
+  async updateBoard(no: number, board: object) {
     const config: AxiosRequestConfig = {
       headers: { 'content-type': 'multipart/form-data' }
     }; 
