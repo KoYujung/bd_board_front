@@ -72,7 +72,7 @@ export default function CreateBoardComponent() {
                 try{
                     BoardService.createBoard(new_board)
                     .then((res) => {
-                    if (fileData.length > 0) {{}
+                    if (fileData.length > 0) {
                         const formData = new FormData();
                     
                         for (let i = 0; i < fileData.length; i++) {

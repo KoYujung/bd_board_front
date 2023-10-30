@@ -17,6 +17,9 @@ export default function UpdateBoardComponent() {
     const { no } = useParams();
     const navigate = useNavigate();
     const formData = new FormData();
+    const existingFiles: any[] = [];
+    const newFiles: any[] = [];
+    const removedFiles: any[] = [];
 
     const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, title: event.target.value });
@@ -29,18 +32,33 @@ export default function UpdateBoardComponent() {
     };
     const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
+        
+        fileList.forEach(file => {
+          if (file.status === 'done') {
+            existingFiles.push(file);
+          } else if (file.status === undefined || file.status === 'done') {
+            newFiles.push(file);
+          }});
 
-        console.log(fileList);
+        fileData.forEach(file => {
+            if(file.status === 'removed') {
+                removedFiles.push(file);
+            }
+        })
 
-        BoardService.updateBoard(Number(no), data);
-            // .then(() => {
-            //     navigate('/read_board/' + no);
-            // });
+        console.log('기존 파일:', existingFiles);
+        console.log('새로 추가한 파일:', newFiles);
+        console.log('삭제한 파일:', removedFiles);
+
+        // BoardService.updateBoard(Number(no), data)
+        //     .then(() => {
+        //         navigate('/read_board/' + no);
+        //     });
     };
 
     const uploadFile = (e: any) => {
         setFileList(e.fileList);
-        setFileData(e.fileList);
+        // setFileData(e.fileList);
     };
 
     useEffect(() => {
@@ -66,7 +84,7 @@ export default function UpdateBoardComponent() {
                 status: 'done',
                 url: file.fpath,
             }));
-
+            setFileData(defaultFiles);
             setFileList(defaultFiles);
         })
         .catch((error) => {
@@ -74,9 +92,6 @@ export default function UpdateBoardComponent() {
         });   
 
     }, [no]);
-
-    console.log(fileData);
-    console.log(fileList);
 
     return (
         <>
@@ -103,7 +118,7 @@ export default function UpdateBoardComponent() {
                     multiple={true}
                     onChange={uploadFile}
                     beforeUpload={(e) => false}
-                    defaultFileList={fileList}
+                    defaultFileList={fileData}
                     >
                         <p className="ant-upload-drag-icon"><InboxOutlined /></p>
                         <p className="ant-upload-text">Click or drag file to this area to upload</p>
@@ -118,3 +133,9 @@ export default function UpdateBoardComponent() {
     )
 }
 
+/*
+[ status ]
+done => 기존 파일 - x
+undefined => 새로 추가한 파일 - create_file
+removed => 삭제한 파일 - delete_file
+*/
