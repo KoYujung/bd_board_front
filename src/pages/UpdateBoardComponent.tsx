@@ -17,9 +17,22 @@ export default function UpdateBoardComponent() {
     const { no } = useParams();
     const navigate = useNavigate();
     const formData = new FormData();
-    const existingFiles: any[] = [];
-    const newFiles: any[] = [];
-    const removedFiles: any[] = [];
+    const existingFiles: any[] = []; //기존 파일 - x
+    const newFiles: any[] = []; //새로 추가한 파일 - create_file
+    const removedFiles: any[] = []; //삭제한 파일 - delete_file
+
+    fileList.forEach(file => {
+        if (file.status === 'done') {
+          existingFiles.push(file);
+        } else if (file.status === undefined || file.status === 'done') {
+          newFiles.push(file);
+        }});
+
+      fileData.forEach(file => {
+          if(file.status === 'removed') {
+              removedFiles.push(file);
+          }
+      });
 
     const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, title: event.target.value });
@@ -32,28 +45,30 @@ export default function UpdateBoardComponent() {
     };
     const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        
-        fileList.forEach(file => {
-          if (file.status === 'done') {
-            existingFiles.push(file);
-          } else if (file.status === undefined || file.status === 'done') {
-            newFiles.push(file);
-          }});
-
-        fileData.forEach(file => {
-            if(file.status === 'removed') {
-                removedFiles.push(file);
-            }
-        })
 
         console.log('기존 파일:', existingFiles);
         console.log('새로 추가한 파일:', newFiles);
         console.log('삭제한 파일:', removedFiles);
 
-        // BoardService.updateBoard(Number(no), data)
-        //     .then(() => {
-        //         navigate('/read_board/' + no);
-        //     });
+        BoardService.updateBoard(Number(no), data);
+
+        try {
+            if (removedFiles.length !== 0) {
+                BoardService.deleteFile(removedFiles.map(i => i.uid));
+            }
+        
+            if (newFiles.length !== 0) {
+                const formData = new FormData();
+                newFiles.forEach((file, i) => {
+                    formData.append(`files[${i}]`, file.originFileObj);
+                });
+                BoardService.createFile(formData, Number(no));
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        navigate('/read_board/' + no);
     };
 
     const uploadFile = (e: any) => {
@@ -132,10 +147,3 @@ export default function UpdateBoardComponent() {
         </>
     )
 }
-
-/*
-[ status ]
-done => 기존 파일 - x
-undefined => 새로 추가한 파일 - create_file
-removed => 삭제한 파일 - delete_file
-*/

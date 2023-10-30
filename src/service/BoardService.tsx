@@ -77,7 +77,7 @@ const BoardService = {
   },
 
   //파일 삭제하기
-  async deleteFile(fid : String) {
+  async deleteFile(fid : Array<String>) {
     try{
       const res = await axios.put('/delete_file/' + fid);
       return res;
