@@ -16,7 +16,7 @@ export default function UpdateBoardComponent() {
     const [fileList, setFileList] = useState<any[]>([]);
     const { no } = useParams();
     const navigate = useNavigate();
-    const formData = new FormData();
+    
     const existingFiles: any[] = []; //기존 파일 - x
     const newFiles: any[] = []; //새로 추가한 파일 - create_file
     const removedFiles: any[] = []; //삭제한 파일 - delete_file
@@ -45,10 +45,6 @@ export default function UpdateBoardComponent() {
     };
     const updateBoard = (event : React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-
-        console.log('기존 파일:', existingFiles);
-        console.log('새로 추가한 파일:', newFiles);
-        console.log('삭제한 파일:', removedFiles);
 
         BoardService.updateBoard(Number(no), data);
 

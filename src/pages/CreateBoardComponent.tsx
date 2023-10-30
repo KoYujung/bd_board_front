@@ -139,9 +139,6 @@ export default function CreateBoardComponent() {
         }
     }, [newNo]);
 
-    // console.log(fileData);
-    // console.log(fileList);
-
     return (
         <>
         {setMes}

@@ -20,7 +20,6 @@ export default function UpModalComponent(props: Props) {
     const [ModalOpen, setModal] = useState(false);
     const [boards, setBoards] = useState<Array<boardType>>();
     const [value, setValue] = useState(0);
-    const [content, setContent] = useState<any>();
 
     const showModal = () => {
         setModal(true);
@@ -38,10 +37,10 @@ export default function UpModalComponent(props: Props) {
         setValue(e.target.value);
         props.setShowNo(updateNumber);
     };
-
-    const setCon = (index: number) => {
-        setContent(boards?.map(i=>i.contents)[index]);
-    }
+    // const radioChange = (boards: boardType, index: number) => {
+    //     props.setShowNo(boards.no);
+    //     setValue(index);
+    // };
 
     useEffect(() => {
         BoardService.getBoards()
@@ -57,6 +56,8 @@ export default function UpModalComponent(props: Props) {
         props.setShowNo(boards?.map(i => i.no)[value]); 
     });
 
+    console.log(props.showNo);
+
     return (
         <>
         <Modal open={ModalOpen} onOk={Ok} onCancel={Cancel} cancelText={"취소"} okText={"선택"} width={700} closeIcon={false}>
@@ -67,14 +68,18 @@ export default function UpModalComponent(props: Props) {
             bordered
             dataSource={boards}
             renderItem={(boards, index) => (
-                <List.Item onMouseOver={() => setCon(index)}>
+                <List.Item >
                     <Radio.Group onChange={radioChange} value={value} >
-                        <Popover content={content} placement="right">
+                        <Popover content={boards.contents} placement="right">
                             <Radio value={index}>제목 : {boards.title}</Radio>
                         </Popover>
                     </Radio.Group>
                 </List.Item>
             )}
+            pagination={{
+                defaultPageSize: 7,
+                defaultCurrent: 1,
+            }}
             />
         </Modal>
 

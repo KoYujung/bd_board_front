@@ -62,6 +62,7 @@ export default function ReadBoardComponent()  {
         <ul style={{ listStyleType: "square"}}>
           {file?.map((i) => (
             <li key={i.fid}>
+              <img src={`http://localhost:8080/download_file/${i.fid}`}></img>
               <a href={`http://localhost:8080/download_file/${i.fid}`} target='_blank' rel="noreferrer">{i.fname}</a>
             </li>
           ))}
