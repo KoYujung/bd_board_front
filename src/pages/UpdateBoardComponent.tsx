@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BoardService from '../service/BoardService';
 import TextArea from 'antd/es/input/TextArea';
-import { Button, Form, Input, Upload, UploadFile } from 'antd';
+import { Button, Form, Input, Upload } from 'antd';
 import { FileAddOutlined, InboxOutlined, UserOutlined } from '@ant-design/icons';
 
 export default function UpdateBoardComponent() {

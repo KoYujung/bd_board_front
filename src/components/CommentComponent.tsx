@@ -114,19 +114,19 @@ export default function CommentComponent(props: commentType) {
             <tbody>
                 <tr>
                     <td>
+                        <Input value={comment.c_member_id} onChange={InputMember} 
+                        bordered={false} placeholder='작성자 번호를 입력해주세요' prefix={<UserOutlined />}/>
+                    </td>
+                </tr>    
+                <tr>
+                    <td>
                     <Form style={{ display: 'flex', alignItems: 'center'}}>
                         <Input value={comment.c_contents} onChange={InputContents} placeholder='댓글을 입력해주세요' 
                         style={{ height: '60px', marginRight: '10px'}}/>
                         <Button style={{height: '60px'}} onClick={addComments}>댓글 작성</Button>
                     </Form>
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        <Input value={comment.c_member_id} onChange={InputMember} style={{marginBottom: '30px'}} 
-                        bordered={false} placeholder='작성자 번호를 입력해주세요' prefix={<UserOutlined />}/>
-                    </td>
-                </tr>                
+                </tr>            
             </tbody>
         </table>
 
@@ -136,7 +136,7 @@ export default function CommentComponent(props: commentType) {
         dataSource={comList}
         renderItem={(comList, index) => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <List.Item actions={[<a onClick={() => delComment(index)}><DeleteOutlined /></a>,<a onClick={upComment}><EditOutlined /></a> ]}>
+            <List.Item actions={[<a onClick={() => delComment(index)}><DeleteOutlined /></a>]}>
                 <List.Item.Meta 
                 avatar= {<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                 title={comList.c_contents}

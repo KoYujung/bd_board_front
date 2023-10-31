@@ -58,11 +58,15 @@ export default function ListBoardComponent() {
     }
 
     const searchBoard = () => {
-        console.log(search_type);
+
         if(inputted === '') {
-            mes.open({
-                content: '검색어를 입력해주세요',
-                type: 'warning'
+            BoardService.searchBoard(null, null)
+            .then((data) => {
+                console.log(data);
+                setBoards(data);
+            })
+            .catch((error) => {
+                console.error(error);
             });
         } else {
             BoardService.searchBoard(search_type, inputted)

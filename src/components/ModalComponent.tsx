@@ -51,6 +51,7 @@ export default function ModalComponent(props: Props) {
     // };
 
     const checkYN = (num: any, direction: string) => {
+
         let newNum = direction === 'prev' ? num - 1 : num + 1; // 여기 수정해야함
 
         BoardService.getOneBoard(newNum)

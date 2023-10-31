@@ -126,7 +126,8 @@ const BoardService = {
   },
 
   //글 검색하기
-  async searchBoard(type: string, keyword: string) {
+  async searchBoard(type: any, keyword: any) {
+    console.log(keyword);
     try {
       const res = await axios.get('/search_board/' + type + '/' + keyword);
       return res.data;

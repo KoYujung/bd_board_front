@@ -33,11 +33,11 @@ export default function CreateBoardComponent() {
           newFiles.push(file);
         }});
 
-      fileData.forEach(file => {
+    fileData.forEach(file => {
           if(file.status === 'removed') {
               removedFiles.push(file);
           }
-      });
+    });
 
     const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, title: event.target.value }); 
@@ -169,8 +169,6 @@ export default function CreateBoardComponent() {
             });
         }
     }, [newNo]);
-
-    console.log(newNo);
 
     return (
         <>
