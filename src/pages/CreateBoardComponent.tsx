@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, Form, Input, Upload, UploadFile, message } from 'antd';
 import UpModalComponent from '../components/UpModalComponent';
-import { InboxOutlined, UserOutlined } from '@ant-design/icons';
+import { FileAddOutlined, InboxOutlined, UserOutlined } from '@ant-design/icons';
 
 export default function CreateBoardComponent() {
 
@@ -16,11 +16,28 @@ export default function CreateBoardComponent() {
         member_id: '',
     });
     const [fileData, setFileData] = useState<any[]>([]);
-    const [fileList, setFileList] = useState();
+    const [fileList, setFileList] = useState<any[]>([]);
     const [title, setTitle] = useState('새 글을 작성합니다');
 
     const [mes, setMes] = message.useMessage();    
     const navigate = useNavigate();
+
+    const existingFiles: any[] = []; 
+    const newFiles: any[] = [];
+    const removedFiles: any[] = []; 
+
+    fileList.forEach(file => {
+        if (file.status === 'done') {
+          existingFiles.push(file);
+        } else if (file.status === undefined || file.status === 'done') {
+          newFiles.push(file);
+        }});
+
+      fileData.forEach(file => {
+          if(file.status === 'removed') {
+              removedFiles.push(file);
+          }
+      });
 
     const changeTitle = (event : React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, title: event.target.value }); 
@@ -62,10 +79,24 @@ export default function CreateBoardComponent() {
         }
         else {
             if (newNo !== 0) { // 글 수정
-                console.log(fileData);
-                BoardService.updateBoard(newNo, new_board);                
-                BoardService.createFile(fileData,newNo)
-                .then(() => { navigate('/board') });
+                console.log(existingFiles, newFiles, removedFiles);
+                try {
+                    if (removedFiles.length !== 0) {
+                        BoardService.deleteFile(removedFiles.map(i => i.uid));
+                    }
+                
+                    if (newFiles.length !== 0) {
+                        const formData = new FormData();
+                        newFiles.forEach((file, i) => {
+                            formData.append(`files[${i}]`, file.originFileObj);
+                        });
+                        BoardService.createFile(formData, newNo);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+
+                navigate('/board');
             } 
             else { // 글 작성
                 console.log(fileData);      
@@ -94,7 +125,7 @@ export default function CreateBoardComponent() {
 
     const uploadFile = (e: any) => {
         setFileList(e.fileList);
-        setFileData(e.fileList);
+        // setFileData(e.fileList);
     };
 
     useEffect(() => {
@@ -121,7 +152,7 @@ export default function CreateBoardComponent() {
                     status: 'done',
                     url: file.fpath,
                 }));
-
+                setFileData(defaultFiles);
                 setFileList(defaultFiles);
             })
             .catch((error) => {
@@ -139,10 +170,12 @@ export default function CreateBoardComponent() {
         }
     }, [newNo]);
 
+    console.log(newNo);
+
     return (
         <>
         {setMes}
-        <h1 style={{textAlign: "center", marginTop: "3%"}}>{title}</h1>
+        <h2 style={{textAlign: "center", marginTop: "3%"}}>{title}</h2>
         <div style={{marginLeft: "15%", marginRight: "15%"}}>
             <Form encType='multipart/form-data'>
                 <Form.Item className='create_div'>
@@ -158,7 +191,7 @@ export default function CreateBoardComponent() {
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
                 </div>
                 <Form.Item>
-                    <p className='label'>첨부파일</p>
+                    <p className='label'><FileAddOutlined style={{marginRight: '10px'}}/>첨부파일</p>
                     <Upload.Dragger
                     fileList={fileList}
                     name='file'
@@ -167,7 +200,7 @@ export default function CreateBoardComponent() {
                     beforeUpload={(e) => false}
                     >
                         <p className="ant-upload-drag-icon"><InboxOutlined /></p>
-                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                        <p className="ant-upload-text">파일을 끌어 놓거나 버튼을 클릭해주세요</p>
                     </Upload.Dragger>
                 </Form.Item>
             </Form>

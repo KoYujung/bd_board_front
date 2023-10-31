@@ -25,22 +25,25 @@ export default function UpModalComponent(props: Props) {
         setModal(true);
     };
     const Ok = () => {
-        props.setNewNo(props.showNo);
+        // props.setNewNo(props.showNo);
         setModal(false);
     };
     const Cancel = () => {
         props.setNewNo(0);
         setModal(false);
     };
-    const radioChange = (e: RadioChangeEvent) => {
-        const updateNumber  = boards?.map(i => i.no)[e.target.value];
-        setValue(e.target.value);
-        props.setShowNo(updateNumber);
-    };
-    // const radioChange = (boards: boardType, index: number) => {
-    //     props.setShowNo(boards.no);
-    //     setValue(index);
+    // const radioChange = (e: RadioChangeEvent) => {
+    //     const updateNumber  = boards?.map(i => i.no)[e.target.value];
+    //     setValue(e.target.value);
+    //     props.setShowNo(updateNumber);
     // };
+
+    const radioChange = (boards: boardType, index: number) => {
+        console.log(boards.no);
+        props.setNewNo(boards.no);
+        props.setShowNo(boards.no);
+        setValue(index);
+    };
 
     useEffect(() => {
         BoardService.getBoards()
@@ -56,8 +59,6 @@ export default function UpModalComponent(props: Props) {
         props.setShowNo(boards?.map(i => i.no)[value]); 
     });
 
-    console.log(props.showNo);
-
     return (
         <>
         <Modal open={ModalOpen} onOk={Ok} onCancel={Cancel} cancelText={"취소"} okText={"선택"} width={700} closeIcon={false}>
@@ -69,7 +70,8 @@ export default function UpModalComponent(props: Props) {
             dataSource={boards}
             renderItem={(boards, index) => (
                 <List.Item >
-                    <Radio.Group onChange={radioChange} value={value} >
+                    {/* <Radio.Group onChange={radioChange} value={value}  > */}
+                    <Radio.Group onChange={() => radioChange(boards,index)} value={value}  >
                         <Popover content={boards.contents} placement="right">
                             <Radio value={index}>제목 : {boards.title}</Radio>
                         </Popover>

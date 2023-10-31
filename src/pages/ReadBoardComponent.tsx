@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import BoardService from '../service/BoardService';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Descriptions, DescriptionsProps, Typography } from 'antd';
+import { Button, Descriptions, DescriptionsProps, Popover, Typography } from 'antd';
 import ModalComponent from '../components/ModalComponent';
 import CommentComponent from '../components/CommentComponent';
 import DeleteComponent from '../components/DelModalComponent';
+import { DownloadOutlined } from '@ant-design/icons';
 
 export default function ReadBoardComponent()  {
   const [ board, setBoard] = useState({
@@ -61,18 +62,17 @@ export default function ReadBoardComponent()  {
       (
         <ul style={{ listStyleType: "square"}}>
           {file?.map((i) => (
-            <li key={i.fid}>
-              <img src={`http://localhost:8080/download_file/${i.fid}`}></img>
-              <a href={`http://localhost:8080/download_file/${i.fid}`} target='_blank' rel="noreferrer">{i.fname}</a>
+            <li key={i.fid} style={{marginBottom: '10px'}}>
+              <Popover placement='right' content={<img src={`http://localhost:8080/download_file/${i.fid}`} width={300}></img>}>
+              {i.fname}<a href={`http://localhost:8080/download_file/${i.fid}`} target='_blank' rel="noreferrer" style={{marginLeft: '15px'}} ><DownloadOutlined/></a>
+              </Popover>
             </li>
           ))}
         </ul>
       ),
-      span: 3,
+      span: 1,
     },
   ]
-
-  console.log(file);
 
   return (
     <>

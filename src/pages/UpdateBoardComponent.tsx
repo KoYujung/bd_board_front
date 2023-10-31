@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import BoardService from '../service/BoardService';
 import TextArea from 'antd/es/input/TextArea';
 import { Button, Form, Input, Upload, UploadFile } from 'antd';
-import { InboxOutlined, UserOutlined } from '@ant-design/icons';
+import { FileAddOutlined, InboxOutlined, UserOutlined } from '@ant-design/icons';
 
 export default function UpdateBoardComponent() {
     const [data, setData] = useState({
@@ -122,7 +122,7 @@ export default function UpdateBoardComponent() {
                     <TextArea placeholder='내용을 입력해주세요' value={data.contents} rows={4} onChange={changeContents} className='inputBoard'></TextArea>
                 </div>
                 <Form.Item>
-                    <p className='label'>첨부파일</p>
+                    <p className='label'><FileAddOutlined style={{marginRight: '10px'}}/>첨부파일</p>
                     <Upload.Dragger
                     fileList={fileList}
                     name='file'
@@ -132,7 +132,7 @@ export default function UpdateBoardComponent() {
                     defaultFileList={fileData}
                     >
                         <p className="ant-upload-drag-icon"><InboxOutlined /></p>
-                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                        <p className="ant-upload-text">파일을 끌어 놓거나 버튼을 클릭해주세요</p>
                     </Upload.Dragger>
                 </Form.Item>
             

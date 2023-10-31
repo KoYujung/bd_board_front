@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import BoardService from '../service/BoardService';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Select, Table, message } from "antd";
+import { Button, Input, Select, Table, Tooltip, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useSelector, useDispatch } from 'react-redux';
 import { setContent, setMember, setTitle } from '../modules/boardReducer';
 import DeleteComponent from '../components/DelModalComponent';
+import { SearchOutlined } from '@ant-design/icons';
 
 interface DataType {
     no: number;
@@ -140,7 +141,9 @@ export default function ListBoardComponent() {
                 value={inputted}
                 style={{ flex: '1', marginRight: '8px' }}
             />
-            <Button style={{ margin: '0' }} id='ListSearch' onClick={searchBoard}>검색</Button>
+            <Tooltip title="search">
+                <Button id='ListSearch' onClick={searchBoard} icon={<SearchOutlined />}></Button>
+            </Tooltip>
         </div>
 
         <Table 
