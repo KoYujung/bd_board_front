@@ -58,7 +58,7 @@ export default function ReadBoardComponent()  {
     },
     {
       label: '첨부파일',
-      children: 
+      children: file?.length === 0 ? "업로드 된 파일이 없습니다" :
       (
         <ul style={{ listStyleType: "square"}}>
           {file?.map((i) => (

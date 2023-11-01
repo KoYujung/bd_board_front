@@ -29,7 +29,7 @@ export default function UpModalComponent(props: Props) {
         setModal(false);
     };
     const Cancel = () => {
-        props.setNewNo(0);
+        // props.setNewNo(0);
         setModal(false);
     };
     const radioChange = (e: RadioChangeEvent) => {
